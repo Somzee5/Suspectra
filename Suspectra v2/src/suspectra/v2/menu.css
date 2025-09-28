@@ -1,0 +1,8 @@
+/*
+ * Empty Stylesheet file.
+ */
+
+.mainFxmlClass {
+    -fx-background-image: url('menu.jpg');
+    -fx-background-size: cover;
+}

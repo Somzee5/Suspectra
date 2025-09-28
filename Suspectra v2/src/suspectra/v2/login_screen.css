@@ -1,0 +1,8 @@
+/*
+ * Empty Stylesheet file.
+ */
+
+.LoginFxmlClass {
+    -fx-background-image: url('login.jpg');
+    -fx-background-size: cover;
+}

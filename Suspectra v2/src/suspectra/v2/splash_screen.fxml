@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane fx:id="splash" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1024.0" styleClass=".root" stylesheets="@style.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="suspectra.v2.splash_screenController">
+   <children>
+      <ImageView fitHeight="95.0" fitWidth="364.0" layoutX="334.0" layoutY="239.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@Transparent%20Logo.png" />
+         </image>
+      </ImageView>
+      <Text fill="WHITE" fontSmoothingType="LCD" layoutX="316.0" layoutY="388.0" strokeType="OUTSIDE" strokeWidth="0.0" text="A Forensic Face Sketch Creator" textAlignment="CENTER" wrappingWidth="415.8854064941406">
+         <font>
+            <Font name="Futura Bk BT Book" size="20.0" />
+         </font>
+      </Text>
+      <Text fill="WHITE" layoutX="715.0" layoutY="583.0" strokeType="OUTSIDE" strokeWidth="0.0" text="© MGM's Collge of Engineering and Technology">
+         <font>
+            <Font name="Futura Bk BT Book" size="14.0" />
+         </font>
+      </Text>
+   </children>
+</AnchorPane>
