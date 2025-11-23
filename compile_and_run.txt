@@ -1,0 +1,8 @@
+COMMANDS TO RUN FROM "Suspectra v2" DIRECTORY:
+
+Command 1 (Compile):
+javac -cp "javafx-sdk-17.0.2\lib\*;lib\*" --module-path "javafx-sdk-17.0.2\lib" --add-modules javafx.controls,javafx.fxml,javafx.graphics,javafx.media,javafx.swing,javafx.web -d build src\suspectra\v2\SuspectraV2.java src\suspectra\v2\DashboardController.java src\suspectra\v2\Login_screenController.java src\suspectra\v2\MenuController.java src\suspectra\v2\Upload_sketchController.java src\suspectra\v2\splash_screenController.java src\suspectra\v2\connectdb.java
+
+Command 2 (Run):
+java -cp "build;javafx-sdk-17.0.2\lib\*;lib\*" --module-path "javafx-sdk-17.0.2\lib" --add-modules javafx.controls,javafx.fxml,javafx.graphics,javafx.media,javafx.swing,javafx.web suspectra.v2.SuspectraV2
+

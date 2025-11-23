@@ -8,12 +8,17 @@ package suspectra.v2;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.logging.Logger;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Cursor;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.ScrollPane;
@@ -453,6 +458,26 @@ public class DashboardController implements Initializable {
     private ImageView more_e_5;
     @FXML
     private ImageView more_e_6;
+    
+    // Dynamic element storage
+    private Map<String, List<ImageView>> elementImageViews = new HashMap<>(); // element_e_X ImageViews
+    private Map<String, List<ImageView>> sketchImageViews = new HashMap<>(); // element_s_X ImageViews for canvas
+    private Map<String, Map<ImageView, ImageView>> elementToSketchMap = new HashMap<>(); // Maps element ImageView to sketch ImageView
+    
+    // Default positions for each component type on the canvas (relative to sketch container center)
+    // Sketch canvas is 620x620, so center is approximately 310, 310
+    private static final Map<String, double[]> DEFAULT_POSITIONS = new HashMap<>();
+    static {
+        // Format: [x, y] positions for each component type (centered on 620x620 canvas)
+        DEFAULT_POSITIONS.put("head", new double[]{160, 200}); // Head at center-bottom
+        DEFAULT_POSITIONS.put("hair", new double[]{160, 100}); // Hair above head (top of head)
+        DEFAULT_POSITIONS.put("eyes", new double[]{160, 180}); // Eyes on head (middle-upper)
+        DEFAULT_POSITIONS.put("eyebrows", new double[]{160, 160}); // Eyebrows above eyes
+        DEFAULT_POSITIONS.put("nose", new double[]{160, 220}); // Nose below eyes (center of face)
+        DEFAULT_POSITIONS.put("lips", new double[]{160, 260}); // Lips below nose
+        DEFAULT_POSITIONS.put("mustach", new double[]{160, 250}); // Mustache above lips
+        DEFAULT_POSITIONS.put("more", new double[]{160, 200}); // More elements at center
+    }
 
     /**
      * Initializes the controller class.
@@ -461,8 +486,511 @@ public class DashboardController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-         //DECLARE DRAG AND MOVE TO FX:ID
+        // Load elements dynamically
+        loadElementsDynamically();
+        
+        // Setup drag handlers for dynamically created elements
+        setupDragHandlers();
+        
+        // Keep existing drag setup for any hardcoded elements
         dragSketch();
+    }
+    
+    /**
+     * Dynamically load all sketch elements from folders
+     */
+    private void loadElementsDynamically() {
+        System.out.println("=== Starting dynamic element loading ===");
+        // Clear existing ImageView elements from containers to avoid duplicates
+        clearHardcodedElements();
+        
+        // IMPORTANT: Load HEAD first so it's at the bottom layer (z-index -1)
+        System.out.println("\n--- Loading HEAD elements (bottom layer) ---");
+        loadElementType("head", head_elements, "head_e_", "head_s_");
+        
+        // Then load all other elements (they will be on top)
+        System.out.println("\n--- Loading HAIR elements ---");
+        loadElementType("hair", hair_elements, "hair_e_", "hair_s_");
+        System.out.println("\n--- Loading EYES elements ---");
+        loadElementType("eyes", eyes_elements, "eyes_e_", "eyes_s_");
+        System.out.println("\n--- Loading EYEBROWS elements ---");
+        loadElementType("eyebrows", eyebrows_elements, "eyeb_e_", "eyeb_s_");
+        System.out.println("\n--- Loading NOSE elements ---");
+        loadElementType("nose", nose_elements, "nose_e_", "nose_s_");
+        System.out.println("\n--- Loading LIPS elements ---");
+        loadElementType("lips", lips_elements, "lips_e_", "lips_s_");
+        System.out.println("\n--- Loading MUSTACHE elements ---");
+        loadElementType("mustach", mustach_elements, "must_e_", "must_s_");
+        System.out.println("\n--- Loading MORE elements ---");
+        loadElementType("more", more_elements, "more_e_", "more_s_");
+        
+        // Ensure all head elements are at the back
+        ensureHeadAtBack();
+        
+        System.out.println("\n=== Dynamic element loading complete ===");
+    }
+    
+    /**
+     * Ensure all head sketch elements are at the back (lowest z-index)
+     */
+    private void ensureHeadAtBack() {
+        List<ImageView> headSketches = sketchImageViews.get("head");
+        if (headSketches != null) {
+            for (ImageView headSketch : headSketches) {
+                headSketch.toBack();
+            }
+        }
+        // Also handle hardcoded head elements
+        if (head_s_1 != null) head_s_1.toBack();
+        if (head_s_2 != null) head_s_2.toBack();
+        if (head_s_3 != null) head_s_3.toBack();
+        if (head_s_4 != null) head_s_4.toBack();
+        if (head_s_5 != null) head_s_5.toBack();
+        if (head_s_6 != null) head_s_6.toBack();
+        if (head_s_7 != null) head_s_7.toBack();
+        if (head_s_8 != null) head_s_8.toBack();
+        if (head_s_9 != null) head_s_9.toBack();
+        if (head_s_10 != null) head_s_10.toBack();
+    }
+    
+    /**
+     * Load elements for a specific type
+     * Group images are shown in selection sidebar, numbered images (01, 02, etc.) are shown on canvas
+     */
+    private void loadElementType(String elementType, AnchorPane container, String elementPrefix, String sketchPrefix) {
+        // Get Group images for selection sidebar
+        List<String> groupImages = DynamicElementLoader.loadElementFiles(elementType, getClass(), true);
+        // Get numbered images for canvas
+        List<String> numberedImages = DynamicElementLoader.loadElementFiles(elementType, getClass(), false);
+        
+        System.out.println("Loading " + elementType + ":");
+        System.out.println("  Group images found: " + groupImages.size() + " - " + groupImages);
+        System.out.println("  Numbered images found: " + numberedImages.size() + " - " + numberedImages);
+        
+        List<ImageView> elementViews = new ArrayList<>();
+        List<ImageView> sketchViews = new ArrayList<>();
+        Map<ImageView, ImageView> elementToSketch = new HashMap<>();
+        
+        // Grid layout parameters
+        int columns = 3;
+        double imageSize = 100.0;
+        double spacingX = 135.0;
+        double spacingY = 134.0;
+        double startX = 30.0;
+        double startY = 129.0;
+        
+        // Create sketch ImageViews for all numbered images first
+        Map<String, ImageView> numberedImageMap = new HashMap<>();
+        for (int i = 0; i < numberedImages.size(); i++) {
+            String numberedImageName = numberedImages.get(i);
+            ImageView sketchView = createSketchImageView(elementType, numberedImageName, sketchPrefix + (i + 1), elementType);
+            
+            // Set default position for this component type
+            double[] defaultPos = DEFAULT_POSITIONS.get(elementType.toLowerCase());
+            if (defaultPos != null) {
+                sketchView.setLayoutX(defaultPos[0]);
+                sketchView.setLayoutY(defaultPos[1]);
+            }
+            
+            // If it's a head component, add it first (so it's at the bottom/z-index -1)
+            // Otherwise add it normally (on top)
+            if (elementType.equalsIgnoreCase("head")) {
+                sketch.getChildren().add(0, sketchView); // Add at beginning (bottom layer)
+            } else {
+                sketch.getChildren().add(sketchView); // Add at end (top layer)
+            }
+            
+            sketchViews.add(sketchView);
+            numberedImageMap.put(numberedImageName, sketchView);
+        }
+        
+        // Create element ImageViews for Group images and map them to numbered images
+        // First tries exact number match (Group 101 -> 101), then falls back to positional mapping
+        for (int i = 0; i < groupImages.size(); i++) {
+            String groupImageName = groupImages.get(i);
+            
+            // Calculate position in grid
+            int col = i % columns;
+            int row = i / columns;
+            double x = startX + (col * spacingX);
+            double y = startY + (row * spacingY);
+            
+            // Try to find exact number match first
+            String correspondingNumberedImage = mapGroupToNumbered(groupImageName, numberedImages);
+            
+            // If no exact match, use positional mapping (first Group -> first numbered, etc.)
+            if (correspondingNumberedImage == null) {
+                if (i < numberedImages.size()) {
+                    correspondingNumberedImage = numberedImages.get(i);
+                    System.out.println("Using positional mapping: " + groupImageName + " (index " + i + ") -> " + correspondingNumberedImage);
+                } else if (!numberedImages.isEmpty()) {
+                    // If more Groups than numbered images, use the last numbered image
+                    correspondingNumberedImage = numberedImages.get(numberedImages.size() - 1);
+                    System.out.println("Using last numbered image for " + groupImageName + " -> " + correspondingNumberedImage);
+                } else {
+                    System.out.println("Warning: No numbered images available for " + groupImageName + ". Skipping.");
+                    continue; // Skip this Group image if no numbered images exist
+                }
+            } else {
+                System.out.println("Exact match found: " + groupImageName + " -> " + correspondingNumberedImage);
+            }
+            
+            // Create element ImageView (for selection panel) - shows Group image
+            ImageView elementView = createElementImageView(elementType, groupImageName, x, y, imageSize, elementPrefix + (i + 1), elementType);
+            // Store the Group name as a property for debugging
+            elementView.getProperties().put("groupImageName", groupImageName);
+            elementView.getProperties().put("numberedImageName", correspondingNumberedImage);
+            container.getChildren().add(elementView);
+            elementViews.add(elementView);
+            
+            // Map Group image view to corresponding numbered sketch view
+            if (numberedImageMap.containsKey(correspondingNumberedImage)) {
+                ImageView sketchView = numberedImageMap.get(correspondingNumberedImage);
+                elementToSketch.put(elementView, sketchView);
+            } else {
+                System.out.println("Error: Numbered image '" + correspondingNumberedImage + "' not found in numberedImageMap for " + groupImageName);
+            }
+        }
+        
+        // Store references
+        elementImageViews.put(elementType, elementViews);
+        sketchImageViews.put(elementType, sketchViews);
+        elementToSketchMap.put(elementType, elementToSketch);
+    }
+    
+    /**
+     * Maps a Group image name to a corresponding numbered image
+     * First tries exact number match (Group 101 -> "101", Group 17 -> "17")
+     * If no exact match, falls back to positional mapping (first Group -> first numbered, etc.)
+     */
+    private String mapGroupToNumbered(String groupImageName, List<String> numberedImages) {
+        try {
+            // Extract number from Group name (e.g., "Group 1", "Group 17", "Group 101")
+            String numberStr = groupImageName.replace("Group", "").trim();
+            
+            if (numberStr.isEmpty() || numberedImages.isEmpty()) {
+                return null;
+            }
+            
+            int groupNumber = Integer.parseInt(numberStr);
+            
+            // Priority 1: Try exact number match as string (17 -> "17", 101 -> "101")
+            String directNumber = String.valueOf(groupNumber);
+            if (numberedImages.contains(directNumber)) {
+                return directNumber;
+            }
+            
+            // Priority 2: Try zero-padded 2-digit format (01, 02, etc.)
+            if (groupNumber < 100) {
+                String padded02 = String.format("%02d", groupNumber);
+                if (numberedImages.contains(padded02)) {
+                    return padded02;
+                }
+            }
+            
+            // Priority 3: Try 3-digit padding for numbers >= 100 (101 -> "101")
+            if (groupNumber >= 100 && groupNumber < 1000) {
+                String padded03 = String.format("%03d", groupNumber);
+                if (numberedImages.contains(padded03)) {
+                    return padded03;
+                }
+            }
+            
+            // Priority 4: Try to find by parsing numbered images and matching numeric value
+            for (String numbered : numberedImages) {
+                try {
+                    int numberedValue = Integer.parseInt(numbered);
+                    if (numberedValue == groupNumber) {
+                        return numbered; // Return the actual filename format found
+                    }
+                } catch (NumberFormatException e) {
+                    // Skip non-numeric numbered images
+                }
+            }
+            
+            // Priority 5: If no exact match, use positional mapping
+            // Find the index of this Group in the sorted list and map to same index in numbered images
+            // This is a fallback - it will be handled by the caller using index-based mapping
+            
+            return null; // Return null to indicate no exact match, caller will use index
+            
+        } catch (NumberFormatException e) {
+            System.out.println("Error parsing Group number from: " + groupImageName);
+            return null;
+        }
+    }
+    
+    /**
+     * Create an ImageView for the element selection panel
+     */
+    private ImageView createElementImageView(String elementType, String imageName, double x, double y, double size, String id, String type) {
+        ImageView imageView = new ImageView();
+        imageView.setFitWidth(size);
+        imageView.setFitHeight(size);
+        imageView.setLayoutX(x);
+        imageView.setLayoutY(y);
+        imageView.setPreserveRatio(true);
+        imageView.setPickOnBounds(true);
+        imageView.setId(id);
+        imageView.setCursor(Cursor.HAND);
+        
+        // Load image - try multiple extensions
+        try {
+            String[] extensions = {".png", ".jpg", ".jpeg"};
+            Image loadedImage = null;
+            for (String ext : extensions) {
+                String imagePath = "elements/sketch elements/" + elementType + "/" + imageName + ext;
+                URL imageUrl = getClass().getResource(imagePath);
+                if (imageUrl != null) {
+                    loadedImage = new Image(imageUrl.toExternalForm());
+                    break; // Found the image, stop trying other extensions
+                }
+            }
+            if (loadedImage != null) {
+                imageView.setImage(loadedImage);
+            } else {
+                System.err.println("Error: Could not find image " + imageName + " with any extension (.png, .jpg, .jpeg)");
+            }
+        } catch (Exception e) {
+            System.err.println("Error loading element image " + imageName + ": " + e.getMessage());
+        }
+        
+        // Set event handler based on element type to call appropriate selection method
+        final String finalType = elementType;
+        imageView.setOnMousePressed(event -> {
+            switch(finalType.toLowerCase()) {
+                case "hair":
+                    onHairSelect(event);
+                    break;
+                case "head":
+                    onHeadSelect(event);
+                    break;
+                case "eyes":
+                    onEyesSelect(event);
+                    break;
+                case "eyebrows":
+                    onEyeBSelect(event);
+                    break;
+                case "nose":
+                    onNoseSelect(event);
+                    break;
+                case "lips":
+                    onLipsSelect(event);
+                    break;
+                case "mustach":
+                    onMustSelect(event);
+                    break;
+                case "more":
+                    onMoreSelect(event);
+                    break;
+            }
+        });
+        
+        return imageView;
+    }
+    
+    /**
+     * Create an ImageView for the sketch canvas
+     */
+    private ImageView createSketchImageView(String elementType, String imageName, String id, String type) {
+        ImageView sketchView = new ImageView();
+        sketchView.setPreserveRatio(true);
+        sketchView.setPickOnBounds(true);
+        sketchView.setId(id);
+        sketchView.setVisible(false); // Initially hidden
+        
+        // Set default position for this component type
+        double[] defaultPos = DEFAULT_POSITIONS.get(elementType.toLowerCase());
+        if (defaultPos != null) {
+            sketchView.setLayoutX(defaultPos[0]);
+            sketchView.setLayoutY(defaultPos[1]);
+        }
+        
+        // Load image - try multiple extensions
+        try {
+            String[] extensions = {".png", ".jpg", ".jpeg"};
+            Image loadedImage = null;
+            for (String ext : extensions) {
+                String imagePath = "elements/sketch elements/" + elementType + "/" + imageName + ext;
+                URL imageUrl = getClass().getResource(imagePath);
+                if (imageUrl != null) {
+                    loadedImage = new Image(imageUrl.toExternalForm());
+                    break; // Found the image, stop trying other extensions
+                }
+            }
+            if (loadedImage != null) {
+                sketchView.setImage(loadedImage);
+            } else {
+                System.err.println("Error: Could not find sketch image " + imageName + " with any extension (.png, .jpg, .jpeg)");
+            }
+        } catch (Exception e) {
+            System.err.println("Error loading sketch image " + imageName + ": " + e.getMessage());
+        }
+        
+        return sketchView;
+    }
+    
+    /**
+     * Clear hardcoded element ImageViews from containers to avoid conflicts with dynamic ones
+     */
+    private void clearHardcodedElements() {
+        // Remove existing ImageView elements from each container
+        // Keep non-ImageView children (like Labels, Rectangles)
+        hair_elements.getChildren().removeIf(node -> 
+            node instanceof ImageView && node.getId() != null && node.getId().startsWith("hair_e_"));
+        head_elements.getChildren().removeIf(node -> 
+            node instanceof ImageView && node.getId() != null && node.getId().startsWith("head_e_"));
+        eyes_elements.getChildren().removeIf(node -> 
+            node instanceof ImageView && node.getId() != null && node.getId().startsWith("eyes_e_"));
+        eyebrows_elements.getChildren().removeIf(node -> 
+            node instanceof ImageView && node.getId() != null && node.getId().startsWith("eyeb_e_"));
+        nose_elements.getChildren().removeIf(node -> 
+            node instanceof ImageView && node.getId() != null && node.getId().startsWith("nose_e_"));
+        lips_elements.getChildren().removeIf(node -> 
+            node instanceof ImageView && node.getId() != null && node.getId().startsWith("lips_e_"));
+        mustach_elements.getChildren().removeIf(node -> 
+            node instanceof ImageView && node.getId() != null && node.getId().startsWith("must_e_"));
+        more_elements.getChildren().removeIf(node -> 
+            node instanceof ImageView && node.getId() != null && node.getId().startsWith("more_e_"));
+        
+        // Note: Sketch ImageViews (s_*) are kept in the sketch container
+        // They can coexist with dynamic ones or be replaced
+    }
+    
+    /**
+     * Generic handler for element selection (called from dynamically created ImageViews)
+     */
+    private void handleElementSelect(MouseEvent event, String elementType) {
+        if (event.getSource() instanceof ImageView) {
+            ImageView clickedView = (ImageView) event.getSource();
+            
+            // Get debug info
+            String groupName = (String) clickedView.getProperties().get("groupImageName");
+            String numberedName = (String) clickedView.getProperties().get("numberedImageName");
+            System.out.println("Clicked: " + groupName + " -> should show: " + numberedName);
+            
+            // Find the corresponding sketch view
+            Map<ImageView, ImageView> mapping = elementToSketchMap.get(elementType);
+            if (mapping != null) {
+                ImageView sketchView = mapping.get(clickedView);
+                if (sketchView != null) {
+                    System.out.println("Found sketch view, showing it now");
+                    
+                    // Hide all other sketches of this type, show selected one
+                    List<ImageView> sketches = sketchImageViews.get(elementType);
+                    if (sketches != null) {
+                        for (ImageView sketch : sketches) {
+                            if (sketch == sketchView) {
+                                sketch.setVisible(true);
+                                // Reset to default position for this component type
+                                double[] defaultPos = DEFAULT_POSITIONS.get(elementType.toLowerCase());
+                                if (defaultPos != null) {
+                                    sketch.setLayoutX(defaultPos[0]);
+                                    sketch.setLayoutY(defaultPos[1]);
+                                    sketch.setTranslateX(0); // Reset any drag translations
+                                    sketch.setTranslateY(0);
+                                }
+                                // Bring to front (except head which should stay at back)
+                                if (!elementType.equalsIgnoreCase("head")) {
+                                    sketch.toFront();
+                                } else {
+                                    sketch.toBack(); // Head always at back
+                                }
+                            } else {
+                                sketch.setVisible(false);
+                            }
+                        }
+                    }
+                } else {
+                    System.out.println("Error: No sketch view mapped for clicked element");
+                }
+            } else {
+                System.out.println("Error: No mapping found for element type: " + elementType);
+            }
+        }
+    }
+    
+    /**
+     * Handle dynamic element selection (for use in onHairSelect, onHeadSelect, etc.)
+     * @return true if handled dynamically, false otherwise
+     */
+    private boolean handleDynamicElementSelect(MouseEvent event, String elementType) {
+        if (event.getSource() instanceof ImageView) {
+            ImageView clickedView = (ImageView) event.getSource();
+            
+            // Check if it's one of our dynamically created element views
+            List<ImageView> elementViews = elementImageViews.get(elementType);
+            if (elementViews != null && elementViews.contains(clickedView)) {
+                handleElementSelect(event, elementType);
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    /**
+     * Hide all sketch elements of a specific type
+     */
+    private void hideAllSketchElements(String elementType) {
+        List<ImageView> sketches = sketchImageViews.get(elementType);
+        if (sketches != null) {
+            for (ImageView sketch : sketches) {
+                sketch.setVisible(false);
+            }
+        }
+    }
+    
+    /**
+     * Get delete button for element type
+     */
+    private Rectangle getDeleteButton(String elementType) {
+        switch (elementType.toLowerCase()) {
+            case "hair": return hair_del;
+            case "head": return head_del;
+            case "eyes": return eyes_del;
+            case "eyebrows": return eyeb_del;
+            case "nose": return nose_del;
+            case "lips": return lips_del;
+            case "mustach": return must_del;
+            case "more": return more_del;
+            default: return null;
+        }
+    }
+    
+    /**
+     * Setup drag handlers for dynamically created sketch elements
+     */
+    private void setupDragHandlers() {
+        for (List<ImageView> sketches : sketchImageViews.values()) {
+            for (ImageView sketch : sketches) {
+                sketch.setOnMouseDragged(event -> drag(event));
+            }
+        }
+    }
+    
+    /**
+     * Show a sketch view and position it at default location with proper z-ordering
+     */
+    private void showSketchAtDefaultPosition(ImageView sketchView, String elementType) {
+        if (sketchView == null) return;
+        
+        sketchView.setVisible(true);
+        
+        // Reset to default position for this component type
+        double[] defaultPos = DEFAULT_POSITIONS.get(elementType.toLowerCase());
+        if (defaultPos != null) {
+            sketchView.setLayoutX(defaultPos[0]);
+            sketchView.setLayoutY(defaultPos[1]);
+            sketchView.setTranslateX(0); // Reset any drag translations
+            sketchView.setTranslateY(0);
+        }
+        
+        // Z-ordering: Head always at back, others at front
+        if (elementType.equalsIgnoreCase("head")) {
+            sketchView.toBack(); // Head at bottom layer
+        } else {
+            sketchView.toFront(); // Other components on top
+        }
     }    
     
     //DRAG AND MOVE CODE Class
@@ -470,6 +998,15 @@ public class DashboardController implements Initializable {
         Node n = (Node)event.getSource();
         n.setTranslateX(n.getTranslateX() + event.getX());
         n.setTranslateY(n.getTranslateY() + event.getY());
+        
+        // Bring dragged element to front (except head which should stay at back)
+        if (n instanceof ImageView) {
+            ImageView imgView = (ImageView) n;
+            String id = imgView.getId();
+            if (id != null && !id.startsWith("head_s_")) {
+                imgView.toFront(); // Bring to front when dragging (except head)
+            }
+        }
     }
     
     //Drag Event assigned to each fx:id in the canvas
@@ -700,7 +1237,17 @@ public class DashboardController implements Initializable {
 
     @FXML //Reset the sketch and delete all element
     private void onReset(MouseEvent event) {
-        head_s_1.setVisible(false);
+        // Hide all dynamic elements
+        for (List<ImageView> sketches : sketchImageViews.values()) {
+            if (sketches != null) {
+                for (ImageView sketch : sketches) {
+                    sketch.setVisible(false);
+                }
+            }
+        }
+        
+        // Also hide hardcoded elements for backward compatibility
+        if(head_s_1 != null) head_s_1.setVisible(false);
         head_s_2.setVisible(false);
         head_s_3.setVisible(false);
         head_s_4.setVisible(false);
@@ -800,7 +1347,13 @@ public class DashboardController implements Initializable {
         // Select the Elements to Show on CANVAS
         @FXML
         private void onHeadSelect(MouseEvent event) {
+            // First check if it's dynamic element
+            if (handleDynamicElementSelect(event, "head")) {
+                return;
+            }
+            
             if(event.getSource()==head_del) {
+                hideAllSketchElements("head");
                 head_s_1.setVisible(false);
                 head_s_2.setVisible(false);
                 head_s_3.setVisible(false);
@@ -812,7 +1365,7 @@ public class DashboardController implements Initializable {
                 head_s_9.setVisible(false);
                 head_s_10.setVisible(false);
             } else if(event.getSource()==head_e_1) {
-                head_s_1.setVisible(true);
+                showSketchAtDefaultPosition(head_s_1, "head");
                 head_s_2.setVisible(false);
                 head_s_3.setVisible(false);
                 head_s_4.setVisible(false);
@@ -824,7 +1377,7 @@ public class DashboardController implements Initializable {
                 head_s_10.setVisible(false);
             } else if(event.getSource()==head_e_2) {
                 head_s_1.setVisible(false);
-                head_s_2.setVisible(true);
+                showSketchAtDefaultPosition(head_s_2, "head");
                 head_s_3.setVisible(false);
                 head_s_4.setVisible(false);
                 head_s_5.setVisible(false);
@@ -926,20 +1479,28 @@ public class DashboardController implements Initializable {
 
         @FXML
         private void onHairSelect(MouseEvent event) {
+            // First check if it's dynamic element
+            if (handleDynamicElementSelect(event, "hair")) {
+                return;
+            }
+            
+            // Fallback to hardcoded elements
             if(event.getSource()==hair_del) {
-                hair_s_1.setVisible(false);
-                hair_s_2.setVisible(false);
-                hair_s_3.setVisible(false);
-                hair_s_4.setVisible(false);
-                hair_s_5.setVisible(false);
-                hair_s_6.setVisible(false);
-                hair_s_7.setVisible(false);
-                hair_s_8.setVisible(false);
-                hair_s_9.setVisible(false);
-                hair_s_10.setVisible(false);
-                hair_s_11.setVisible(false);
-                hair_s_12.setVisible(false);
-            } else if(event.getSource()==hair_e_1) {
+                hideAllSketchElements("hair");
+                // Also hide hardcoded ones for backward compatibility
+                if(hair_s_1 != null) hair_s_1.setVisible(false);
+                if(hair_s_2 != null) hair_s_2.setVisible(false);
+                if(hair_s_3 != null) hair_s_3.setVisible(false);
+                if(hair_s_4 != null) hair_s_4.setVisible(false);
+                if(hair_s_5 != null) hair_s_5.setVisible(false);
+                if(hair_s_6 != null) hair_s_6.setVisible(false);
+                if(hair_s_7 != null) hair_s_7.setVisible(false);
+                if(hair_s_8 != null) hair_s_8.setVisible(false);
+                if(hair_s_9 != null) hair_s_9.setVisible(false);
+                if(hair_s_10 != null) hair_s_10.setVisible(false);
+                if(hair_s_11 != null) hair_s_11.setVisible(false);
+                if(hair_s_12 != null) hair_s_12.setVisible(false);
+            } else if(hair_e_1 != null && event.getSource()==hair_e_1) {
                 hair_s_1.setVisible(true);
                 hair_s_2.setVisible(false);
                 hair_s_3.setVisible(false);
@@ -954,7 +1515,7 @@ public class DashboardController implements Initializable {
                 hair_s_12.setVisible(false);
             } else if(event.getSource()==hair_e_2) {
                 hair_s_1.setVisible(false);
-                hair_s_2.setVisible(true);
+                showSketchAtDefaultPosition(hair_s_2, "hair");
                 hair_s_3.setVisible(false);
                 hair_s_4.setVisible(false);
                 hair_s_5.setVisible(false);
@@ -1100,7 +1661,13 @@ public class DashboardController implements Initializable {
 
         @FXML
         private void onEyesSelect(MouseEvent event) {
+            // First check if it's dynamic element
+            if (handleDynamicElementSelect(event, "eyes")) {
+                return;
+            }
+            
             if(event.getSource()==eyes_del) {
+                hideAllSketchElements("eyes");
                 eyes_s_1.setVisible(false);
                 eyes_s_2.setVisible(false);
                 eyes_s_3.setVisible(false);
@@ -1114,7 +1681,7 @@ public class DashboardController implements Initializable {
                 eyes_s_11.setVisible(false);
                 eyes_s_12.setVisible(false);
             } else if(event.getSource()==eyes_e_1) {
-                eyes_s_1.setVisible(true);
+                showSketchAtDefaultPosition(eyes_s_1, "eyes");
                 eyes_s_2.setVisible(false);
                 eyes_s_3.setVisible(false);
                 eyes_s_4.setVisible(false);
@@ -1274,7 +1841,13 @@ public class DashboardController implements Initializable {
 
         @FXML
         private void onEyeBSelect(MouseEvent event) {
+            // First check if it's dynamic element
+            if (handleDynamicElementSelect(event, "eyebrows")) {
+                return;
+            }
+            
             if(event.getSource()==eyeb_del) {
+                hideAllSketchElements("eyebrows");
                 eyeb_s_1.setVisible(false);
                 eyeb_s_2.setVisible(false);
                 eyeb_s_3.setVisible(false);
@@ -1448,7 +2021,13 @@ public class DashboardController implements Initializable {
 
         @FXML
         private void onNoseSelect(MouseEvent event) {
+            // First check if it's dynamic element
+            if (handleDynamicElementSelect(event, "nose")) {
+                return;
+            }
+            
             if(event.getSource()==nose_del) {
+                hideAllSketchElements("nose");
                 nose_s_1.setVisible(false);
                 nose_s_2.setVisible(false);
                 nose_s_3.setVisible(false);
@@ -1462,7 +2041,7 @@ public class DashboardController implements Initializable {
                 nose_s_11.setVisible(false);
                 nose_s_12.setVisible(false);
             } else if(event.getSource()==nose_e_1) {
-                nose_s_1.setVisible(true);
+                showSketchAtDefaultPosition(nose_s_1, "nose");
                 nose_s_2.setVisible(false);
                 nose_s_3.setVisible(false);
                 nose_s_4.setVisible(false);
@@ -1622,7 +2201,13 @@ public class DashboardController implements Initializable {
 
         @FXML
         private void onLipsSelect(MouseEvent event) {
+            // First check if it's dynamic element
+            if (handleDynamicElementSelect(event, "lips")) {
+                return;
+            }
+            
             if(event.getSource()==lips_del) {
+                hideAllSketchElements("lips");
                 lips_s_1.setVisible(false);
                 lips_s_2.setVisible(false);
                 lips_s_3.setVisible(false);
@@ -1636,7 +2221,7 @@ public class DashboardController implements Initializable {
                 lips_s_11.setVisible(false);
                 lips_s_12.setVisible(false);
             } else if(event.getSource()==lips_e_1) {
-                lips_s_1.setVisible(true);
+                showSketchAtDefaultPosition(lips_s_1, "lips");
                 lips_s_2.setVisible(false);
                 lips_s_3.setVisible(false);
                 lips_s_4.setVisible(false);
@@ -1796,7 +2381,13 @@ public class DashboardController implements Initializable {
 
         @FXML
         private void onMustSelect(MouseEvent event) {
+            // First check if it's dynamic element
+            if (handleDynamicElementSelect(event, "mustach")) {
+                return;
+            }
+            
             if(event.getSource()==must_del) {
+                hideAllSketchElements("mustach");
                 must_s_1.setVisible(false);
                 must_s_2.setVisible(false);
                 must_s_3.setVisible(false);
@@ -1970,7 +2561,13 @@ public class DashboardController implements Initializable {
 
         @FXML
         private void onMoreSelect(MouseEvent event) {
+            // First check if it's dynamic element
+            if (handleDynamicElementSelect(event, "more")) {
+                return;
+            }
+            
             if(event.getSource()==more_del) {
+                hideAllSketchElements("more");
                 more_s_1.setVisible(false);
                 more_s_2.setVisible(false);
                 more_s_3.setVisible(false);
@@ -2007,3 +2604,4 @@ public class DashboardController implements Initializable {
         }
     
 }
+

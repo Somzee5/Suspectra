@@ -45,9 +45,12 @@ public class MenuController implements Initializable {
                 fxmlLoader.setLocation(getClass().getResource("dashboard.fxml"));
                 Scene scene = new Scene(fxmlLoader.load());
                 Stage stage = new Stage();
-                stage.setTitle("New Window");
+                stage.setTitle("Suspectra v2 - Sketch Dashboard");
                 stage.setScene(scene);
-                stage.resizableProperty().setValue(false); //Disable maximize button
+                stage.setResizable(true); // Enable resizing
+                stage.setMinWidth(1350); // Set minimum width
+                stage.setMinHeight(700); // Set minimum height
+                stage.setMaximized(false); // Don't start maximized
                 stage.show();
                 ((Node)(event.getSource())).getScene().getWindow().hide();
                 
