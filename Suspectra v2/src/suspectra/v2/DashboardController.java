@@ -22,6 +22,9 @@ import javafx.scene.Cursor;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.Slider;
+import javafx.scene.control.Label;
+import javafx.scene.paint.Color;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -72,6 +75,29 @@ public class DashboardController implements Initializable {
     private Rectangle reset_btn;
     @FXML
     private Rectangle compare_btn;
+    @FXML
+    private Rectangle zoom_in_btn;
+    @FXML
+    private Rectangle zoom_out_btn;
+    @FXML
+    private Rectangle size_increase_btn;
+    @FXML
+    private Rectangle size_decrease_btn;
+    @FXML
+    private Rectangle sketch_size_increase_btn;
+    @FXML
+    private Rectangle sketch_size_decrease_btn;
+    @FXML
+    private Slider sizeSlider;
+    @FXML
+    private javafx.scene.control.Label sizeLabel;
+    
+    // Track currently selected component for zooming
+    private ImageView currentlySelectedComponent = null;
+    private String currentlySelectedType = null;
+    
+    // Store original dimensions for zooming (so we can reset and zoom properly)
+    private Map<ImageView, double[]> originalDimensions = new HashMap<>(); // [originalWidth, originalHeight]
     @FXML
     private AnchorPane element_anchor;
     @FXML
@@ -486,6 +512,69 @@ public class DashboardController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        // Initialize slider
+        if (sizeSlider != null) {
+            sizeSlider.setVisible(true);
+            sizeSlider.setDisable(false);
+            if (sizeLabel != null) {
+                sizeLabel.setText("100%");
+            }
+            System.out.println("Size slider initialized and visible");
+        } else {
+            System.err.println("ERROR: sizeSlider is null in initialize!");
+        }
+        
+        // Initialize size buttons (menu bar)
+        if (size_increase_btn != null) {
+            size_increase_btn.setVisible(true);
+            size_increase_btn.setDisable(false);
+            System.out.println("Size increase button (menu) initialized and visible");
+        } else {
+            System.err.println("ERROR: size_increase_btn is null in initialize!");
+        }
+        
+        if (size_decrease_btn != null) {
+            size_decrease_btn.setVisible(true);
+            size_decrease_btn.setDisable(false);
+            System.out.println("Size decrease button (menu) initialized and visible");
+        } else {
+            System.err.println("ERROR: size_decrease_btn is null in initialize!");
+        }
+        
+        // Initialize size buttons (sketch area)
+        if (sketch_size_increase_btn != null) {
+            sketch_size_increase_btn.setVisible(true);
+            sketch_size_increase_btn.setDisable(false);
+            System.out.println("Size increase button (sketch) initialized and visible");
+        } else {
+            System.err.println("ERROR: sketch_size_increase_btn is null in initialize!");
+        }
+        
+        if (sketch_size_decrease_btn != null) {
+            sketch_size_decrease_btn.setVisible(true);
+            sketch_size_decrease_btn.setDisable(false);
+            System.out.println("Size decrease button (sketch) initialized and visible");
+        } else {
+            System.err.println("ERROR: sketch_size_decrease_btn is null in initialize!");
+        }
+
+        // Clip the sketch area so oversized/skewed images cannot draw outside the canvas
+        if (sketch != null) {
+            // Enforce intended sketch size so it doesn't expand and overlap other UI
+            sketch.setPrefSize(620, 620);
+            sketch.setMinSize(620, 620);
+            sketch.setMaxSize(620, 620);
+
+            javafx.scene.shape.Rectangle clipRect = new javafx.scene.shape.Rectangle();
+            clipRect.setWidth(620);
+            clipRect.setHeight(620);
+            // Also bind clip to sketch size in case layout changes
+            clipRect.widthProperty().bind(sketch.widthProperty());
+            clipRect.heightProperty().bind(sketch.heightProperty());
+            sketch.setClip(clipRect);
+            System.out.println("Set fixed size and clip on sketch area to prevent overflow of images");
+        }
+        
         // Load elements dynamically
         loadElementsDynamically();
         
@@ -494,8 +583,133 @@ public class DashboardController implements Initializable {
         
         // Keep existing drag setup for any hardcoded elements
         dragSketch();
+        
+        // Bring size buttons to front so they're always visible
+        if (sketch_size_increase_btn != null) {
+            sketch_size_increase_btn.toFront();
+        }
+        if (sketch_size_decrease_btn != null) {
+            sketch_size_decrease_btn.toFront();
+        }
+        // Also bring the labels to front
+        if (sketch != null) {
+            sketch.getChildren().forEach(child -> {
+                if (child instanceof Label && (child.getId() == null || child.getId().contains("SIZE"))) {
+                    child.toFront();
+                }
+            });
+        }
+
+        // Ensure resize controls are visible, interactive and always on top
+        Rectangle[] resizeControls = new Rectangle[]{size_increase_btn, size_decrease_btn, sketch_size_increase_btn, sketch_size_decrease_btn};
+        for (Rectangle rc : resizeControls) {
+            if (rc != null) {
+                rc.setVisible(true);
+                rc.setDisable(false);
+                rc.setManaged(true);
+                rc.setMouseTransparent(false);
+                rc.setOpacity(1.0);
+                rc.toFront();
+                rc.setPickOnBounds(true);
+
+                // Attach a debug click handler so clicks are logged even if FXML handler isn't firing
+                rc.setOnMousePressed(evt -> {
+                    System.out.println("DEBUG: Resize control clicked -> id=" + rc.getId() + " source=" + evt.getSource());
+                });
+
+                // Print debug state
+                try {
+                    String parentId = (rc.getParent() != null && rc.getParent().getId() != null) ? rc.getParent().getId() : String.valueOf(rc.getParent());
+                    System.out.println(String.format("DEBUG: Control '%s' visible=%b managed=%b mouseTransparent=%b opacity=%.2f layout=(%.1f,%.1f) translate=(%.1f,%.1f) parent=%s bounds=%s",
+                            rc.getId(), rc.isVisible(), rc.isManaged(), rc.isMouseTransparent(), rc.getOpacity(), rc.getLayoutX(), rc.getLayoutY(), rc.getTranslateX(), rc.getTranslateY(), parentId, rc.getBoundsInParent().toString()));
+                } catch (Exception e) {
+                    System.out.println("DEBUG: Could not print control bounds for " + rc.getId() + ": " + e.getMessage());
+                }
+            }
+        }
+        // Also ensure menu_tab is on top for visibility
+        if (menu_tab != null) {
+            menu_tab.toFront();
+            System.out.println("DEBUG: menu_tab layoutY=" + menu_tab.getLayoutY() + " visible=" + menu_tab.isVisible());
+        }
+
+        // Fallback: if FXML didn't inject controls, create them programmatically
+        try {
+            if (size_increase_btn == null && menu_tab != null) {
+                Rectangle r = new Rectangle(45, 45, Color.web("#1F93FF"));
+                r.setArcWidth(5);
+                r.setArcHeight(5);
+                r.setLayoutX(720);
+                r.setLayoutY(21);
+                r.setId("size_increase_btn");
+                r.setOnMousePressed(evt -> onSizeIncrease(null));
+                menu_tab.getChildren().add(r);
+                size_increase_btn = r;
+                System.out.println("DEBUG: created fallback size_increase_btn");
+            }
+
+            if (size_decrease_btn == null && menu_tab != null) {
+                Rectangle r = new Rectangle(45, 45, Color.web("#1F93FF"));
+                r.setArcWidth(5);
+                r.setArcHeight(5);
+                r.setLayoutX(775);
+                r.setLayoutY(21);
+                r.setId("size_decrease_btn");
+                r.setOnMousePressed(evt -> onSizeDecrease(null));
+                menu_tab.getChildren().add(r);
+                size_decrease_btn = r;
+                System.out.println("DEBUG: created fallback size_decrease_btn");
+            }
+
+            if (sizeSlider == null && menu_tab != null) {
+                Slider s = new Slider(20, 300, 100);
+                s.setLayoutX(830);
+                s.setLayoutY(30);
+                s.setPrefWidth(180);
+                s.valueProperty().addListener((obs, oldV, newV) -> onSizeSliderChanged());
+                menu_tab.getChildren().add(s);
+                sizeSlider = s;
+                System.out.println("DEBUG: created fallback sizeSlider");
+            }
+
+            if (sizeLabel == null && menu_tab != null) {
+                Label lbl = new Label("100%");
+                lbl.setLayoutX(1030);
+                lbl.setLayoutY(33);
+                menu_tab.getChildren().add(lbl);
+                sizeLabel = lbl;
+                System.out.println("DEBUG: created fallback sizeLabel");
+            }
+
+            if (sketch_size_increase_btn == null && sketch != null) {
+                Rectangle r2 = new Rectangle(50,50, Color.web("#1F93FF"));
+                r2.setArcWidth(8);
+                r2.setArcHeight(8);
+                r2.setLayoutX(70);
+                r2.setLayoutY(5);
+                r2.setId("sketch_size_increase_btn");
+                r2.setOnMousePressed(evt -> onSizeIncrease(null));
+                sketch.getChildren().add(r2);
+                sketch_size_increase_btn = r2;
+                System.out.println("DEBUG: created fallback sketch_size_increase_btn");
+            }
+
+            if (sketch_size_decrease_btn == null && sketch != null) {
+                Rectangle r2 = new Rectangle(50,50, Color.web("#1F93FF"));
+                r2.setArcWidth(8);
+                r2.setArcHeight(8);
+                r2.setLayoutX(130);
+                r2.setLayoutY(5);
+                r2.setId("sketch_size_decrease_btn");
+                r2.setOnMousePressed(evt -> onSizeDecrease(null));
+                sketch.getChildren().add(r2);
+                sketch_size_decrease_btn = r2;
+                System.out.println("DEBUG: created fallback sketch_size_decrease_btn");
+            }
+        } catch (Exception ex) {
+            System.out.println("DEBUG: error creating fallback controls: " + ex.getMessage());
+        }
     }
-    
     /**
      * Dynamically load all sketch elements from folders
      */
@@ -526,6 +740,16 @@ public class DashboardController implements Initializable {
         
         // Ensure all head elements are at the back
         ensureHeadAtBack();
+        
+        // Bring size buttons to front after all elements are loaded
+        if (sketch_size_increase_btn != null) {
+            sketch_size_increase_btn.toFront();
+            System.out.println("Brought size increase button to front after loading");
+        }
+        if (sketch_size_decrease_btn != null) {
+            sketch_size_decrease_btn.toFront();
+            System.out.println("Brought size decrease button to front after loading");
+        }
         
         System.out.println("\n=== Dynamic element loading complete ===");
     }
@@ -604,6 +828,14 @@ public class DashboardController implements Initializable {
             numberedImageMap.put(numberedImageName, sketchView);
         }
         
+        // After adding all sketch views, ensure buttons are on top
+        if (sketch_size_increase_btn != null) {
+            sketch_size_increase_btn.toFront();
+        }
+        if (sketch_size_decrease_btn != null) {
+            sketch_size_decrease_btn.toFront();
+        }
+        
         // Create element ImageViews for Group images and map them to numbered images
         // First tries exact number match (Group 101 -> 101), then falls back to positional mapping
         for (int i = 0; i < groupImages.size(); i++) {
@@ -635,11 +867,15 @@ public class DashboardController implements Initializable {
                 System.out.println("Exact match found: " + groupImageName + " -> " + correspondingNumberedImage);
             }
             
-            // Create element ImageView (for selection panel) - shows Group image
-            ImageView elementView = createElementImageView(elementType, groupImageName, x, y, imageSize, elementPrefix + (i + 1), elementType);
-            // Store the Group name as a property for debugging
+            // Decide which image file to use for the selection panel thumbnail.
+            // Prefer the numbered image (same one used on the sketch) so thumbnails
+            // match the canvas image and do not include unexpected background/bounds.
+            String thumbnailImageToUse = correspondingNumberedImage != null ? correspondingNumberedImage : groupImageName;
+            ImageView elementView = createElementImageView(elementType, thumbnailImageToUse, x, y, imageSize, elementPrefix + (i + 1), elementType);
+            // Store the Group and numbered names as properties for debugging
             elementView.getProperties().put("groupImageName", groupImageName);
             elementView.getProperties().put("numberedImageName", correspondingNumberedImage);
+            System.out.println("Thumbnail for " + groupImageName + " will use file: " + thumbnailImageToUse);
             container.getChildren().add(elementView);
             elementViews.add(elementView);
             
@@ -806,6 +1042,28 @@ public class DashboardController implements Initializable {
             sketchView.setLayoutY(defaultPos[1]);
         }
         
+        // Set initial size based on element type (will be adjusted when image loads)
+        // Default sizes for different component types
+        Map<String, double[]> defaultSizes = new HashMap<>();
+        defaultSizes.put("head", new double[]{288, 464});
+        defaultSizes.put("hair", new double[]{400, 500});
+        defaultSizes.put("eyes", new double[]{150, 80});
+        defaultSizes.put("eyebrows", new double[]{200, 60});
+        defaultSizes.put("nose", new double[]{100, 120});
+        defaultSizes.put("lips", new double[]{120, 60});
+        defaultSizes.put("mustach", new double[]{200, 80});
+        defaultSizes.put("more", new double[]{100, 100});
+        
+        double[] size = defaultSizes.get(elementType.toLowerCase());
+        if (size != null) {
+            sketchView.setFitWidth(size[0]);
+            sketchView.setFitHeight(size[1]);
+        } else {
+            // Default size if type not found
+            sketchView.setFitWidth(200);
+            sketchView.setFitHeight(200);
+        }
+        
         // Load image - try multiple extensions
         try {
             String[] extensions = {".png", ".jpg", ".jpeg"};
@@ -820,6 +1078,20 @@ public class DashboardController implements Initializable {
             }
             if (loadedImage != null) {
                 sketchView.setImage(loadedImage);
+                
+                // Store original dimensions for zooming (use actual image dimensions)
+                double origWidth = loadedImage.getWidth();
+                double origHeight = loadedImage.getHeight();
+                
+                // If fitWidth/fitHeight are set, use those as original
+                if (sketchView.getFitWidth() > 0) {
+                    origWidth = sketchView.getFitWidth();
+                }
+                if (sketchView.getFitHeight() > 0) {
+                    origHeight = sketchView.getFitHeight();
+                }
+                
+                originalDimensions.put(sketchView, new double[]{origWidth, origHeight});
             } else {
                 System.err.println("Error: Could not find sketch image " + imageName + " with any extension (.png, .jpg, .jpeg)");
             }
@@ -882,6 +1154,44 @@ public class DashboardController implements Initializable {
                         for (ImageView sketch : sketches) {
                             if (sketch == sketchView) {
                                 sketch.setVisible(true);
+                                // Track currently selected component (except head)
+                                if (!elementType.equalsIgnoreCase("head")) {
+                                    currentlySelectedComponent = sketch;
+                                    currentlySelectedType = elementType;
+                                    
+                                    // Update slider to reflect current size
+                                    if (sizeSlider != null) {
+                                        // Store original dimensions if not already stored
+                                        if (!originalDimensions.containsKey(sketch)) {
+                                            double origWidth = sketch.getFitWidth() > 0 ? sketch.getFitWidth() : (sketch.getImage() != null ? sketch.getImage().getWidth() : 300);
+                                            double origHeight = sketch.getFitHeight() > 0 ? sketch.getFitHeight() : (sketch.getImage() != null ? sketch.getImage().getHeight() : 300);
+                                            originalDimensions.put(sketch, new double[]{origWidth, origHeight});
+                                        }
+                                        
+                                        // Calculate current percentage based on original dimensions
+                                        double[] origDims = originalDimensions.get(sketch);
+                                        double currentWidth = sketch.getFitWidth() > 0 ? sketch.getFitWidth() : origDims[0];
+                                        double currentPercentage = (currentWidth / origDims[0]) * 100.0;
+                                        
+                                        // Clamp to slider range (20-300)
+                                        currentPercentage = Math.max(20, Math.min(300, currentPercentage));
+                                        sizeSlider.setValue(currentPercentage);
+                                        if (sizeLabel != null) {
+                                            sizeLabel.setText(String.format("%.0f%%", currentPercentage));
+                                        }
+                                    }
+                                } else {
+                                    currentlySelectedComponent = null;
+                                    currentlySelectedType = null;
+                                    // Reset slider when no component selected or head selected
+                                    if (sizeSlider != null) {
+                                        sizeSlider.setValue(100);
+                                        if (sizeLabel != null) {
+                                            sizeLabel.setText("100%");
+                                        }
+                                    }
+                                }
+                                
                                 // Reset to default position for this component type
                                 double[] defaultPos = DEFAULT_POSITIONS.get(elementType.toLowerCase());
                                 if (defaultPos != null) {
@@ -890,11 +1200,34 @@ public class DashboardController implements Initializable {
                                     sketch.setTranslateX(0); // Reset any drag translations
                                     sketch.setTranslateY(0);
                                 }
+                                
+                                // Reset size when selecting new component (restore original dimensions)
+                                if (originalDimensions.containsKey(sketch)) {
+                                    double[] origDims = originalDimensions.get(sketch);
+                                    sketch.setFitWidth(origDims[0]);
+                                    sketch.setFitHeight(origDims[1]);
+                                } else {
+                                    // Store original dimensions for first time
+                                    double origWidth = sketch.getFitWidth() > 0 ? sketch.getFitWidth() : 
+                                                      (sketch.getImage() != null ? sketch.getImage().getWidth() : 100);
+                                    double origHeight = sketch.getFitHeight() > 0 ? sketch.getFitHeight() : 
+                                                       (sketch.getImage() != null ? sketch.getImage().getHeight() : 100);
+                                    originalDimensions.put(sketch, new double[]{origWidth, origHeight});
+                                }
+                                
                                 // Bring to front (except head which should stay at back)
                                 if (!elementType.equalsIgnoreCase("head")) {
                                     sketch.toFront();
                                 } else {
                                     sketch.toBack(); // Head always at back
+                                }
+                                
+                                // Always keep size buttons on top
+                                if (sketch_size_increase_btn != null) {
+                                    sketch_size_increase_btn.toFront();
+                                }
+                                if (sketch_size_decrease_btn != null) {
+                                    sketch_size_decrease_btn.toFront();
                                 }
                             } else {
                                 sketch.setVisible(false);
@@ -976,6 +1309,44 @@ public class DashboardController implements Initializable {
         
         sketchView.setVisible(true);
         
+        // Track currently selected component (except head)
+        if (!elementType.equalsIgnoreCase("head")) {
+            currentlySelectedComponent = sketchView;
+            currentlySelectedType = elementType;
+            
+            // Update slider to reflect current size
+            if (sizeSlider != null) {
+                // Store original dimensions if not already stored
+                if (!originalDimensions.containsKey(sketchView)) {
+                    double origWidth = sketchView.getFitWidth() > 0 ? sketchView.getFitWidth() : (sketchView.getImage() != null ? sketchView.getImage().getWidth() : 300);
+                    double origHeight = sketchView.getFitHeight() > 0 ? sketchView.getFitHeight() : (sketchView.getImage() != null ? sketchView.getImage().getHeight() : 300);
+                    originalDimensions.put(sketchView, new double[]{origWidth, origHeight});
+                }
+                
+                // Calculate current percentage based on original dimensions
+                double[] origDims = originalDimensions.get(sketchView);
+                double currentWidth = sketchView.getFitWidth() > 0 ? sketchView.getFitWidth() : origDims[0];
+                double currentPercentage = (currentWidth / origDims[0]) * 100.0;
+                
+                // Clamp to slider range (20-300)
+                currentPercentage = Math.max(20, Math.min(300, currentPercentage));
+                sizeSlider.setValue(currentPercentage);
+                if (sizeLabel != null) {
+                    sizeLabel.setText(String.format("%.0f%%", currentPercentage));
+                }
+            }
+        } else {
+            currentlySelectedComponent = null;
+            currentlySelectedType = null;
+            // Reset slider when no component selected or head selected
+            if (sizeSlider != null) {
+                sizeSlider.setValue(100);
+                if (sizeLabel != null) {
+                    sizeLabel.setText("100%");
+                }
+            }
+        }
+        
         // Reset to default position for this component type
         double[] defaultPos = DEFAULT_POSITIONS.get(elementType.toLowerCase());
         if (defaultPos != null) {
@@ -985,13 +1356,423 @@ public class DashboardController implements Initializable {
             sketchView.setTranslateY(0);
         }
         
+        // Store original dimensions for zooming (if not already stored)
+        if (!originalDimensions.containsKey(sketchView)) {
+            // Get original size from image or use current fitWidth/fitHeight
+            double origWidth = sketchView.getFitWidth() > 0 ? sketchView.getFitWidth() : (sketchView.getImage() != null ? sketchView.getImage().getWidth() : 300);
+            double origHeight = sketchView.getFitHeight() > 0 ? sketchView.getFitHeight() : (sketchView.getImage() != null ? sketchView.getImage().getHeight() : 300);
+            originalDimensions.put(sketchView, new double[]{origWidth, origHeight});
+        }
+        
         // Z-ordering: Head always at back, others at front
         if (elementType.equalsIgnoreCase("head")) {
             sketchView.toBack(); // Head at bottom layer
         } else {
             sketchView.toFront(); // Other components on top
         }
+        
+        // Always keep size buttons on top
+        if (sketch_size_increase_btn != null) {
+            sketch_size_increase_btn.toFront();
+        }
+        if (sketch_size_decrease_btn != null) {
+            sketch_size_decrease_btn.toFront();
+        }
+    }
+    
+    /**
+     * Get currently visible/selected component (for zooming) - excludes head
+     */
+    private ImageView getCurrentlySelectedComponent() {
+        // Check dynamic components first
+        if (currentlySelectedComponent != null && currentlySelectedComponent.isVisible()) {
+            String id = currentlySelectedComponent.getId();
+            if (id != null && !id.startsWith("head_s_")) {
+                return currentlySelectedComponent;
+            }
+        }
+        
+        // Check all dynamic sketch views (except head)
+        for (Map.Entry<String, List<ImageView>> entry : sketchImageViews.entrySet()) {
+            String elementType = entry.getKey();
+            if (!elementType.equalsIgnoreCase("head")) {
+                List<ImageView> sketches = entry.getValue();
+                if (sketches != null) {
+                    for (ImageView sketch : sketches) {
+                        if (sketch != null && sketch.isVisible()) {
+                            return sketch;
+                        }
+                    }
+                }
+            }
+        }
+        
+        // Check hardcoded components (except head)
+        // Check hair
+        if (hair_s_1 != null && hair_s_1.isVisible()) return hair_s_1;
+        if (hair_s_2 != null && hair_s_2.isVisible()) return hair_s_2;
+        if (hair_s_3 != null && hair_s_3.isVisible()) return hair_s_3;
+        if (hair_s_4 != null && hair_s_4.isVisible()) return hair_s_4;
+        if (hair_s_5 != null && hair_s_5.isVisible()) return hair_s_5;
+        if (hair_s_6 != null && hair_s_6.isVisible()) return hair_s_6;
+        if (hair_s_7 != null && hair_s_7.isVisible()) return hair_s_7;
+        if (hair_s_8 != null && hair_s_8.isVisible()) return hair_s_8;
+        if (hair_s_9 != null && hair_s_9.isVisible()) return hair_s_9;
+        if (hair_s_10 != null && hair_s_10.isVisible()) return hair_s_10;
+        if (hair_s_11 != null && hair_s_11.isVisible()) return hair_s_11;
+        if (hair_s_12 != null && hair_s_12.isVisible()) return hair_s_12;
+        
+        // Check eyes
+        if (eyes_s_1 != null && eyes_s_1.isVisible()) return eyes_s_1;
+        if (eyes_s_2 != null && eyes_s_2.isVisible()) return eyes_s_2;
+        if (eyes_s_3 != null && eyes_s_3.isVisible()) return eyes_s_3;
+        if (eyes_s_4 != null && eyes_s_4.isVisible()) return eyes_s_4;
+        if (eyes_s_5 != null && eyes_s_5.isVisible()) return eyes_s_5;
+        if (eyes_s_6 != null && eyes_s_6.isVisible()) return eyes_s_6;
+        if (eyes_s_7 != null && eyes_s_7.isVisible()) return eyes_s_7;
+        if (eyes_s_8 != null && eyes_s_8.isVisible()) return eyes_s_8;
+        if (eyes_s_9 != null && eyes_s_9.isVisible()) return eyes_s_9;
+        if (eyes_s_10 != null && eyes_s_10.isVisible()) return eyes_s_10;
+        if (eyes_s_11 != null && eyes_s_11.isVisible()) return eyes_s_11;
+        if (eyes_s_12 != null && eyes_s_12.isVisible()) return eyes_s_12;
+        
+        // Check eyebrows
+        if (eyeb_s_1 != null && eyeb_s_1.isVisible()) return eyeb_s_1;
+        if (eyeb_s_2 != null && eyeb_s_2.isVisible()) return eyeb_s_2;
+        if (eyeb_s_3 != null && eyeb_s_3.isVisible()) return eyeb_s_3;
+        if (eyeb_s_4 != null && eyeb_s_4.isVisible()) return eyeb_s_4;
+        if (eyeb_s_5 != null && eyeb_s_5.isVisible()) return eyeb_s_5;
+        if (eyeb_s_6 != null && eyeb_s_6.isVisible()) return eyeb_s_6;
+        if (eyeb_s_7 != null && eyeb_s_7.isVisible()) return eyeb_s_7;
+        if (eyeb_s_8 != null && eyeb_s_8.isVisible()) return eyeb_s_8;
+        if (eyeb_s_9 != null && eyeb_s_9.isVisible()) return eyeb_s_9;
+        if (eyeb_s_10 != null && eyeb_s_10.isVisible()) return eyeb_s_10;
+        if (eyeb_s_11 != null && eyeb_s_11.isVisible()) return eyeb_s_11;
+        if (eyeb_s_12 != null && eyeb_s_12.isVisible()) return eyeb_s_12;
+        
+        // Check nose
+        if (nose_s_1 != null && nose_s_1.isVisible()) return nose_s_1;
+        if (nose_s_2 != null && nose_s_2.isVisible()) return nose_s_2;
+        if (nose_s_3 != null && nose_s_3.isVisible()) return nose_s_3;
+        if (nose_s_4 != null && nose_s_4.isVisible()) return nose_s_4;
+        if (nose_s_5 != null && nose_s_5.isVisible()) return nose_s_5;
+        if (nose_s_6 != null && nose_s_6.isVisible()) return nose_s_6;
+        if (nose_s_7 != null && nose_s_7.isVisible()) return nose_s_7;
+        if (nose_s_8 != null && nose_s_8.isVisible()) return nose_s_8;
+        if (nose_s_9 != null && nose_s_9.isVisible()) return nose_s_9;
+        if (nose_s_10 != null && nose_s_10.isVisible()) return nose_s_10;
+        if (nose_s_11 != null && nose_s_11.isVisible()) return nose_s_11;
+        if (nose_s_12 != null && nose_s_12.isVisible()) return nose_s_12;
+        
+        // Check lips
+        if (lips_s_1 != null && lips_s_1.isVisible()) return lips_s_1;
+        if (lips_s_2 != null && lips_s_2.isVisible()) return lips_s_2;
+        if (lips_s_3 != null && lips_s_3.isVisible()) return lips_s_3;
+        if (lips_s_4 != null && lips_s_4.isVisible()) return lips_s_4;
+        if (lips_s_5 != null && lips_s_5.isVisible()) return lips_s_5;
+        if (lips_s_6 != null && lips_s_6.isVisible()) return lips_s_6;
+        if (lips_s_7 != null && lips_s_7.isVisible()) return lips_s_7;
+        if (lips_s_8 != null && lips_s_8.isVisible()) return lips_s_8;
+        if (lips_s_9 != null && lips_s_9.isVisible()) return lips_s_9;
+        if (lips_s_10 != null && lips_s_10.isVisible()) return lips_s_10;
+        if (lips_s_11 != null && lips_s_11.isVisible()) return lips_s_11;
+        if (lips_s_12 != null && lips_s_12.isVisible()) return lips_s_12;
+        
+        // Check mustache
+        if (must_s_1 != null && must_s_1.isVisible()) return must_s_1;
+        if (must_s_2 != null && must_s_2.isVisible()) return must_s_2;
+        if (must_s_3 != null && must_s_3.isVisible()) return must_s_3;
+        if (must_s_4 != null && must_s_4.isVisible()) return must_s_4;
+        if (must_s_5 != null && must_s_5.isVisible()) return must_s_5;
+        if (must_s_6 != null && must_s_6.isVisible()) return must_s_6;
+        if (must_s_7 != null && must_s_7.isVisible()) return must_s_7;
+        if (must_s_8 != null && must_s_8.isVisible()) return must_s_8;
+        if (must_s_9 != null && must_s_9.isVisible()) return must_s_9;
+        if (must_s_10 != null && must_s_10.isVisible()) return must_s_10;
+        if (must_s_11 != null && must_s_11.isVisible()) return must_s_11;
+        if (must_s_12 != null && must_s_12.isVisible()) return must_s_12;
+        
+        // Check more
+        if (more_s_1 != null && more_s_1.isVisible()) return more_s_1;
+        if (more_s_2 != null && more_s_2.isVisible()) return more_s_2;
+        if (more_s_3 != null && more_s_3.isVisible()) return more_s_3;
+        if (more_s_4 != null && more_s_4.isVisible()) return more_s_4;
+        if (more_s_5 != null && more_s_5.isVisible()) return more_s_5;
+        if (more_s_6 != null && more_s_6.isVisible()) return more_s_6;
+        
+        return null; // No non-head component selected
+    }
+    
+    @FXML
+    private void onZoomIn(MouseEvent event) {
+        ImageView selected = getCurrentlySelectedComponent();
+        if (selected != null) {
+            // Don't zoom head
+            if (selected.getId() != null && selected.getId().startsWith("head_s_")) {
+                System.out.println("Cannot zoom head component");
+                return;
+            }
+            
+            // Store original dimensions if not already stored
+            if (!originalDimensions.containsKey(selected)) {
+                double origWidth = selected.getFitWidth() > 0 ? selected.getFitWidth() : selected.getImage().getWidth();
+                double origHeight = selected.getFitHeight() > 0 ? selected.getFitHeight() : selected.getImage().getHeight();
+                originalDimensions.put(selected, new double[]{origWidth, origHeight});
+            }
+            
+            double[] origDims = originalDimensions.get(selected);
+            double currentWidth = selected.getFitWidth() > 0 ? selected.getFitWidth() : origDims[0];
+            double currentHeight = selected.getFitHeight() > 0 ? selected.getFitHeight() : origDims[1];
+            
+            // Increase size by 10%
+            double newWidth = currentWidth * 1.1;
+            double newHeight = currentHeight * 1.1;
+            
+            // Limit max zoom to 300% of original
+            double maxWidth = origDims[0] * 3.0;
+            double maxHeight = origDims[1] * 3.0;
+            
+            if (newWidth <= maxWidth && newHeight <= maxHeight) {
+                // Clamp to sketch bounds to avoid visual overflow
+                double[] clamped = clampSizeToSketch(selected, newWidth, newHeight);
+                selected.setFitWidth(clamped[0]);
+                selected.setFitHeight(clamped[1]);
+                System.out.println("Zoomed in: " + selected.getId() + " to " + (clamped[0]/origDims[0]*100) + "%");
+            } else {
+                System.out.println("Maximum zoom reached (300%)");
+            }
+        } else {
+            System.out.println("No component selected for zooming");
+        }
+    }
+    
+    @FXML
+    private void onZoomOut(MouseEvent event) {
+        ImageView selected = getCurrentlySelectedComponent();
+        if (selected != null) {
+            // Don't zoom head
+            if (selected.getId() != null && selected.getId().startsWith("head_s_")) {
+                System.out.println("Cannot zoom head component");
+                return;
+            }
+            
+            // Store original dimensions if not already stored
+            if (!originalDimensions.containsKey(selected)) {
+                double origWidth = selected.getFitWidth() > 0 ? selected.getFitWidth() : selected.getImage().getWidth();
+                double origHeight = selected.getFitHeight() > 0 ? selected.getFitHeight() : selected.getImage().getHeight();
+                originalDimensions.put(selected, new double[]{origWidth, origHeight});
+            }
+            
+            double[] origDims = originalDimensions.get(selected);
+            double currentWidth = selected.getFitWidth() > 0 ? selected.getFitWidth() : origDims[0];
+            double currentHeight = selected.getFitHeight() > 0 ? selected.getFitHeight() : origDims[1];
+            
+            // Decrease size by 10%
+            double newWidth = currentWidth * 0.9;
+            double newHeight = currentHeight * 0.9;
+            
+            // Limit min zoom to 20% of original
+            double minWidth = origDims[0] * 0.2;
+            double minHeight = origDims[1] * 0.2;
+            
+            if (newWidth >= minWidth && newHeight >= minHeight) {
+                double[] clamped = clampSizeToSketch(selected, newWidth, newHeight);
+                selected.setFitWidth(clamped[0]);
+                selected.setFitHeight(clamped[1]);
+                System.out.println("Zoomed out: " + selected.getId() + " to " + (clamped[0]/origDims[0]*100) + "%");
+            } else {
+                System.out.println("Minimum zoom reached (20%)");
+            }
+        } else {
+            System.out.println("No component selected for zooming");
+        }
+    }
+    
+    @FXML
+    private void onSizeIncrease(MouseEvent event) {
+        ImageView selected = getCurrentlySelectedComponent();
+        if (selected != null) {
+            // Don't resize head
+            if (selected.getId() != null && selected.getId().startsWith("head_s_")) {
+                System.out.println("Cannot resize head component");
+                return;
+            }
+            
+            // Store original dimensions if not already stored
+            if (!originalDimensions.containsKey(selected)) {
+                double origWidth = selected.getFitWidth() > 0 ? selected.getFitWidth() : (selected.getImage() != null ? selected.getImage().getWidth() : 300);
+                double origHeight = selected.getFitHeight() > 0 ? selected.getFitHeight() : (selected.getImage() != null ? selected.getImage().getHeight() : 300);
+                originalDimensions.put(selected, new double[]{origWidth, origHeight});
+            }
+            
+            double[] origDims = originalDimensions.get(selected);
+            double currentWidth = selected.getFitWidth() > 0 ? selected.getFitWidth() : origDims[0];
+            double currentHeight = selected.getFitHeight() > 0 ? selected.getFitHeight() : origDims[1];
+            
+            // Increase size by 15%
+            double newWidth = currentWidth * 1.15;
+            double newHeight = currentHeight * 1.15;
+            
+            // Limit max size to 300% of original
+            double maxWidth = origDims[0] * 3.0;
+            double maxHeight = origDims[1] * 3.0;
+            
+            if (newWidth <= maxWidth && newHeight <= maxHeight) {
+                // Clamp to sketch to prevent overflow
+                double[] clamped = clampSizeToSketch(selected, newWidth, newHeight);
+                selected.setFitWidth(clamped[0]);
+                selected.setFitHeight(clamped[1]);
+                
+                // Update slider if it exists
+                if (sizeSlider != null) {
+                    double percentage = (newWidth / origDims[0]) * 100.0;
+                    percentage = Math.max(20, Math.min(300, percentage));
+                    sizeSlider.setValue(percentage);
+                    if (sizeLabel != null) {
+                        sizeLabel.setText(String.format("%.0f%%", percentage));
+                    }
+                }
+                
+                System.out.println("Size increased: " + selected.getId() + " to " + String.format("%.1f", (clamped[0]/origDims[0]*100)) + "%");
+            } else {
+                System.out.println("Maximum size reached (300%)");
+            }
+        } else {
+            System.out.println("No component selected. Please select a component first.");
+        }
+    }
+    
+    @FXML
+    private void onSizeDecrease(MouseEvent event) {
+        ImageView selected = getCurrentlySelectedComponent();
+        if (selected != null) {
+            // Don't resize head
+            if (selected.getId() != null && selected.getId().startsWith("head_s_")) {
+                System.out.println("Cannot resize head component");
+                return;
+            }
+            
+            // Store original dimensions if not already stored
+            if (!originalDimensions.containsKey(selected)) {
+                double origWidth = selected.getFitWidth() > 0 ? selected.getFitWidth() : (selected.getImage() != null ? selected.getImage().getWidth() : 300);
+                double origHeight = selected.getFitHeight() > 0 ? selected.getFitHeight() : (selected.getImage() != null ? selected.getImage().getHeight() : 300);
+                originalDimensions.put(selected, new double[]{origWidth, origHeight});
+            }
+            
+            double[] origDims = originalDimensions.get(selected);
+            double currentWidth = selected.getFitWidth() > 0 ? selected.getFitWidth() : origDims[0];
+            double currentHeight = selected.getFitHeight() > 0 ? selected.getFitHeight() : origDims[1];
+            
+            // Decrease size by 15%
+            double newWidth = currentWidth * 0.85;
+            double newHeight = currentHeight * 0.85;
+            
+            // Limit min size to 20% of original
+            double minWidth = origDims[0] * 0.2;
+            double minHeight = origDims[1] * 0.2;
+            
+            if (newWidth >= minWidth && newHeight >= minHeight) {
+                double[] clamped = clampSizeToSketch(selected, newWidth, newHeight);
+                selected.setFitWidth(clamped[0]);
+                selected.setFitHeight(clamped[1]);
+                
+                // Update slider if it exists
+                if (sizeSlider != null) {
+                    double percentage = (newWidth / origDims[0]) * 100.0;
+                    percentage = Math.max(20, Math.min(300, percentage));
+                    sizeSlider.setValue(percentage);
+                    if (sizeLabel != null) {
+                        sizeLabel.setText(String.format("%.0f%%", percentage));
+                    }
+                }
+                
+                System.out.println("Size decreased: " + selected.getId() + " to " + String.format("%.1f", (clamped[0]/origDims[0]*100)) + "%");
+            } else {
+                System.out.println("Minimum size reached (20%)");
+            }
+        } else {
+            System.out.println("No component selected. Please select a component first.");
+        }
+    }
+    
+    @FXML
+    private void onSizeSliderChanged() {
+        if (sizeSlider == null) return;
+        
+        ImageView selected = getCurrentlySelectedComponent();
+        if (selected != null) {
+            // Don't resize head
+            if (selected.getId() != null && selected.getId().startsWith("head_s_")) {
+                System.out.println("Cannot resize head component");
+                return;
+            }
+            
+            // Store original dimensions if not already stored
+            if (!originalDimensions.containsKey(selected)) {
+                double origWidth = selected.getFitWidth() > 0 ? selected.getFitWidth() : (selected.getImage() != null ? selected.getImage().getWidth() : 300);
+                double origHeight = selected.getFitHeight() > 0 ? selected.getFitHeight() : (selected.getImage() != null ? selected.getImage().getHeight() : 300);
+                originalDimensions.put(selected, new double[]{origWidth, origHeight});
+            }
+            
+            double[] origDims = originalDimensions.get(selected);
+            double percentage = sizeSlider.getValue(); // Slider value is already in percentage (20-300)
+            
+            // Calculate new size based on percentage
+            double newWidth = origDims[0] * (percentage / 100.0);
+            double newHeight = origDims[1] * (percentage / 100.0);
+
+            double[] clamped = clampSizeToSketch(selected, newWidth, newHeight);
+            selected.setFitWidth(clamped[0]);
+            selected.setFitHeight(clamped[1]);
+            
+            // Update size label
+            if (sizeLabel != null) {
+                sizeLabel.setText(String.format("%.0f%%", percentage));
+            }
+            
+            System.out.println("Slider resized: " + selected.getId() + " to " + String.format("%.1f", percentage) + "% (" + String.format("%.0f", newWidth) + "x" + String.format("%.0f", newHeight) + ")");
+        } else {
+            // No component selected - disable slider or show message
+            if (sizeLabel != null) {
+                sizeLabel.setText("Select component");
+            }
+        }
     }    
+
+    /**
+     * Clamp desired image size so it cannot visually overflow the sketch area.
+     * Returns [width, height] adjusted to fit within sketch bounds if needed.
+     */
+    private double[] clampSizeToSketch(ImageView iv, double desiredW, double desiredH) {
+        double sketchW = (sketch != null && sketch.getWidth() > 0) ? sketch.getWidth() : sketch.getPrefWidth();
+        double sketchH = (sketch != null && sketch.getHeight() > 0) ? sketch.getHeight() : sketch.getPrefHeight();
+
+        // If sketchW/H are not defined yet, fall back to 620 (design default)
+        if (sketchW <= 0) sketchW = 620;
+        if (sketchH <= 0) sketchH = 620;
+
+        double maxW = sketchW; // do not allow width larger than sketch width
+        double maxH = sketchH; // do not allow height larger than sketch height
+
+        double w = Math.min(desiredW, maxW);
+        double h = Math.min(desiredH, maxH);
+
+        // Preserve aspect ratio based on original image if present
+        if (iv.getImage() != null && iv.isPreserveRatio()) {
+            double imgW = iv.getImage().getWidth();
+            double imgH = iv.getImage().getHeight();
+            if (imgW > 0 && imgH > 0) {
+                double imgRatio = imgW / imgH;
+                if (w / h > imgRatio) {
+                    w = h * imgRatio;
+                } else {
+                    h = w / imgRatio;
+                }
+            }
+        }
+
+        return new double[]{w, h};
+    }
     
     //DRAG AND MOVE CODE Class
     public void drag(MouseEvent event) {

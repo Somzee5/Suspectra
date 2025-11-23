@@ -4,6 +4,8 @@
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Slider?>
+<?import javafx.scene.control.Tooltip?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -1014,6 +1016,31 @@
       </ScrollPane>
       <AnchorPane fx:id="sketch" layoutX="164.0" layoutY="41.0" prefHeight="620.0" prefWidth="620.0" style="-fx-background-color: #FFFFFF;">
          <children>
+            <Label layoutX="10.0" layoutY="10.0" text="SIZE:" textFill="#173F5F">
+               <font>
+                  <Font name="Futura Md BT Bold" size="16.0" />
+               </font>
+            </Label>
+            <Rectangle fx:id="sketch_size_increase_btn" arcHeight="8.0" arcWidth="8.0" fill="#1F93FF" height="50.0" layoutX="70.0" layoutY="5.0" onMousePressed="#onSizeIncrease" stroke="#173F5F" strokeType="INSIDE" strokeWidth="3.0" width="50.0" visible="true">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Rectangle>
+            <Label layoutX="87.0" layoutY="15.0" mouseTransparent="true" text="+" textFill="WHITE" textAlignment="CENTER">
+               <font>
+                  <Font name="Futura Md BT Bold" size="30.0" />
+               </font>
+            </Label>
+            <Rectangle fx:id="sketch_size_decrease_btn" arcHeight="8.0" arcWidth="8.0" fill="#1F93FF" height="50.0" layoutX="130.0" layoutY="5.0" onMousePressed="#onSizeDecrease" stroke="#173F5F" strokeType="INSIDE" strokeWidth="3.0" width="50.0" visible="true">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Rectangle>
+            <Label layoutX="147.0" layoutY="15.0" mouseTransparent="true" text="-" textFill="WHITE" textAlignment="CENTER">
+               <font>
+                  <Font name="Futura Md BT Bold" size="30.0" />
+               </font>
+            </Label>
             <ImageView fx:id="more_s_5" fitHeight="199.0" fitWidth="236.0" layoutX="202.0" layoutY="411.0" pickOnBounds="true" preserveRatio="true" visible="false">
                <image>
                   <Image url="@elements/sketch%20elements/more/05.png" />
@@ -1456,7 +1483,7 @@
                </image>
             </ImageView>
          </children></AnchorPane>
-      <AnchorPane fx:id="menu_tab" layoutX="722.0" layoutY="-186.0" prefHeight="87.0" prefWidth="471.0" style="-fx-background-color: #173F5F;" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <AnchorPane fx:id="menu_tab" layoutX="722.0" layoutY="-186.0" prefHeight="87.0" prefWidth="1350.0" style="-fx-background-color: #173F5F;" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
             <Label layoutX="65.0" layoutY="33.0" text="SAVE" textFill="WHITE">
                <font>
@@ -1488,6 +1515,61 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </Rectangle>
+            <Label layoutX="470.0" layoutY="33.0" text="ZOOM +" textFill="WHITE">
+               <font>
+                  <Font name="Futura Md BT Bold" size="14.0" />
+               </font>
+            </Label>
+            <Rectangle fx:id="zoom_in_btn" arcHeight="5.0" arcWidth="5.0" fill="#1f93ff00" height="54.0" layoutX="470.0" layoutY="16.0" onMousePressed="#onZoomIn" stroke="WHITE" strokeType="INSIDE" strokeWidth="3.0" width="80.0">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Rectangle>
+            <Label layoutX="560.0" layoutY="33.0" text="ZOOM -" textFill="WHITE">
+               <font>
+                  <Font name="Futura Md BT Bold" size="14.0" />
+               </font>
+            </Label>
+            <Rectangle fx:id="zoom_out_btn" arcHeight="5.0" arcWidth="5.0" fill="#1f93ff00" height="54.0" layoutX="560.0" layoutY="16.0" onMousePressed="#onZoomOut" stroke="WHITE" strokeType="INSIDE" strokeWidth="3.0" width="80.0">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Rectangle>
+            <Label layoutX="660.0" layoutY="33.0" text="SIZE:" textFill="WHITE">
+               <font>
+                  <Font name="Futura Md BT Bold" size="12.0" />
+               </font>
+            </Label>
+            <Rectangle fx:id="size_increase_btn" arcHeight="5.0" arcWidth="5.0" fill="#1F93FF" height="45.0" layoutX="720.0" layoutY="21.0" onMousePressed="#onSizeIncrease" stroke="WHITE" strokeType="INSIDE" strokeWidth="2.5" width="45.0" visible="true">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Rectangle>
+            <Label layoutX="735.0" layoutY="30.0" mouseTransparent="true" text="+" textFill="WHITE" textAlignment="CENTER">
+               <font>
+                  <Font name="Futura Md BT Bold" size="24.0" />
+               </font>
+            </Label>
+            <Rectangle fx:id="size_decrease_btn" arcHeight="5.0" arcWidth="5.0" fill="#1F93FF" height="45.0" layoutX="775.0" layoutY="21.0" onMousePressed="#onSizeDecrease" stroke="WHITE" strokeType="INSIDE" strokeWidth="2.5" width="45.0" visible="true">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Rectangle>
+            <Label layoutX="790.0" layoutY="30.0" mouseTransparent="true" text="-" textFill="WHITE" textAlignment="CENTER">
+               <font>
+                  <Font name="Futura Md BT Bold" size="24.0" />
+               </font>
+            </Label>
+            <Slider fx:id="sizeSlider" layoutX="830.0" layoutY="30.0" max="300.0" min="20.0" onValueChanged="#onSizeSliderChanged" prefWidth="180.0" showTickLabels="false" showTickMarks="true" value="100.0" visible="true">
+               <tooltip>
+                  <Tooltip text="Adjust component size (20% - 300%)" />
+               </tooltip>
+            </Slider>
+            <Label fx:id="sizeLabel" layoutX="1030.0" layoutY="33.0" text="100%" textFill="WHITE">
+               <font>
+                  <Font name="Futura Md BT Bold" size="12.0" />
+               </font>
+            </Label>
          </children>
       </AnchorPane>
    </children>
