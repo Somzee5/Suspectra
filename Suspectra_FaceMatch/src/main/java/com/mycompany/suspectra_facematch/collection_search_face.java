@@ -5,30 +5,32 @@
  */
 package com.mycompany.suspectra_facematch;
 
+import java.util.List;
+
 import com.amazonaws.services.rekognition.AmazonRekognition;
 import com.amazonaws.services.rekognition.AmazonRekognitionClientBuilder;
-import com.amazonaws.services.rekognition.model.AmazonRekognitionException;
 import com.amazonaws.services.rekognition.model.FaceMatch;
 import com.amazonaws.services.rekognition.model.Image;
 import com.amazonaws.services.rekognition.model.S3Object;
 import com.amazonaws.services.rekognition.model.SearchFacesByImageRequest;
 import com.amazonaws.services.rekognition.model.SearchFacesByImageResult;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import java.util.List;
-import javax.swing.JOptionPane;
 
 /**
  *
  * @author Akash Sahu
  */
 public class collection_search_face {
-    public static final String collectionId = "Records";
-    public static final String bucket = "thirdeyepics";
-    public static final String photo = "test.jpg";
+        // Set these to the collection and bucket you created earlier
+        public static final String collectionId = "suspectra_collection";
+        public static final String bucket = "suspectra-facematch-somzee5";
+        public static final String photo = "test.jpg";
       
     public static void main(String[] args) throws Exception {
 
-      AmazonRekognition rekognitionClient = AmazonRekognitionClientBuilder.defaultClient();
+      AmazonRekognition rekognitionClient = AmazonRekognitionClientBuilder.standard()
+              .withRegion("us-east-1")
+              .build();
         
       ObjectMapper objectMapper = new ObjectMapper();
        

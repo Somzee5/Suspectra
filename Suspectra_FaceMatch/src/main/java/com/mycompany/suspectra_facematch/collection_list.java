@@ -5,13 +5,14 @@
  */
 package com.mycompany.thirdeye_facematch;
 
+import java.util.List;
+
 import com.amazonaws.services.rekognition.AmazonRekognition;
 import com.amazonaws.services.rekognition.AmazonRekognitionClientBuilder;
 import com.amazonaws.services.rekognition.model.Face;
 import com.amazonaws.services.rekognition.model.ListFacesRequest;
 import com.amazonaws.services.rekognition.model.ListFacesResult;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import java.util.List;
 
 /**
  *
@@ -22,7 +23,9 @@ public class collection_list {
 
     public static void main(String[] args) throws Exception {
       
-      AmazonRekognition rekognitionClient = AmazonRekognitionClientBuilder.defaultClient();
+            AmazonRekognition rekognitionClient = AmazonRekognitionClientBuilder.standard()
+               .withRegion("us-east-1")
+               .build();
 
       ObjectMapper objectMapper = new ObjectMapper();
 

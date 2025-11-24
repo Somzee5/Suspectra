@@ -17,11 +17,17 @@ import com.amazonaws.services.rekognition.model.SearchFacesByImageRequest;
 import com.amazonaws.services.rekognition.model.SearchFacesByImageResult;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
+import com.amazonaws.services.s3.model.GetObjectRequest;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
+import com.amazonaws.services.s3.model.S3ObjectInputStream;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.awt.Image;
+import java.awt.image.BufferedImage;
+import java.awt.Graphics2D;
+import java.awt.Color;
+import javax.imageio.ImageIO;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
@@ -32,12 +38,24 @@ import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.JPasswordField;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardCopyOption;
+import java.nio.file.Paths;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.StandardOpenOption;
+import java.util.Arrays;
+import java.util.Optional;
 
 /**
  *
  * @author Akash Sahu
  */
 public class face_rekognition extends javax.swing.JFrame {
+    
+    // Store the S3 key of the uploaded sketch
+    private String uploadedS3Key = null;
 
     public face_rekognition() {
         initComponents();
@@ -189,117 +207,440 @@ public class face_rekognition extends javax.swing.JFrame {
     
     //UPLOAD THE SKETCH TO S3 BUCKET TO FIND A MATCH FROM AWS COLLECTION
     private void upload_sketchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_upload_sketchActionPerformed
-        Regions clientRegion = Regions.AP_SOUTH_1;
-        String bucketName = "thirdeyepics";
-        //String stringObjKeyName = "stringkey";
-        String fileObjKeyName = "test.jpg"; //File name to be shown in S3 Bucket
         String fileName = sketch_path.getText();
 
+        System.out.println("[FaceMatch] Upload to AWS clicked. sketch_path='" + fileName + "'");
+
+        // Validate that a sketch has been opened/selected first
+        if (fileName == null || fileName.isBlank()) {
+            JOptionPane.showMessageDialog(null, "Please open a sketch first (click OPEN SKETCH).");
+            return;
+        }
+
+        // Check for AWS credentials
+        if (!hasAwsCredentials()) {
+            if (!promptForAwsCredentials()) {
+                JOptionPane.showMessageDialog(null, "AWS credentials required. Cannot upload to S3.");
+                return;
+            }
+        }
+
+        // Clear previous match UI
+        match_path.setText(null);
+        match.setIcon(null);
+        match_similarity.setText(null);
+        match_properties.setText(null);
+
         try {
-            //This code expects that you have AWS credentials set up per:
-            // https://docs.aws.amazon.com/sdk-for-java/v1/developer-guide/setup-credentials.html
-            AmazonS3 s3Client = AmazonS3ClientBuilder.standard()
-                    .withRegion(clientRegion)
+            // Upload sketch to S3 bucket
+            String bucket = "suspectra-facematch-somzee5";
+            String s3Key = "sketches/" + System.currentTimeMillis() + "_" + new File(fileName).getName();
+            
+                AmazonS3 s3Client = AmazonS3ClientBuilder.standard()
+                    .withRegion("us-east-1") // Match your bucket region
                     .build();
-
-
-            // Upload a file as a new object with ContentType and title specified.
-            PutObjectRequest request = new PutObjectRequest(bucketName, fileObjKeyName, new File(fileName));
+            
+            File sketchFile = new File(fileName);
+            if (!sketchFile.exists()) {
+                JOptionPane.showMessageDialog(null, "Sketch file not found: " + fileName);
+                return;
+            }
+            
+            // Upload to S3
+            PutObjectRequest putRequest = new PutObjectRequest(bucket, s3Key, sketchFile);
             ObjectMetadata metadata = new ObjectMetadata();
-            metadata.setContentType("plain/text");
-            metadata.addUserMetadata("title", "someTitle");
-            request.setMetadata(metadata);
-            s3Client.putObject(request);
+            metadata.setContentType("image/jpeg");
+            putRequest.setMetadata(metadata);
             
-            JOptionPane.showMessageDialog(null, "Sketch Uploaded Successfully");
+            s3Client.putObject(putRequest);
+            System.out.println("Successfully uploaded sketch to s3://" + bucket + "/" + s3Key);
             
-            match_path.setText(null); //Clears the old path data of the image 
-            match.setIcon(null); //Clears the Old Matched Image
-            match_similarity.setText(null); //Clears the Similarity Percentage
-            match_properties.setText(null);
+            // Store the S3 key for later use in FIND MATCH
+            uploadedS3Key = s3Key; // Store S3 key in class variable
+            
+            // Also save local copy for fallback
+            fallbackLocalSave(fileName);
+            
+            JOptionPane.showMessageDialog(null, "Sketch uploaded successfully to S3!\nS3 Key: " + s3Key + "\n\nNow click 'FIND MATCH' to search the collection.");
             
         } catch (AmazonServiceException e) {
-            // The call was transmitted successfully, but Amazon S3 couldn't process 
-            // it, so it returned an error response.
-            JOptionPane.showMessageDialog(null, "The Sketch could not been Uploaded, Try Again \n");
+            System.err.println("AWS Service Error: " + e.getMessage());
+            String errorMsg = "AWS Service Error: " + e.getErrorMessage() + "\nError Code: " + e.getErrorCode();
+            
+            // Provide helpful message for Access Denied
+            if (e.getErrorCode().equals("AccessDenied")) {
+                errorMsg += "\n\n⚠️ PERMISSION ISSUE:\n";
+                errorMsg += "Your IAM user doesn't have permission to write to S3.\n\n";
+                errorMsg += "To fix:\n";
+                errorMsg += "1. Go to AWS IAM Console\n";
+                errorMsg += "2. Find your IAM user\n";
+                errorMsg += "3. Attach policy: AmazonS3FullAccess\n";
+                errorMsg += "4. Wait 1-2 minutes, then try again\n\n";
+                errorMsg += "See FIX_ACCESS_DENIED.md for details.";
+            }
+            
+            JOptionPane.showMessageDialog(null, errorMsg);
         } catch (SdkClientException e) {
-            // Amazon S3 couldn't be contacted for a response, or the client
-            // couldn't parse the response from Amazon S3.
-            JOptionPane.showMessageDialog(null, "The Sketch could not been Uploaded, Try Again \n");
+            System.err.println("AWS Client Error: " + e.getMessage());
+            JOptionPane.showMessageDialog(null, "AWS Client Error: " + e.getMessage() + "\n\nFalling back to local matching...");
+            // Fallback to local matching
+            String localPath = sketch_path.getText();
+            if (localPath != null && !localPath.isBlank()) {
+                searchLocally(localPath);
+            }
+        } catch (Exception e) {
+            System.err.println("Unexpected error: " + e.getMessage());
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Error uploading sketch: " + e.getMessage());
         }
     }//GEN-LAST:event_upload_sketchActionPerformed
 
+    // Save a copy of the sketch locally for offline matching. Returns true on success.
+    private boolean fallbackLocalSave(String srcPath) {
+        if (srcPath == null || srcPath.isEmpty()) return false;
+        try {
+            File src = new File(srcPath);
+            if (!src.exists()) return false;
+            Path destDir = Paths.get("src/main/java/com/mycompany/suspectra_facematch/sketches");
+            Files.createDirectories(destDir);
+            Path dest = destDir.resolve("test.jpg");
+            Files.copy(src.toPath(), dest, StandardCopyOption.REPLACE_EXISTING);
+            // Update UI to point to local copy
+            sketch_path.setText(dest.toString());
+            ImageIcon imIco = new ImageIcon(dest.toString());
+            Image imFit = imIco.getImage();
+            Image imgFit = imFit.getScaledInstance(sketch.getWidth(), sketch.getHeight(), Image.SCALE_SMOOTH);
+            sketch.setIcon(new ImageIcon(imgFit));
+            return true;
+        } catch (IOException ex) {
+            return false;
+        }
+    }
+
+    // Basic check for AWS credentials on the host so we can avoid network calls when not configured
+    private boolean hasAwsCredentials() {
+        String ak = System.getenv("AWS_ACCESS_KEY_ID");
+        String sk = System.getenv("AWS_SECRET_ACCESS_KEY");
+        if (ak != null && !ak.isEmpty() && sk != null && !sk.isEmpty()) return true;
+        // Check shared credentials file for non-empty entries
+        String home = System.getProperty("user.home");
+        Path cred = Paths.get(home, ".aws", "credentials");
+        if (Files.exists(cred)) {
+            try {
+                String content = Files.readString(cred, StandardCharsets.UTF_8);
+                boolean hasAk = content.matches("(?s).*aws_access_key_id\\s*=\\s*\\S+.*");
+                boolean hasSk = content.matches("(?s).*aws_secret_access_key\\s*=\\s*\\S+.*");
+                return hasAk && hasSk;
+            } catch (IOException ex) {
+                return false;
+            }
+        }
+        return false;
+    }
+
+    // Prompt user to enter AWS credentials interactively; optionally save to ~/.aws/credentials
+    private boolean promptForAwsCredentials() {
+        int result = JOptionPane.showConfirmDialog(null, "AWS credentials not found. Do you want to enter them now?", "AWS Credentials", JOptionPane.YES_NO_OPTION);
+        if (result != JOptionPane.YES_OPTION) return false;
+        String accessKey = JOptionPane.showInputDialog(null, "Enter AWS Access Key ID:");
+        if (accessKey == null || accessKey.isBlank()) return false;
+        JPasswordField pf = new JPasswordField();
+        int ok = JOptionPane.showConfirmDialog(null, pf, "Enter AWS Secret Access Key:", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+        if (ok != JOptionPane.OK_OPTION) return false;
+        String secretKey = new String(pf.getPassword());
+        if (secretKey == null || secretKey.isBlank()) return false;
+
+        int save = JOptionPane.showConfirmDialog(null, "Save credentials to %USERPROFILE%\\.aws\\credentials for future runs?", "Save Credentials", JOptionPane.YES_NO_OPTION);
+        if (save == JOptionPane.YES_OPTION) {
+            try {
+                Path dir = Paths.get(System.getProperty("user.home"), ".aws");
+                if (!Files.exists(dir)) Files.createDirectories(dir);
+                Path creds = dir.resolve("credentials");
+                String content = "[default]\naws_access_key_id = " + accessKey + "\naws_secret_access_key = " + secretKey + "\n";
+                Files.writeString(creds, content, StandardCharsets.UTF_8, StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
+            } catch (IOException ex) {
+                JOptionPane.showMessageDialog(null, "Failed to write credentials file: " + ex.getMessage());
+            }
+        } else {
+            // set system properties for this JVM run (AWS SDK can pick up system props in some cases)
+            System.setProperty("aws.accessKeyId", accessKey);
+            System.setProperty("aws.secretKey", secretKey);
+        }
+        return true;
+    }
+
     //FIND MATCH FROM THE AWS COLLECTION AND SHOW RESULTS
     private void find_matchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_find_matchActionPerformed
-        String collectionId = "Records";
-        String bucket = "thirdeyepics";
-        String photo = "test.jpg";
+        String collectionId = "suspectra_collection";
+        String bucket = "suspectra-facematch-somzee5";
         
-        AmazonRekognition rekognitionClient = AmazonRekognitionClientBuilder.defaultClient();
-        
-        ObjectMapper objectMapper = new ObjectMapper();
-        
-        // Get an image object from S3 bucket.
-        com.amazonaws.services.rekognition.model.Image image=new com.amazonaws.services.rekognition.model.Image()
-                .withS3Object(new S3Object()
-                        .withBucket(bucket)
-                        .withName(photo));
-        
-        // Search collection for faces similar to the largest face in the image.
-        SearchFacesByImageRequest searchFacesByImageRequest = new SearchFacesByImageRequest()
-                .withCollectionId(collectionId)
-                .withImage(image)
-                .withFaceMatchThreshold(70F)
-                .withMaxFaces(2);
-        
-        SearchFacesByImageResult searchFacesByImageResult = 
-                 rekognitionClient.searchFacesByImage(searchFacesByImageRequest);
-        
-       
-        List < FaceMatch > faceImageMatches = searchFacesByImageResult.getFaceMatches();
-        faceImageMatches.forEach((FaceMatch face) -> {
-            try {
-               System.out.println(objectMapper.writerWithDefaultPrettyPrinter()
-                        .writeValueAsString(face));
-               
-               match_path.setText(face.getFace().getExternalImageId()); //Used for verifing and No Match
-               
-               //Display the Similarity Percentage on the Screen
-               match_similarity.setText("SIMILARITY : "+face.getSimilarity()); 
-               
-               // Display Properties
-               match_properties.setText("******************************************** \n"+
-                                        "FACE MATCHED \n"+
-                                        "******************************************** \n"+
-                                        "\n"+
-                                        "\n"+
-                                        "Name in database: "+face.getFace().getExternalImageId() + "\n" +
-                                        "\n"+
-                                        "\n"+
-                                        "Similarity: "+face.getSimilarity() + "\n" +
-                                        "\n"+
-                                        "\n"+
-                                        "Confidence: "+face.getFace().getConfidence() + "\n" );
-                    
-               // Display Matched Images in the JLABEL 
-               String path = "https://thirdeyepics.s3.ap-south-1.amazonaws.com/"+face.getFace().getExternalImageId();
-               System.out.println("Get Image from " + path);
-               try {
-                 URL url = new URL(path);
-                 match.setIcon(new ImageIcon(url));
-               } catch (IOException e) {
-                  
-               }
-            } catch (JsonProcessingException ex) {
-                Logger.getLogger(face_rekognition.class.getName()).log(Level.SEVERE, null, ex);
+        // Get the S3 key from the uploaded sketch (stored in class variable)
+        String s3Key = uploadedS3Key;
+        if (s3Key == null || s3Key.isEmpty()) {
+            // Fallback: try to use local test.jpg if no S3 key found
+            String localPath = sketch_path.getText();
+            if (localPath != null && localPath.contains("sketches") && localPath.contains("test.jpg")) {
+                s3Key = "sketches/test.jpg";
+            } else {
+                JOptionPane.showMessageDialog(null, "Please upload the sketch to S3 first (click UPLOAD SKETCH).");
+                return;
             }
-        });
-        if (match_path.getText().isEmpty()) { // IF THE SKETCH DOES NOT MATCH
-            System.out.println("NO MATCH FOUND");
-            JOptionPane.showMessageDialog(null, "No Match Found in the Database !! \n");
-            match.setIcon(null);
+        }
+        
+        System.out.println("[FaceMatch] Searching AWS Rekognition collection: " + collectionId);
+        System.out.println("[FaceMatch] Using S3 image: s3://" + bucket + "/" + s3Key);
+        
+        // Check for AWS credentials
+        if (!hasAwsCredentials()) {
+            if (!promptForAwsCredentials()) {
+                JOptionPane.showMessageDialog(null, "AWS credentials required. Cannot search Rekognition collection.");
+                // Fallback to local search
+                searchLocally(sketch_path.getText());
+                return;
+            }
+        }
+        
+        try {
+                AmazonRekognition rekognitionClient = AmazonRekognitionClientBuilder.standard()
+                    .withRegion("us-east-1")
+                    .build();
+            ObjectMapper objectMapper = new ObjectMapper();
+            
+            // Get an image object from S3 bucket (use the uploaded sketch)
+            com.amazonaws.services.rekognition.model.Image image = new com.amazonaws.services.rekognition.model.Image()
+                    .withS3Object(new S3Object()
+                            .withBucket(bucket)
+                            .withName(s3Key));
+            
+            // Search collection for faces similar to the largest face in the image.
+            SearchFacesByImageRequest searchFacesByImageRequest = new SearchFacesByImageRequest()
+                    .withCollectionId(collectionId)
+                    .withImage(image)
+                    .withFaceMatchThreshold(70F)  // Minimum 70% similarity
+                    .withMaxFaces(5);  // Get top 5 matches
+            
+            SearchFacesByImageResult searchFacesByImageResult = 
+                     rekognitionClient.searchFacesByImage(searchFacesByImageRequest);
+            
+            List<FaceMatch> faceImageMatches = searchFacesByImageResult.getFaceMatches();
+            
+            if (faceImageMatches == null || faceImageMatches.isEmpty()) {
+                JOptionPane.showMessageDialog(null, "No matches found in AWS Rekognition collection.\nSimilarity threshold: 70%\n\nTrying local search as fallback...");
+                // Fallback to local search
+                searchLocally(sketch_path.getText());
+                return;
+            }
+            
+            // Display the best match (first in list)
+            FaceMatch bestMatch = faceImageMatches.get(0);
+            
+            System.out.println("Found " + faceImageMatches.size() + " match(es)");
+            System.out.println(objectMapper.writerWithDefaultPrettyPrinter()
+                    .writeValueAsString(bestMatch));
+            
+            match_path.setText(bestMatch.getFace().getExternalImageId());
+            
+            // Display the Similarity Percentage on the Screen
+            match_similarity.setText("SIMILARITY : " + String.format("%.1f", bestMatch.getSimilarity()) + "%");
+            
+            // Display Properties
+            StringBuilder props = new StringBuilder();
+            props.append("********************************************\n");
+            props.append("FACE MATCHED (AWS Rekognition)\n");
+            props.append("********************************************\n\n");
+            props.append("Name in database: ").append(bestMatch.getFace().getExternalImageId()).append("\n\n");
+            props.append("Similarity: ").append(String.format("%.2f", bestMatch.getSimilarity())).append("%\n\n");
+            props.append("Confidence: ").append(String.format("%.2f", bestMatch.getFace().getConfidence())).append("%\n\n");
+            
+            if (faceImageMatches.size() > 1) {
+                props.append("Other matches:\n");
+                for (int i = 1; i < Math.min(faceImageMatches.size(), 4); i++) {
+                    FaceMatch fm = faceImageMatches.get(i);
+                    props.append(String.format("  - %s (%.1f%%)\n", fm.getFace().getExternalImageId(), fm.getSimilarity()));
+                }
+            }
+            
+            match_properties.setText(props.toString());
+            
+            // Display Matched Image from S3 using S3 client
+            String matchedImageKey = bestMatch.getFace().getExternalImageId();
+            System.out.println("Fetching matched image from S3: s3://" + bucket + "/" + matchedImageKey);
+            
+            try {
+                // Use S3 client to download the image
+                AmazonS3 s3Client = AmazonS3ClientBuilder.standard()
+                        .withRegion(Regions.US_EAST_1) // Match the region used for Rekognition
+                        .build();
+                
+                GetObjectRequest getObjectRequest = new GetObjectRequest(bucket, matchedImageKey);
+                com.amazonaws.services.s3.model.S3Object s3Object = s3Client.getObject(getObjectRequest);
+                S3ObjectInputStream objectInputStream = s3Object.getObjectContent();
+                
+                // Read the image from S3
+                BufferedImage bufferedImage = ImageIO.read(objectInputStream);
+                objectInputStream.close();
+                
+                if (bufferedImage != null) {
+                    // Get the label dimensions (use preferred size if width/height are 0)
+                    int labelWidth = match.getWidth() > 0 ? match.getWidth() : match.getPreferredSize().width;
+                    int labelHeight = match.getHeight() > 0 ? match.getHeight() : match.getPreferredSize().height;
+                    
+                    // If still 0, use a default size
+                    if (labelWidth <= 0) labelWidth = 400;
+                    if (labelHeight <= 0) labelHeight = 500;
+                    
+                    // Scale the image to fit the label while maintaining aspect ratio
+                    int imageWidth = bufferedImage.getWidth();
+                    int imageHeight = bufferedImage.getHeight();
+                    
+                    double widthRatio = (double) labelWidth / imageWidth;
+                    double heightRatio = (double) labelHeight / imageHeight;
+                    double ratio = Math.min(widthRatio, heightRatio);
+                    
+                    int scaledWidth = (int) (imageWidth * ratio);
+                    int scaledHeight = (int) (imageHeight * ratio);
+                    
+                    // Create scaled image
+                    Image scaledImage = bufferedImage.getScaledInstance(
+                        scaledWidth, 
+                        scaledHeight, 
+                        Image.SCALE_SMOOTH
+                    );
+                    
+                    match.setIcon(new ImageIcon(scaledImage));
+                    System.out.println("Successfully loaded and displayed matched image: " + matchedImageKey);
+                } else {
+                    System.err.println("Failed to read image from S3: " + matchedImageKey);
+                    JOptionPane.showMessageDialog(null, "Could not read matched image from S3: " + matchedImageKey);
+                }
+            } catch (AmazonServiceException e) {
+                System.err.println("AWS Service Error loading image: " + e.getMessage());
+                JOptionPane.showMessageDialog(null, "Error loading matched image from S3: " + e.getErrorMessage());
+            } catch (SdkClientException e) {
+                System.err.println("AWS Client Error loading image: " + e.getMessage());
+                JOptionPane.showMessageDialog(null, "Error loading matched image from S3: " + e.getMessage());
+            } catch (IOException e) {
+                System.err.println("Error reading image from S3: " + e.getMessage());
+                JOptionPane.showMessageDialog(null, "Could not read matched image from S3: " + matchedImageKey);
+            }
+            
+        } catch (AmazonRekognitionException e) {
+            System.err.println("AWS Rekognition Error: " + e.getMessage());
+            JOptionPane.showMessageDialog(null, "AWS Rekognition Error: " + e.getMessage() + "\n\nFalling back to local search...");
+            // Fallback to local search
+            searchLocally(sketch_path.getText());
+        } catch (SdkClientException e) {
+            System.err.println("AWS Client Error: " + e.getMessage());
+            JOptionPane.showMessageDialog(null, "AWS Client Error: " + e.getMessage() + "\n\nFalling back to local search...");
+            // Fallback to local search
+            searchLocally(sketch_path.getText());
+        } catch (Exception e) {
+            System.err.println("Unexpected error: " + e.getMessage());
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Error searching for matches: " + e.getMessage());
         }
     }//GEN-LAST:event_find_matchActionPerformed
+
+    // Local search fallback: compare the selected sketch to images in the local `faces` folder
+    private void searchLocally(String sketchFilePath) {
+        if (sketchFilePath == null || sketchFilePath.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Please open a sketch first.");
+            return;
+        }
+
+        File facesDir = new File("src/main/java/com/mycompany/suspectra_facematch/faces");
+        if (!facesDir.exists() || !facesDir.isDirectory()) {
+            JOptionPane.showMessageDialog(null, "Local faces directory not found: " + facesDir.getAbsolutePath());
+            return;
+        }
+
+        try {
+            BufferedImage sketchImg = ImageIO.read(new File(sketchFilePath));
+            if (sketchImg == null) {
+                JOptionPane.showMessageDialog(null, "Could not read sketch image: " + sketchFilePath);
+                return;
+            }
+
+            // normalize size for comparison
+            int W = 200, H = 200;
+            BufferedImage s = new BufferedImage(W, H, BufferedImage.TYPE_INT_RGB);
+            Graphics2D g = s.createGraphics();
+            g.setColor(Color.WHITE);
+            g.fillRect(0, 0, W, H);
+            g.drawImage(sketchImg.getScaledInstance(W, H, Image.SCALE_SMOOTH), 0, 0, null);
+            g.dispose();
+
+            double bestScore = -1.0;
+            File bestFile = null;
+            BufferedImage bestImg = null;
+
+            File[] files = facesDir.listFiles((d, name) -> {
+                String ln = name.toLowerCase();
+                return ln.endsWith(".jpg") || ln.endsWith(".jpeg") || ln.endsWith(".png");
+            });
+            if (files == null || files.length == 0) {
+                JOptionPane.showMessageDialog(null, "No face images found in: " + facesDir.getAbsolutePath());
+                return;
+            }
+
+            for (File f : files) {
+                try {
+                    BufferedImage faceImg = ImageIO.read(f);
+                    if (faceImg == null) continue;
+                    BufferedImage t = new BufferedImage(W, H, BufferedImage.TYPE_INT_RGB);
+                    Graphics2D g2 = t.createGraphics();
+                    g2.setColor(Color.WHITE);
+                    g2.fillRect(0, 0, W, H);
+                    g2.drawImage(faceImg.getScaledInstance(W, H, Image.SCALE_SMOOTH), 0, 0, null);
+                    g2.dispose();
+
+                    // compute mean squared error across channels
+                    long sumSq = 0;
+                    for (int y = 0; y < H; y++) {
+                        for (int x = 0; x < W; x++) {
+                            int rgb1 = s.getRGB(x, y);
+                            int rgb2 = t.getRGB(x, y);
+                            int r1 = (rgb1 >> 16) & 0xff;
+                            int g1c = (rgb1 >> 8) & 0xff;
+                            int b1 = rgb1 & 0xff;
+                            int r2 = (rgb2 >> 16) & 0xff;
+                            int g2c = (rgb2 >> 8) & 0xff;
+                            int b2 = rgb2 & 0xff;
+                            int dr = r1 - r2;
+                            int dg = g1c - g2c;
+                            int db = b1 - b2;
+                            sumSq += dr * dr + dg * dg + db * db;
+                        }
+                    }
+                    double mse = sumSq / (double)(W * H * 3);
+                    double similarity = 100.0 * (1.0 - (mse / (255.0 * 255.0)));
+
+                    if (similarity > bestScore) {
+                        bestScore = similarity;
+                        bestFile = f;
+                        bestImg = faceImg;
+                    }
+                } catch (IOException ex) {
+                    // skip file
+                }
+            }
+
+            if (bestFile != null && bestScore >= 30.0) {
+                match_path.setText(bestFile.getName());
+                match_similarity.setText(String.format("SIMILARITY : %.1f", bestScore));
+                match_properties.setText("LOCAL MATCH\nFile: " + bestFile.getName() + "\nSimilarity: " + String.format("%.2f", bestScore));
+                ImageIcon ico = new ImageIcon(bestImg.getScaledInstance(match.getWidth(), match.getHeight(), Image.SCALE_SMOOTH));
+                match.setIcon(ico);
+                JOptionPane.showMessageDialog(null, "Local match found: " + bestFile.getName() + " (" + String.format("%.1f", bestScore) + "%)");
+            } else {
+                JOptionPane.showMessageDialog(null, "No local match found (best: " + (bestScore < 0 ? "n/a" : String.format("%.1f", bestScore)) + "%).");
+                match.setIcon(null);
+            }
+
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(null, "Error during local search: " + ex.getMessage());
+        }
+    }
 
     
     

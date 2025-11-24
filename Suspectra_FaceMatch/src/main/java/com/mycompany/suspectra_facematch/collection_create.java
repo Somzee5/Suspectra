@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.mycompany.thirdeye_facematch;
+package com.mycompany.suspectra_facematch;
 
 import com.amazonaws.services.rekognition.AmazonRekognition;
 import com.amazonaws.services.rekognition.AmazonRekognitionClientBuilder;
@@ -16,9 +16,11 @@ import com.amazonaws.services.rekognition.model.CreateCollectionResult;
  */
 public class collection_create {
     public static void main(String[] args) throws Exception {
-            AmazonRekognition rekognitionClient = AmazonRekognitionClientBuilder.defaultClient();
+                AmazonRekognition rekognitionClient = AmazonRekognitionClientBuilder.standard()
+                   .withRegion("us-east-1")
+                   .build();
 
-            String collectionId = "Records"; //Collection Name to be Created
+            String collectionId = "suspectra_collection"; //Collection Name to be Created
 
             System.out.println("Creating collection: " + collectionId );
 

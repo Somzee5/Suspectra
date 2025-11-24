@@ -5,6 +5,8 @@
  */
 package com.mycompany.suspectra_facematch;
 
+import java.util.List;
+
 import com.amazonaws.services.rekognition.AmazonRekognition;
 import com.amazonaws.services.rekognition.AmazonRekognitionClientBuilder;
 import com.amazonaws.services.rekognition.model.FaceRecord;
@@ -12,20 +14,21 @@ import com.amazonaws.services.rekognition.model.Image;
 import com.amazonaws.services.rekognition.model.IndexFacesRequest;
 import com.amazonaws.services.rekognition.model.IndexFacesResult;
 import com.amazonaws.services.rekognition.model.S3Object;
-import java.util.List;
 
 /**
  *
  * @author Akash Sahu
  */
 public class collection_add_image {
-    public static final String collectionId = "Records";
-    public static final String bucket = "thirdeyepics";
-    public static final String photo = "f1-003-01.jpg";
+    public static final String collectionId = "suspectra_collection";
+    public static final String bucket = "suspectra-facematch-somzee5";
+    public static final String photo = "a-sharukh.jpg";
 
     public static void main(String[] args) throws Exception {
 
-        AmazonRekognition rekognitionClient = AmazonRekognitionClientBuilder.defaultClient();
+        AmazonRekognition rekognitionClient = AmazonRekognitionClientBuilder.standard()
+            .withRegion("us-east-1")
+            .build();
 
         Image image = new Image()
                 .withS3Object(new S3Object()
