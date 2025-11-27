@@ -12,7 +12,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Properties;
-import java.util.Random;
+
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -47,15 +47,7 @@ public class Login_screenController implements Initializable {
     @FXML
     private TextField password;
     @FXML
-    private TextField otp;
-    @FXML
-    private Text error;
-    @FXML
     private Button send;
-    @FXML
-    private Button verify;
-    @FXML
-    private Text hide;
     
     
     //Connect DB
@@ -63,9 +55,9 @@ public class Login_screenController implements Initializable {
     PreparedStatement preparedStatement = null;
     ResultSet resultSet = null;
     @FXML
-    private Text loginerror;
+    private Text error;
     @FXML
-    private Text hide1;
+    private Text loginerror;
     @FXML
     private Text loginmsg;
     @FXML
@@ -109,56 +101,6 @@ public class Login_screenController implements Initializable {
             }
         }
     }
-    
-    //OTP GENERATE FUNTION
-    public void Random(){
-        Random rd=new Random();
-        hide.setText(""+rd.nextInt(10000+1));
-    }
-    
-    //SEND OTP FUNTION
-    public void Sendotp(){
-        // TEMPORARY: Show OTP directly in app instead of sending email
-        // This allows testing without Gmail setup issues
-        
-        try {
-            // Generate and display OTP directly
-            String otpValue = hide.getText();
-            error.setText("OTP is: " + otpValue + " (Email sending disabled for testing)");
-            
-            // Uncomment the email code below once Gmail is properly configured
-            /*
-            Properties props=new Properties();
-            props.put("mail.smtp.host","smtp.gmail.com");
-            props.put("mail.smtp.port",587);
-            props.put("mail.smtp.user","sohampatilsp55@gmail.com");
-            props.put("mail.smtp.auth",true);
-            props.put("mail.smtp.starttls.enable",true);
-            props.put("mail.smtp.debug",true);
-            
-            Session session = Session.getDefaultInstance(props, null);
-            session.setDebug(true);
-            MimeMessage message = new MimeMessage(session);
-            message.setText("Your OTP is " + hide.getText());
-            message.setSubject("OTP For your ThirdEye Account");
-            message.setFrom(new InternetAddress("sohampatilsp55@gmail.com"));
-            message.addRecipient(MimeMessage.RecipientType.TO, new InternetAddress(email.getText().trim()));
-            message.saveChanges();
-            
-            Transport transport = session.getTransport("smtp");
-            transport.connect("smtp.gmail.com","sohampatilsp55@gmail.com","fjci ztfm achj pcqc");
-            transport.sendMessage(message, message.getAllRecipients());
-            transport.close();
-            
-            error.setText("OTP is been sent to your registered Email");
-            */
-            
-        } catch (Exception e) {
-            error.setText("Error: " + e.getMessage());
-            System.out.println("OTP Error: " + e.getMessage());
-        }
-    }
-    
     // LOGIN FUNCTION
     private String Login() { 
         //test connection 
@@ -209,27 +151,16 @@ public class Login_screenController implements Initializable {
     @FXML
     private void handleButtonAction(ActionEvent event) {
         if(event.getSource()==send){
-            Login();  // Log IN Code
+            String loginStatus = Login();  // Log IN Code
             // This code will run only when the login is successful
             if (loginerror.getText().equals(loginmsg.getText())) {
-                Random(); //OTP Generator
-                send.setVisible(false);
-                otp.setVisible(true);
-                verify.setVisible(true);
-                Sendotp(); // OTP Funtion
-            } else {
-                error.setText("Enter Correct Email/Password");
-            }
-        }else if(event.getSource()==verify){
-            // If OTP is verified only then move to new screen
-            if (hide.getText().equals(otp.getText())) {
-                //OPEN NEW WINDOW FUNTION
+                // Navigate directly to menu after successful login
                 try {
                     FXMLLoader fxmlLoader = new FXMLLoader();
                     fxmlLoader.setLocation(getClass().getResource("menu.fxml"));
                     Scene scene = new Scene(fxmlLoader.load());
                     Stage stage = new Stage();
-                    stage.setTitle("New Window");
+                    stage.setTitle("Suspectra - Menu");
                     stage.setScene(scene);
                     stage.resizableProperty().setValue(false);
                     stage.show();
@@ -239,7 +170,7 @@ public class Login_screenController implements Initializable {
                     logger.log(Level.SEVERE, "Failed to create new Window.", e);
                 }
             } else {
-                error.setText("OTP is Incorrect");
+                error.setText("Enter Correct Email/Password");
             }
         }
     }

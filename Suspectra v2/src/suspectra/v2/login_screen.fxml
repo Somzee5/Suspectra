@@ -70,11 +70,7 @@
             <Font name="Futura Md BT Medium" size="20.0" />
          </font>
       </TextField>
-      <TextField fx:id="otp" layoutX="555.0" layoutY="335.0" prefHeight="53.0" prefWidth="386.0" promptText="OTP" visible="false">
-         <font>
-            <Font name="Futura Md BT Medium" size="20.0" />
-         </font>
-      </TextField>
+
       <Text fx:id="error" fill="WHITE" layoutX="557.0" layoutY="423.0" lineSpacing="5.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="411.6289367675781" AnchorPane.leftAnchor="557.0" AnchorPane.topAnchor="409.0">
          <font>
             <Font name="Futura Bk BT Book" size="16.0" />
@@ -85,26 +81,14 @@
             <Font name="Futura Md BT Bold" size="17.0" />
          </font>
       </Button>
-      <Button fx:id="verify" layoutX="558.0" layoutY="461.0" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="53.0" prefWidth="146.0" text="VERIFY OTP" visible="false" AnchorPane.leftAnchor="558.0" AnchorPane.topAnchor="461.0">
-         <font>
-            <Font name="Futura Md BT Bold" size="17.0" />
-         </font>
-      </Button>
-      <Text fx:id="hide" fill="WHITE" layoutX="750.0" layoutY="494.0" lineSpacing="5.0" strokeType="OUTSIDE" strokeWidth="0.0" text="otp" visible="false" wrappingWidth="146.29562377929688" AnchorPane.leftAnchor="750.0" AnchorPane.topAnchor="478.59375">
-         <font>
-            <Font name="Futura Bk BT Book" size="16.0" />
-         </font>
-      </Text>
+
+
       <Text fx:id="loginerror" fill="RED" layoutX="559.0" layoutY="551.0" lineSpacing="5.0" strokeType="OUTSIDE" strokeWidth="0.0" visible="false" wrappingWidth="411.6289367675781" AnchorPane.leftAnchor="559.0" AnchorPane.topAnchor="535.59375">
          <font>
             <Font name="Futura Bk BT Book" size="16.0" />
          </font>
       </Text>
-      <Text fx:id="hide1" fill="WHITE" layoutX="760.0" layoutY="504.0" lineSpacing="5.0" strokeType="OUTSIDE" strokeWidth="0.0" text="otp" visible="false" wrappingWidth="146.29562377929688">
-         <font>
-            <Font name="Futura Bk BT Book" size="16.0" />
-         </font>
-      </Text>
+
       <Text fx:id="loginmsg" fill="WHITE" layoutX="760.0" layoutY="504.0" lineSpacing="5.0" strokeType="OUTSIDE" strokeWidth="0.0" text="successful" visible="false" wrappingWidth="146.29562377929688">
          <font>
             <Font name="Futura Bk BT Book" size="16.0" />
