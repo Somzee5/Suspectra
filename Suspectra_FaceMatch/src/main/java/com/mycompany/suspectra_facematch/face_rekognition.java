@@ -72,119 +72,364 @@ public class face_rekognition extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPanel1 = new javax.swing.JPanel();
+        titleLabel = new javax.swing.JLabel();
+        subtitleLabel = new javax.swing.JLabel();
+        sketchPanel = new javax.swing.JPanel();
+        sketchLabel = new javax.swing.JLabel();
         sketch = new javax.swing.JLabel();
+        matchPanel = new javax.swing.JPanel();
+        matchLabel = new javax.swing.JLabel();
         match = new javax.swing.JLabel();
-        jSeparator1 = new javax.swing.JSeparator();
+        buttonPanel = new javax.swing.JPanel();
         open_sketch = new javax.swing.JButton();
         upload_sketch = new javax.swing.JButton();
         find_match = new javax.swing.JButton();
+        resultsPanel = new javax.swing.JPanel();
+        resultsLabel = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         match_properties = new javax.swing.JTextArea();
         match_similarity = new javax.swing.JLabel();
-        jSeparator2 = new javax.swing.JSeparator();
+        statusPanel = new javax.swing.JPanel();
+        statusLabel = new javax.swing.JLabel();
         sketch_path = new javax.swing.JTextField();
         match_path = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Suspectra - Face Recognition System");
+        setBackground(new java.awt.Color(245, 247, 250));
+        setMinimumSize(new java.awt.Dimension(1200, 800));
 
-        sketch.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel1.setBorder(javax.swing.BorderFactory.createEmptyBorder(20, 30, 20, 30));
 
-        match.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        titleLabel.setFont(new java.awt.Font("Segoe UI", 1, 32)); // NOI18N
+        titleLabel.setForeground(new java.awt.Color(30, 58, 138));
+        titleLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        titleLabel.setText("🔍 Suspectra Face Match");
 
-        open_sketch.setText("OPEN SKETCH");
+        subtitleLabel.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        subtitleLabel.setForeground(new java.awt.Color(100, 116, 139));
+        subtitleLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        subtitleLabel.setText("AI-Powered Facial Recognition & Sketch Matching System");
+
+        sketchPanel.setBackground(new java.awt.Color(248, 250, 252));
+        sketchPanel.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(203, 213, 225), 2), javax.swing.BorderFactory.createEmptyBorder(15, 15, 15, 15)));
+
+        sketchLabel.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
+        sketchLabel.setForeground(new java.awt.Color(51, 65, 85));
+        sketchLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        sketchLabel.setText("📷 Upload Sketch");
+
+        sketch.setBackground(new java.awt.Color(255, 255, 255));
+        sketch.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
+        sketch.setForeground(new java.awt.Color(148, 163, 184));
+        sketch.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        sketch.setText("No image selected");
+        sketch.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(226, 232, 240), 2), javax.swing.BorderFactory.createEmptyBorder(10, 10, 10, 10)));
+        sketch.setOpaque(true);
+
+        javax.swing.GroupLayout sketchPanelLayout = new javax.swing.GroupLayout(sketchPanel);
+        sketchPanel.setLayout(sketchPanelLayout);
+        sketchPanelLayout.setHorizontalGroup(
+            sketchPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(sketchLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(sketch, javax.swing.GroupLayout.DEFAULT_SIZE, 340, Short.MAX_VALUE)
+        );
+        sketchPanelLayout.setVerticalGroup(
+            sketchPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(sketchPanelLayout.createSequentialGroup()
+                .addComponent(sketchLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(sketch, javax.swing.GroupLayout.DEFAULT_SIZE, 310, Short.MAX_VALUE))
+        );
+
+        matchPanel.setBackground(new java.awt.Color(248, 250, 252));
+        matchPanel.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(203, 213, 225), 2), javax.swing.BorderFactory.createEmptyBorder(15, 15, 15, 15)));
+
+        matchLabel.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
+        matchLabel.setForeground(new java.awt.Color(51, 65, 85));
+        matchLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        matchLabel.setText("✅ Matched Face");
+
+        match.setBackground(new java.awt.Color(255, 255, 255));
+        match.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
+        match.setForeground(new java.awt.Color(148, 163, 184));
+        match.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        match.setText("No match found yet");
+        match.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(226, 232, 240), 2), javax.swing.BorderFactory.createEmptyBorder(10, 10, 10, 10)));
+        match.setOpaque(true);
+
+        javax.swing.GroupLayout matchPanelLayout = new javax.swing.GroupLayout(matchPanel);
+        matchPanel.setLayout(matchPanelLayout);
+        matchPanelLayout.setHorizontalGroup(
+            matchPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(matchLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(match, javax.swing.GroupLayout.DEFAULT_SIZE, 340, Short.MAX_VALUE)
+        );
+        matchPanelLayout.setVerticalGroup(
+            matchPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(matchPanelLayout.createSequentialGroup()
+                .addComponent(matchLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(match, javax.swing.GroupLayout.DEFAULT_SIZE, 310, Short.MAX_VALUE))
+        );
+
+        buttonPanel.setBackground(new java.awt.Color(255, 255, 255));
+        buttonPanel.setBorder(javax.swing.BorderFactory.createEmptyBorder(20, 0, 10, 0));
+
+        open_sketch.setBackground(new java.awt.Color(59, 130, 246));
+        open_sketch.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        open_sketch.setForeground(new java.awt.Color(255, 255, 255));
+        open_sketch.setText("📁 Open Sketch");
+        open_sketch.setBorder(javax.swing.BorderFactory.createEmptyBorder(12, 24, 12, 24));
+        open_sketch.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        open_sketch.setFocusPainted(false);
+        open_sketch.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                open_sketchMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                open_sketchMouseExited(evt);
+            }
+        });
         open_sketch.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 open_sketchActionPerformed(evt);
             }
         });
 
-        upload_sketch.setText("UPLOAD SKETCH");
+        upload_sketch.setBackground(new java.awt.Color(16, 185, 129));
+        upload_sketch.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        upload_sketch.setForeground(new java.awt.Color(255, 255, 255));
+        upload_sketch.setText("☁️ Upload to AWS");
+        upload_sketch.setBorder(javax.swing.BorderFactory.createEmptyBorder(12, 24, 12, 24));
+        upload_sketch.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        upload_sketch.setFocusPainted(false);
+        upload_sketch.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                upload_sketchMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                upload_sketchMouseExited(evt);
+            }
+        });
         upload_sketch.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 upload_sketchActionPerformed(evt);
             }
         });
 
-        find_match.setText("FIND MATCH");
+        find_match.setBackground(new java.awt.Color(139, 92, 246));
+        find_match.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        find_match.setForeground(new java.awt.Color(255, 255, 255));
+        find_match.setText("🔎 Find Match");
+        find_match.setBorder(javax.swing.BorderFactory.createEmptyBorder(12, 24, 12, 24));
+        find_match.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        find_match.setFocusPainted(false);
+        find_match.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                find_matchMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                find_matchMouseExited(evt);
+            }
+        });
         find_match.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 find_matchActionPerformed(evt);
             }
         });
 
+        javax.swing.GroupLayout buttonPanelLayout = new javax.swing.GroupLayout(buttonPanel);
+        buttonPanel.setLayout(buttonPanelLayout);
+        buttonPanelLayout.setHorizontalGroup(
+            buttonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(buttonPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(open_sketch, javax.swing.GroupLayout.DEFAULT_SIZE, 222, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addComponent(upload_sketch, javax.swing.GroupLayout.DEFAULT_SIZE, 222, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addComponent(find_match, javax.swing.GroupLayout.DEFAULT_SIZE, 222, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        buttonPanelLayout.setVerticalGroup(
+            buttonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(buttonPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(buttonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(open_sketch, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(upload_sketch, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(find_match, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        resultsPanel.setBackground(new java.awt.Color(248, 250, 252));
+        resultsPanel.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(203, 213, 225), 2), javax.swing.BorderFactory.createEmptyBorder(15, 15, 15, 15)));
+
+        resultsLabel.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
+        resultsLabel.setForeground(new java.awt.Color(51, 65, 85));
+        resultsLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        resultsLabel.setText("📊 Match Details");
+
+        jScrollPane1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(226, 232, 240), 2));
+
+        match_properties.setBackground(new java.awt.Color(255, 255, 255));
         match_properties.setColumns(20);
+        match_properties.setFont(new java.awt.Font("Consolas", 0, 12)); // NOI18N
+        match_properties.setForeground(new java.awt.Color(71, 85, 105));
         match_properties.setRows(5);
+        match_properties.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 10, 10, 10));
         jScrollPane1.setViewportView(match_properties);
 
-        match_similarity.setFont(new java.awt.Font("Roboto", 1, 18)); // NOI18N
-        match_similarity.setForeground(new java.awt.Color(0, 204, 0));
+        match_similarity.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        match_similarity.setForeground(new java.awt.Color(16, 185, 129));
+        match_similarity.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        match_similarity.setText("Ready to match...");
+
+        javax.swing.GroupLayout resultsPanelLayout = new javax.swing.GroupLayout(resultsPanel);
+        resultsPanel.setLayout(resultsPanelLayout);
+        resultsPanelLayout.setHorizontalGroup(
+            resultsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(resultsLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 278, Short.MAX_VALUE)
+            .addComponent(match_similarity, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        resultsPanelLayout.setVerticalGroup(
+            resultsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(resultsPanelLayout.createSequentialGroup()
+                .addComponent(resultsLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(match_similarity, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 260, Short.MAX_VALUE))
+        );
+
+        statusPanel.setBackground(new java.awt.Color(241, 245, 249));
+        statusPanel.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createMatteBorder(2, 0, 0, 0, new java.awt.Color(226, 232, 240)), javax.swing.BorderFactory.createEmptyBorder(15, 20, 15, 20)));
+
+        statusLabel.setFont(new java.awt.Font("Segoe UI", 0, 11)); // NOI18N
+        statusLabel.setForeground(new java.awt.Color(100, 116, 139));
+        statusLabel.setText("💡 Status: Ready | Click 'Open Sketch' to begin");
+
+        sketch_path.setEditable(false);
+        sketch_path.setBackground(new java.awt.Color(248, 250, 252));
+        sketch_path.setFont(new java.awt.Font("Segoe UI", 0, 10)); // NOI18N
+        sketch_path.setForeground(new java.awt.Color(100, 116, 139));
+        sketch_path.setBorder(javax.swing.BorderFactory.createEmptyBorder(5, 8, 5, 8));
+
+        match_path.setEditable(false);
+        match_path.setBackground(new java.awt.Color(248, 250, 252));
+        match_path.setFont(new java.awt.Font("Segoe UI", 0, 10)); // NOI18N
+        match_path.setForeground(new java.awt.Color(100, 116, 139));
+        match_path.setBorder(javax.swing.BorderFactory.createEmptyBorder(5, 8, 5, 8));
+
+        javax.swing.GroupLayout statusPanelLayout = new javax.swing.GroupLayout(statusPanel);
+        statusPanel.setLayout(statusPanelLayout);
+        statusPanelLayout.setHorizontalGroup(
+            statusPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(statusPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(statusLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(sketch_path, javax.swing.GroupLayout.DEFAULT_SIZE, 290, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addComponent(match_path, javax.swing.GroupLayout.DEFAULT_SIZE, 290, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        statusPanelLayout.setVerticalGroup(
+            statusPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(statusPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(statusPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(statusLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(sketch_path, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(match_path, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(titleLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(subtitleLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(buttonPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(statusPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(sketchPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addComponent(matchPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addComponent(resultsPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addComponent(titleLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(subtitleLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(sketchPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(matchPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(resultsPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(buttonPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(statusPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(50, 50, 50)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jSeparator2)
-                    .addComponent(jSeparator1)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(sketch, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(29, 29, 29)
-                        .addComponent(match, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(open_sketch, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(upload_sketch, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(find_match, javax.swing.GroupLayout.DEFAULT_SIZE, 139, Short.MAX_VALUE))
-                    .addComponent(match_similarity, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(32, 32, 32)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 243, Short.MAX_VALUE)
-                    .addComponent(sketch_path)
-                    .addComponent(match_path))
-                .addContainerGap(53, Short.MAX_VALUE))
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(42, 42, 42)
-                .addComponent(match_similarity, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(1, 1, 1)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(sketch, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(match, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jScrollPane1))
-                .addGap(18, 18, 18)
-                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(sketch_path, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(7, 7, 7)
-                        .addComponent(match_path, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 13, Short.MAX_VALUE))
-                    .addComponent(open_sketch, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(upload_sketch, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(find_match, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(42, 42, 42))
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
+    // Button hover effects
+    private void open_sketchMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_open_sketchMouseEntered
+        open_sketch.setBackground(new java.awt.Color(37, 99, 235));
+    }//GEN-LAST:event_open_sketchMouseEntered
+
+    private void open_sketchMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_open_sketchMouseExited
+        open_sketch.setBackground(new java.awt.Color(59, 130, 246));
+    }//GEN-LAST:event_open_sketchMouseExited
+
+    private void upload_sketchMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_upload_sketchMouseEntered
+        upload_sketch.setBackground(new java.awt.Color(5, 150, 105));
+    }//GEN-LAST:event_upload_sketchMouseEntered
+
+    private void upload_sketchMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_upload_sketchMouseExited
+        upload_sketch.setBackground(new java.awt.Color(16, 185, 129));
+    }//GEN-LAST:event_upload_sketchMouseExited
+
+    private void find_matchMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_find_matchMouseEntered
+        find_match.setBackground(new java.awt.Color(109, 40, 217));
+    }//GEN-LAST:event_find_matchMouseEntered
+
+    private void find_matchMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_find_matchMouseExited
+        find_match.setBackground(new java.awt.Color(139, 92, 246));
+    }//GEN-LAST:event_find_matchMouseExited
+
     // OPEN SKETCH AND VIEW IMAGE AND PATH
     private void open_sketchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_open_sketchActionPerformed
         JFileChooser fileChooser = new JFileChooser("E:\\NetBeans\\ThirdEye_FaceMatch\\src\\main\\java\\com\\mycompany\\thirdeye_facematch\\sketches"); 
         //Limit type of file name extensions supported. 
-        FileNameExtensionFilter filter = new FileNameExtensionFilter("4 Extensions Supported", "jpg", "png", "jpeg", "gif"); 
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("Image Files (*.jpg, *.png, *.jpeg, *.gif)", "jpg", "png", "jpeg", "gif"); 
         fileChooser.setFileFilter(filter); 
-        int selected = fileChooser.showOpenDialog(null); 
+        int selected = fileChooser.showOpenDialog(this); 
         
         //check if open button has been clicked. 
         if (selected == JFileChooser.APPROVE_OPTION) { 
@@ -193,15 +438,26 @@ public class face_rekognition extends javax.swing.JFrame {
             //Get Path of the selected image.
             String getselectedImage = file.getAbsolutePath(); 
             
-            //Display image path on Message Dialog
-            JOptionPane.showMessageDialog(null, "Selected Image Path is - \n" + getselectedImage); 
-            ImageIcon imIco = new ImageIcon(getselectedImage);
             sketch_path.setText(getselectedImage);
+            statusLabel.setText("💡 Status: Sketch loaded | Click 'Upload to AWS' to continue");
             
-            //make image fit on jlabel.
-            Image imFit = imIco.getImage(); 
-            Image imgFit = imFit.getScaledInstance(sketch.getWidth(), sketch.getHeight(), Image.SCALE_SMOOTH);
-            sketch.setIcon(new ImageIcon(imgFit));
+            // Clear match display when new sketch is loaded
+            match.setText("No match found yet");
+            match.setIcon(null);
+            match_similarity.setText("Ready to match...");
+            match_properties.setText("");
+            match_path.setText("");
+            
+            try {
+                ImageIcon imIco = new ImageIcon(getselectedImage);
+                //make image fit on jlabel.
+                Image imFit = imIco.getImage(); 
+                Image imgFit = imFit.getScaledInstance(sketch.getWidth(), sketch.getHeight(), Image.SCALE_SMOOTH);
+                sketch.setIcon(new ImageIcon(imgFit));
+                sketch.setText(""); // Clear placeholder text
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this, "Error loading image: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            }
         }        
     }//GEN-LAST:event_open_sketchActionPerformed
     
@@ -213,23 +469,28 @@ public class face_rekognition extends javax.swing.JFrame {
 
         // Validate that a sketch has been opened/selected first
         if (fileName == null || fileName.isBlank()) {
-            JOptionPane.showMessageDialog(null, "Please open a sketch first (click OPEN SKETCH).");
+            JOptionPane.showMessageDialog(this, "Please open a sketch first (click 'Open Sketch').", "No Sketch Selected", JOptionPane.WARNING_MESSAGE);
+            statusLabel.setText("⚠️ Status: No sketch selected | Click 'Open Sketch' first");
             return;
         }
 
         // Check for AWS credentials
         if (!hasAwsCredentials()) {
             if (!promptForAwsCredentials()) {
-                JOptionPane.showMessageDialog(null, "AWS credentials required. Cannot upload to S3.");
+                JOptionPane.showMessageDialog(this, "AWS credentials required. Cannot upload to S3.", "AWS Credentials Required", JOptionPane.ERROR_MESSAGE);
+                statusLabel.setText("❌ Status: Upload failed | AWS credentials required");
                 return;
             }
         }
 
+        statusLabel.setText("⏳ Status: Uploading sketch to AWS S3...");
+        
         // Clear previous match UI
-        match_path.setText(null);
+        match_path.setText("");
         match.setIcon(null);
-        match_similarity.setText(null);
-        match_properties.setText(null);
+        match.setText("No match found yet");
+        match_similarity.setText("Ready to match...");
+        match_properties.setText("");
 
         try {
             // Upload sketch to S3 bucket
@@ -261,7 +522,8 @@ public class face_rekognition extends javax.swing.JFrame {
             // Also save local copy for fallback
             fallbackLocalSave(fileName);
             
-            JOptionPane.showMessageDialog(null, "Sketch uploaded successfully to S3!\nS3 Key: " + s3Key + "\n\nNow click 'FIND MATCH' to search the collection.");
+            statusLabel.setText("✅ Status: Upload successful | Click 'Find Match' to search");
+            JOptionPane.showMessageDialog(this, "Sketch uploaded successfully to AWS S3!\n\nS3 Key: " + s3Key + "\n\nNow click 'Find Match' to search the collection.", "Upload Successful", JOptionPane.INFORMATION_MESSAGE);
             
         } catch (AmazonServiceException e) {
             System.err.println("AWS Service Error: " + e.getMessage());
@@ -279,10 +541,12 @@ public class face_rekognition extends javax.swing.JFrame {
                 errorMsg += "See FIX_ACCESS_DENIED.md for details.";
             }
             
-            JOptionPane.showMessageDialog(null, errorMsg);
+            statusLabel.setText("❌ Status: Upload failed | Check AWS permissions");
+            JOptionPane.showMessageDialog(this, errorMsg, "AWS Service Error", JOptionPane.ERROR_MESSAGE);
         } catch (SdkClientException e) {
             System.err.println("AWS Client Error: " + e.getMessage());
-            JOptionPane.showMessageDialog(null, "AWS Client Error: " + e.getMessage() + "\n\nFalling back to local matching...");
+            statusLabel.setText("⚠️ Status: AWS error | Falling back to local matching");
+            JOptionPane.showMessageDialog(this, "AWS Client Error: " + e.getMessage() + "\n\nFalling back to local matching...", "AWS Error", JOptionPane.WARNING_MESSAGE);
             // Fallback to local matching
             String localPath = sketch_path.getText();
             if (localPath != null && !localPath.isBlank()) {
@@ -291,7 +555,8 @@ public class face_rekognition extends javax.swing.JFrame {
         } catch (Exception e) {
             System.err.println("Unexpected error: " + e.getMessage());
             e.printStackTrace();
-            JOptionPane.showMessageDialog(null, "Error uploading sketch: " + e.getMessage());
+            statusLabel.setText("❌ Status: Upload failed | Error occurred");
+            JOptionPane.showMessageDialog(this, "Error uploading sketch: " + e.getMessage(), "Upload Error", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_upload_sketchActionPerformed
 
@@ -382,10 +647,13 @@ public class face_rekognition extends javax.swing.JFrame {
             if (localPath != null && localPath.contains("sketches") && localPath.contains("test.jpg")) {
                 s3Key = "sketches/test.jpg";
             } else {
-                JOptionPane.showMessageDialog(null, "Please upload the sketch to S3 first (click UPLOAD SKETCH).");
+                JOptionPane.showMessageDialog(this, "Please upload the sketch to S3 first (click 'Upload to AWS').", "No Upload Found", JOptionPane.WARNING_MESSAGE);
+                statusLabel.setText("⚠️ Status: No uploaded sketch | Click 'Upload to AWS' first");
                 return;
             }
         }
+        
+        statusLabel.setText("🔍 Status: Searching AWS Rekognition collection...");
         
         System.out.println("[FaceMatch] Searching AWS Rekognition collection: " + collectionId);
         System.out.println("[FaceMatch] Using S3 image: s3://" + bucket + "/" + s3Key);
@@ -441,26 +709,110 @@ public class face_rekognition extends javax.swing.JFrame {
             match_path.setText(bestMatch.getFace().getExternalImageId());
             
             // Display the Similarity Percentage on the Screen
-            match_similarity.setText("SIMILARITY : " + String.format("%.1f", bestMatch.getSimilarity()) + "%");
+            double similarity = bestMatch.getSimilarity();
+            match_similarity.setText(String.format(">> %.2f%% Match", similarity));
             
-            // Display Properties
+            // Update similarity color based on match quality
+            if (similarity >= 95.0) {
+                match_similarity.setForeground(new java.awt.Color(16, 185, 129)); // Green - Excellent
+            } else if (similarity >= 85.0) {
+                match_similarity.setForeground(new java.awt.Color(59, 130, 246)); // Blue - Good
+            } else if (similarity >= 75.0) {
+                match_similarity.setForeground(new java.awt.Color(245, 158, 11)); // Orange - Fair
+            } else {
+                match_similarity.setForeground(new java.awt.Color(239, 68, 68)); // Red - Low
+            }
+            
+            // Display Properties with professional formatting
             StringBuilder props = new StringBuilder();
-            props.append("********************************************\n");
-            props.append("FACE MATCHED (AWS Rekognition)\n");
-            props.append("********************************************\n\n");
-            props.append("Name in database: ").append(bestMatch.getFace().getExternalImageId()).append("\n\n");
-            props.append("Similarity: ").append(String.format("%.2f", bestMatch.getSimilarity())).append("%\n\n");
-            props.append("Confidence: ").append(String.format("%.2f", bestMatch.getFace().getConfidence())).append("%\n\n");
             
+            // Header Section
+            props.append("+======================================================+\n");
+            props.append("|       >>> MATCH FOUND - AWS REKOGNITION <<<          |\n");
+            props.append("+======================================================+\n\n");
+            
+            // Match Quality Indicator
+            String matchQuality;
+            String qualityIcon;
+            if (similarity >= 95.0) {
+                matchQuality = "EXCELLENT";
+                qualityIcon = "[**]";
+            } else if (similarity >= 85.0) {
+                matchQuality = "GOOD";
+                qualityIcon = "[++]";
+            } else if (similarity >= 75.0) {
+                matchQuality = "FAIR";
+                qualityIcon = "[~~]";
+            } else {
+                matchQuality = "LOW";
+                qualityIcon = "[--]";
+            }
+            props.append(qualityIcon).append(" Match Quality: ").append(matchQuality).append("\n\n");
+            
+            // Primary Match Details
+            props.append("======================================================\n");
+            props.append(">>> MATCH DETAILS\n");
+            props.append("======================================================\n\n");
+            
+            // Extract clean name from file
+            String fileName = bestMatch.getFace().getExternalImageId();
+            String displayName = fileName.replace(".jpg", "").replace(".jpeg", "").replace(".png", "");
+            displayName = displayName.replace("-", " ").replace("_", " ");
+            // Capitalize each word
+            String[] words = displayName.split(" ");
+            StringBuilder nameBuilder = new StringBuilder();
+            for (String word : words) {
+                if (!word.isEmpty()) {
+                    nameBuilder.append(Character.toUpperCase(word.charAt(0)));
+                    if (word.length() > 1) {
+                        nameBuilder.append(word.substring(1).toLowerCase());
+                    }
+                    nameBuilder.append(" ");
+                }
+            }
+            displayName = nameBuilder.toString().trim();
+            
+            props.append(">> Identified Person:\n");
+            props.append("   ").append(displayName).append("\n\n");
+            
+            props.append(">> Database Reference:\n");
+            props.append("   ").append(fileName).append("\n\n");
+            
+            props.append(">> Similarity Score:\n");
+            props.append("   ").append(String.format("%.2f%%", similarity));
+            props.append(" - ").append(getSimilarityBar(similarity)).append("\n\n");
+            
+            props.append(">> Confidence Level:\n");
+            props.append("   ").append(String.format("%.2f%%", bestMatch.getFace().getConfidence()));
+            props.append(" - ").append(getConfidenceBar(bestMatch.getFace().getConfidence())).append("\n\n");
+            
+            props.append(">> Face ID:\n");
+            props.append("   ").append(bestMatch.getFace().getFaceId()).append("\n\n");
+            
+            // Additional matches section
             if (faceImageMatches.size() > 1) {
-                props.append("Other matches:\n");
+                props.append("======================================================\n");
+                props.append(">>> ALTERNATIVE MATCHES (").append(faceImageMatches.size() - 1).append(")\n");
+                props.append("======================================================\n\n");
+                
                 for (int i = 1; i < Math.min(faceImageMatches.size(), 4); i++) {
                     FaceMatch fm = faceImageMatches.get(i);
-                    props.append(String.format("  - %s (%.1f%%)\n", fm.getFace().getExternalImageId(), fm.getSimilarity()));
+                    String altName = fm.getFace().getExternalImageId();
+                    double altSim = fm.getSimilarity();
+                    props.append(String.format("%d. %s\n", i, altName));
+                    props.append(String.format("   Similarity: %.2f%% %s\n\n", altSim, getSimilarityBar(altSim)));
                 }
             }
             
+            // Footer
+            props.append("======================================================\n");
+            props.append("** Powered by AWS Rekognition\n");
+            props.append("** Matched at: ").append(new java.text.SimpleDateFormat("HH:mm:ss").format(new java.util.Date())).append("\n");
+            
             match_properties.setText(props.toString());
+            
+            // Update status
+            statusLabel.setText("✅ Status: Match found - " + displayName + " (" + String.format("%.2f%%", similarity) + ")");
             
             // Display Matched Image from S3 using S3 client
             String matchedImageKey = bestMatch.getFace().getExternalImageId();
@@ -508,19 +860,24 @@ public class face_rekognition extends javax.swing.JFrame {
                     );
                     
                     match.setIcon(new ImageIcon(scaledImage));
+                    match.setText(""); // Clear the "No match found yet" text
                     System.out.println("Successfully loaded and displayed matched image: " + matchedImageKey);
                 } else {
                     System.err.println("Failed to read image from S3: " + matchedImageKey);
+                    match.setText("Failed to load image");
                     JOptionPane.showMessageDialog(null, "Could not read matched image from S3: " + matchedImageKey);
                 }
             } catch (AmazonServiceException e) {
                 System.err.println("AWS Service Error loading image: " + e.getMessage());
+                match.setText("Error loading image from AWS");
                 JOptionPane.showMessageDialog(null, "Error loading matched image from S3: " + e.getErrorMessage());
             } catch (SdkClientException e) {
                 System.err.println("AWS Client Error loading image: " + e.getMessage());
+                match.setText("Error loading image from AWS");
                 JOptionPane.showMessageDialog(null, "Error loading matched image from S3: " + e.getMessage());
             } catch (IOException e) {
                 System.err.println("Error reading image from S3: " + e.getMessage());
+                match.setText("Failed to read image from AWS");
                 JOptionPane.showMessageDialog(null, "Could not read matched image from S3: " + matchedImageKey);
             }
             
@@ -541,6 +898,33 @@ public class face_rekognition extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_find_matchActionPerformed
 
+    // Helper method to create visual similarity bar
+    private String getSimilarityBar(double percentage) {
+        int filled = (int) (percentage / 5); // 20 segments for 0-100%
+        int empty = 20 - filled;
+        
+        StringBuilder bar = new StringBuilder();
+        bar.append("[");
+        
+        // Color-coded filled portion
+        for (int i = 0; i < filled; i++) {
+            bar.append("█");
+        }
+        
+        // Empty portion
+        for (int i = 0; i < empty; i++) {
+            bar.append("░");
+        }
+        
+        bar.append("]");
+        return bar.toString();
+    }
+    
+    // Helper method to create visual confidence bar
+    private String getConfidenceBar(Float percentage) {
+        return getSimilarityBar(percentage.doubleValue());
+    }
+    
     // Local search fallback: compare the selected sketch to images in the local `faces` folder
     private void searchLocally(String sketchFilePath) {
         if (sketchFilePath == null || sketchFilePath.isEmpty()) {
@@ -627,14 +1011,55 @@ public class face_rekognition extends javax.swing.JFrame {
 
             if (bestFile != null && bestScore >= 30.0) {
                 match_path.setText(bestFile.getName());
-                match_similarity.setText(String.format("SIMILARITY : %.1f", bestScore));
-                match_properties.setText("LOCAL MATCH\nFile: " + bestFile.getName() + "\nSimilarity: " + String.format("%.2f", bestScore));
+                
+                // Set similarity with color coding
+                match_similarity.setText(String.format(">> %.2f%% Match", bestScore));
+                if (bestScore >= 80.0) {
+                    match_similarity.setForeground(new java.awt.Color(16, 185, 129)); // Green
+                } else if (bestScore >= 60.0) {
+                    match_similarity.setForeground(new java.awt.Color(59, 130, 246)); // Blue
+                } else if (bestScore >= 40.0) {
+                    match_similarity.setForeground(new java.awt.Color(245, 158, 11)); // Orange
+                } else {
+                    match_similarity.setForeground(new java.awt.Color(239, 68, 68)); // Red
+                }
+                
+                // Professional formatting for local matches
+                StringBuilder localProps = new StringBuilder();
+                localProps.append("+======================================================+\n");
+                localProps.append("|       >>> MATCH FOUND - LOCAL DATABASE <<<           |\n");
+                localProps.append("+======================================================+\n\n");
+                
+                String quality = bestScore >= 80.0 ? "GOOD" : bestScore >= 60.0 ? "FAIR" : "LOW";
+                String icon = bestScore >= 80.0 ? "[++]" : bestScore >= 60.0 ? "[~~]" : "[--]";
+                localProps.append(icon).append(" Match Quality: ").append(quality).append("\n\n");
+                
+                localProps.append("======================================================\n");
+                localProps.append(">>> MATCH DETAILS\n");
+                localProps.append("======================================================\n\n");
+                
+                localProps.append(">> File Name:\n");
+                localProps.append("   ").append(bestFile.getName()).append("\n\n");
+                
+                localProps.append(">> Similarity Score:\n");
+                localProps.append("   ").append(String.format("%.2f%%", bestScore));
+                localProps.append(" - ").append(getSimilarityBar(bestScore)).append("\n\n");
+                
+                localProps.append("======================================================\n");
+                localProps.append("** Note: Local pixel-based comparison\n");
+                localProps.append("** Matched at: ").append(new java.text.SimpleDateFormat("HH:mm:ss").format(new java.util.Date())).append("\n");
+                
+                match_properties.setText(localProps.toString());
                 ImageIcon ico = new ImageIcon(bestImg.getScaledInstance(match.getWidth(), match.getHeight(), Image.SCALE_SMOOTH));
                 match.setIcon(ico);
-                JOptionPane.showMessageDialog(null, "Local match found: " + bestFile.getName() + " (" + String.format("%.1f", bestScore) + "%)");
+                match.setText(""); // Clear the "No match found yet" text
+                statusLabel.setText("✅ Status: Local match found - " + bestFile.getName());
+                JOptionPane.showMessageDialog(this, "Local match found: " + bestFile.getName() + " (" + String.format("%.1f", bestScore) + "%)", "Match Found", JOptionPane.INFORMATION_MESSAGE);
             } else {
-                JOptionPane.showMessageDialog(null, "No local match found (best: " + (bestScore < 0 ? "n/a" : String.format("%.1f", bestScore)) + "%).");
+                statusLabel.setText("❌ Status: No local match found above threshold");
+                JOptionPane.showMessageDialog(this, "No local match found above 30% threshold.\n\nBest score: " + (bestScore < 0 ? "n/a" : String.format("%.1f%%", bestScore)), "No Match", JOptionPane.WARNING_MESSAGE);
                 match.setIcon(null);
+                match.setText("No match found");
             }
 
         } catch (IOException ex) {
@@ -675,16 +1100,26 @@ public class face_rekognition extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton find_match;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JSeparator jSeparator2;
     private javax.swing.JLabel match;
+    private javax.swing.JLabel matchLabel;
+    private javax.swing.JPanel matchPanel;
     private javax.swing.JTextField match_path;
     private javax.swing.JTextArea match_properties;
     private javax.swing.JLabel match_similarity;
     private javax.swing.JButton open_sketch;
+    private javax.swing.JPanel resultsPanel;
+    private javax.swing.JLabel resultsLabel;
     private javax.swing.JLabel sketch;
+    private javax.swing.JLabel sketchLabel;
+    private javax.swing.JPanel sketchPanel;
     private javax.swing.JTextField sketch_path;
+    private javax.swing.JLabel statusLabel;
+    private javax.swing.JPanel statusPanel;
+    private javax.swing.JLabel subtitleLabel;
+    private javax.swing.JLabel titleLabel;
     private javax.swing.JButton upload_sketch;
+    private javax.swing.JPanel buttonPanel;
     // End of variables declaration//GEN-END:variables
 }
