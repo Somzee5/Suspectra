@@ -42,8 +42,17 @@ public class MenuController implements Initializable {
     @FXML //Open the sketch dashboard   
     private void sketch(MouseEvent event) {
             try {
+                System.out.println("Create Sketch button clicked!");
                 FXMLLoader fxmlLoader = new FXMLLoader();
-                fxmlLoader.setLocation(getClass().getResource("dashboard.fxml"));
+                URL fxmlUrl = getClass().getResource("dashboard.fxml");
+                System.out.println("Dashboard FXML URL: " + fxmlUrl);
+                
+                if (fxmlUrl == null) {
+                    System.err.println("Error: dashboard.fxml not found!");
+                    return;
+                }
+                
+                fxmlLoader.setLocation(fxmlUrl);
                 Scene scene = new Scene(fxmlLoader.load());
                 Stage stage = new Stage();
                 stage.setTitle("Suspectra v2 - Sketch Dashboard");
@@ -57,6 +66,12 @@ public class MenuController implements Initializable {
                 
             } catch (IOException e) {
                 Logger logger = Logger.getLogger(getClass().getName());
+                logger.log(Level.SEVERE, "Failed to load dashboard", e);
+                System.err.println("Error loading dashboard: " + e.getMessage());
+                e.printStackTrace();
+            } catch (Exception e) {
+                System.err.println("Unexpected error: " + e.getMessage());
+                e.printStackTrace();
             }
     }
 

@@ -590,14 +590,7 @@ public class DashboardController implements Initializable {
         if (sketch_size_decrease_btn != null) {
             sketch_size_decrease_btn.toFront();
         }
-        // Also bring the labels to front
-        if (sketch != null) {
-            sketch.getChildren().forEach(child -> {
-                if (child instanceof Label && (child.getId() == null || child.getId().contains("SIZE"))) {
-                    child.toFront();
-                }
-            });
-        }
+        // Labels will be brought to front automatically when their parent buttons are toFront()
 
         // Ensure resize controls are visible, interactive and always on top
         Rectangle[] resizeControls = new Rectangle[]{size_increase_btn, size_decrease_btn, sketch_size_increase_btn, sketch_size_decrease_btn};
@@ -1044,7 +1037,7 @@ public class DashboardController implements Initializable {
         // Set initial size based on element type (will be adjusted when image loads)
         // Default sizes for different component types
         Map<String, double[]> defaultSizes = new HashMap<>();
-        defaultSizes.put("head", new double[]{288, 464});
+        defaultSizes.put("head", new double[]{200, 320});
         defaultSizes.put("hair", new double[]{400, 500});
         defaultSizes.put("eyes", new double[]{150, 80});
         defaultSizes.put("eyebrows", new double[]{200, 60});
@@ -1229,7 +1222,10 @@ public class DashboardController implements Initializable {
                                     sketch_size_decrease_btn.toFront();
                                 }
                             } else {
-                                sketch.setVisible(false);
+                                // For 'more' type (ears), allow multiple selections - don't hide others
+                                if (!elementType.equalsIgnoreCase("more")) {
+                                    sketch.setVisible(false);
+                                }
                             }
                         }
                     }
@@ -1894,7 +1890,11 @@ public class DashboardController implements Initializable {
             FileChooser fileChooser = new FileChooser();
             fileChooser.setTitle("Save Image");
             //Directory 
-            fileChooser.setInitialDirectory(new File("./src/thirdeye/v2/elements/output/"));
+            File initialDir = new File("./src/suspectra/v2/elements/output/");
+            if (!initialDir.exists()) {
+                initialDir.mkdirs(); // Create directory if it doesn't exist
+            }
+            fileChooser.setInitialDirectory(initialDir);
             
             //Extension Filter
             FileChooser.ExtensionFilter extFilter;
@@ -2124,13 +2124,13 @@ public class DashboardController implements Initializable {
         more_s_6.setVisible(false);
     }
 
-        // Select the Elements to Show on CANVAS
-        @FXML
-        private void onHeadSelect(MouseEvent event) {
-            // First check if it's dynamic element
-            if (handleDynamicElementSelect(event, "head")) {
-                return;
-            }
+    // Select the Elements to Show on CANVAS
+    @FXML
+    private void onHeadSelect(MouseEvent event) {
+        // First check if it's dynamic element
+        if (handleDynamicElementSelect(event, "head")) {
+            return;
+        }
             
             if(event.getSource()==head_del) {
                 hideAllSketchElements("head");
@@ -2257,8 +2257,8 @@ public class DashboardController implements Initializable {
             }
         }
 
-        @FXML
-        private void onHairSelect(MouseEvent event) {
+    @FXML
+    private void onHairSelect(MouseEvent event) {
             // First check if it's dynamic element
             if (handleDynamicElementSelect(event, "hair")) {
                 return;
@@ -2439,8 +2439,8 @@ public class DashboardController implements Initializable {
             } 
         }
 
-        @FXML
-        private void onEyesSelect(MouseEvent event) {
+    @FXML
+    private void onEyesSelect(MouseEvent event) {
             // First check if it's dynamic element
             if (handleDynamicElementSelect(event, "eyes")) {
                 return;
@@ -2619,8 +2619,8 @@ public class DashboardController implements Initializable {
             } 
         }
 
-        @FXML
-        private void onEyeBSelect(MouseEvent event) {
+    @FXML
+    private void onEyeBSelect(MouseEvent event) {
             // First check if it's dynamic element
             if (handleDynamicElementSelect(event, "eyebrows")) {
                 return;
@@ -2799,8 +2799,8 @@ public class DashboardController implements Initializable {
             } 
         }
 
-        @FXML
-        private void onNoseSelect(MouseEvent event) {
+    @FXML
+    private void onNoseSelect(MouseEvent event) {
             // First check if it's dynamic element
             if (handleDynamicElementSelect(event, "nose")) {
                 return;
@@ -2979,8 +2979,8 @@ public class DashboardController implements Initializable {
             } 
         }
 
-        @FXML
-        private void onLipsSelect(MouseEvent event) {
+    @FXML
+    private void onLipsSelect(MouseEvent event) {
             // First check if it's dynamic element
             if (handleDynamicElementSelect(event, "lips")) {
                 return;
@@ -3159,8 +3159,8 @@ public class DashboardController implements Initializable {
             } 
         }
 
-        @FXML
-        private void onMustSelect(MouseEvent event) {
+    @FXML
+    private void onMustSelect(MouseEvent event) {
             // First check if it's dynamic element
             if (handleDynamicElementSelect(event, "mustach")) {
                 return;
@@ -3339,8 +3339,8 @@ public class DashboardController implements Initializable {
             } 
         }
 
-        @FXML
-        private void onMoreSelect(MouseEvent event) {
+    @FXML
+    private void onMoreSelect(MouseEvent event) {
             // First check if it's dynamic element
             if (handleDynamicElementSelect(event, "more")) {
                 return;
@@ -3355,23 +3355,15 @@ public class DashboardController implements Initializable {
                 more_s_5.setVisible(false);
                 more_s_6.setVisible(false);
             } else if(event.getSource()==more_e_1) {
-                more_s_1.setVisible(true);
-                more_s_2.setVisible(false);
-                more_s_3.setVisible(false);
-                more_s_4.setVisible(false);
+                // Toggle left ear (more_s_1)
+                more_s_1.setVisible(!more_s_1.isVisible());
             } else if(event.getSource()==more_e_2) {
-                more_s_1.setVisible(true);
-                more_s_2.setVisible(true);
-                more_s_3.setVisible(false);
-                more_s_4.setVisible(false);
+                // Toggle right ear (more_s_2)
+                more_s_2.setVisible(!more_s_2.isVisible());
             } else if(event.getSource()==more_e_3) {
-                more_s_1.setVisible(false);
-                more_s_2.setVisible(false);
                 more_s_3.setVisible(true);
                 more_s_4.setVisible(false);
             } else if(event.getSource()==more_e_4) {
-                more_s_1.setVisible(false);
-                more_s_2.setVisible(false);
                 more_s_3.setVisible(true);
                 more_s_4.setVisible(true);
             } else if(event.getSource()==more_e_5) {
