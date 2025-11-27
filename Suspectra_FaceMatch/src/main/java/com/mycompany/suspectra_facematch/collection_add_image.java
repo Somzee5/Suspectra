@@ -17,7 +17,6 @@ import com.amazonaws.services.rekognition.model.S3Object;
 
 /**
  *
- * @author Akash Sahu
  */
 public class collection_add_image {
     public static final String collectionId = "suspectra_collection";

@@ -12,7 +12,6 @@ import com.amazonaws.services.rekognition.model.DeleteCollectionResult;
 
 /**
  *
- * @author Akash Sahu
  */
 public class collection_delete {
     public static void main(String[] args) throws Exception {

@@ -37,7 +37,6 @@ import javax.imageio.ImageIO;
 /**
  * FXML Controller class
  *
- * @author Akash Sahu
  */
 public class DashboardController implements Initializable {
 

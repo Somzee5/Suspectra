@@ -5,9 +5,11 @@
  */
 package suspectra.v2;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -21,7 +23,6 @@ import javafx.stage.Stage;
 /**
  * FXML Controller class
  *
- * @author Akash Sahu
  */
 public class MenuController implements Initializable {
 
@@ -59,21 +60,23 @@ public class MenuController implements Initializable {
             }
     }
 
-    @FXML //Open upload sketch window
+    @FXML //Open upload sketch window - Launch FaceMatch application
     private void upload(MouseEvent event) {
          try {
-                FXMLLoader fxmlLoader = new FXMLLoader();
-                fxmlLoader.setLocation(getClass().getResource("upload_sketch.fxml"));
-                Scene scene = new Scene(fxmlLoader.load());
-                Stage stage = new Stage();
-                stage.setTitle("New Window");
-                stage.setScene(scene);
-                stage.resizableProperty().setValue(false); //Disable maximize button
-                stage.show();
+                // Launch the FaceMatch application using Maven
+                ProcessBuilder processBuilder = new ProcessBuilder(
+                    "cmd.exe", "/c", 
+                    "cd /d \"d:\\Suspectra\\Suspectra_FaceMatch\" && mvn exec:java -Dexec.mainClass=com.mycompany.suspectra_facematch.face_rekognition"
+                );
+                processBuilder.directory(new File("d:\\Suspectra\\Suspectra_FaceMatch"));
+                processBuilder.start();
+                
+                // Close the current menu window
                 ((Node)(event.getSource())).getScene().getWindow().hide();
                 
             } catch (IOException e) {
                 Logger logger = Logger.getLogger(getClass().getName());
+                logger.log(Level.SEVERE, "Failed to launch FaceMatch application", e);
             }
     }
     

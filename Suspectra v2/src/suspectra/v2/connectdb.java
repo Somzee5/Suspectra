@@ -11,7 +11,6 @@ import java.sql.SQLException;
 
 /**
  *
- * @author Akash Sahu
  */
 public class connectdb {
     Connection conn = null;

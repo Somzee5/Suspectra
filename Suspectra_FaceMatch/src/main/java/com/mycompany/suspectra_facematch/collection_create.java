@@ -10,10 +10,7 @@ import com.amazonaws.services.rekognition.AmazonRekognitionClientBuilder;
 import com.amazonaws.services.rekognition.model.CreateCollectionRequest;
 import com.amazonaws.services.rekognition.model.CreateCollectionResult;
 
-/**
- *
- * @author Akash Sahu
- */
+
 public class collection_create {
     public static void main(String[] args) throws Exception {
                 AmazonRekognition rekognitionClient = AmazonRekognitionClientBuilder.standard()

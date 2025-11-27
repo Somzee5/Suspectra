@@ -16,7 +16,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
  *
- * @author Akash Sahu
  */
 public class collection_list {
     public static final String collectionId = "Records"; //Collection Name

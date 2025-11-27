@@ -48,10 +48,7 @@ import java.nio.file.StandardOpenOption;
 import java.util.Arrays;
 import java.util.Optional;
 
-/**
- *
- * @author Akash Sahu
- */
+
 public class face_rekognition extends javax.swing.JFrame {
     
     // Store the S3 key of the uploaded sketch

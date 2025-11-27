@@ -18,7 +18,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
  *
- * @author Akash Sahu
  */
 public class collection_search_face {
         // Set these to the collection and bucket you created earlier

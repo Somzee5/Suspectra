@@ -14,7 +14,6 @@ import javafx.stage.StageStyle;
 
 /**
  *
- * @author Akash Sahu
  */
 public class SuspectraV2 extends Application {
     

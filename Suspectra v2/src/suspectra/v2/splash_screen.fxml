@@ -18,10 +18,5 @@
             <Font name="Futura Bk BT Book" size="20.0" />
          </font>
       </Text>
-      <Text fill="WHITE" layoutX="715.0" layoutY="583.0" strokeType="OUTSIDE" strokeWidth="0.0" text="© MGM's Collge of Engineering and Technology">
-         <font>
-            <Font name="Futura Bk BT Book" size="14.0" />
-         </font>
-      </Text>
    </children>
 </AnchorPane>

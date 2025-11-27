@@ -12,7 +12,6 @@ import javafx.fxml.Initializable;
 /**
  * FXML Controller class
  *
- * @author Akash Sahu
  */
 public class Upload_sketchController implements Initializable {
 
