@@ -8,14 +8,14 @@
 
 <AnchorPane fx:id="splash" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1024.0" styleClass=".root" stylesheets="@style.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="suspectra.v2.splash_screenController">
    <children>
-      <ImageView fitHeight="95.0" fitWidth="364.0" layoutX="334.0" layoutY="239.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="250.0" fitWidth="600.0" layoutX="212.0" layoutY="175.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@Transparent%20Logo.png" />
          </image>
       </ImageView>
-      <Text fill="WHITE" fontSmoothingType="LCD" layoutX="316.0" layoutY="388.0" strokeType="OUTSIDE" strokeWidth="0.0" text="A Forensic Face Sketch Creator" textAlignment="CENTER" wrappingWidth="415.8854064941406">
+      <Text fill="WHITE" fontSmoothingType="LCD" layoutX="280.0" layoutY="450.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Forensic Face Recognition Platform" textAlignment="CENTER" wrappingWidth="480.0">
          <font>
-            <Font name="Futura Bk BT Book" size="20.0" />
+            <Font name="Futura Md BT Medium" size="22.0" />
          </font>
       </Text>
    </children>

@@ -14,7 +14,7 @@
         <URL value="@menu.css" />
     </stylesheets>
    <children>
-      <ImageView fitHeight="85.0" fitWidth="386.0" layoutX="313.0" layoutY="112.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="313.0" AnchorPane.topAnchor="112.0">
+      <ImageView fitHeight="180.0" fitWidth="600.0" layoutX="212.0" layoutY="60.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="212.0" AnchorPane.topAnchor="60.0">
          <image>
             <Image url="@Transparent%20Logo.png" />
          </image>

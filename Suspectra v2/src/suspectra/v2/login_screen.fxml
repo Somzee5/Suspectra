@@ -15,7 +15,7 @@
         <URL value="@login_screen.css" />
     </stylesheets>
    <children>
-      <ImageView fitHeight="86.0" fitWidth="321.0" layoutX="67.0" layoutY="136.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="69.0" AnchorPane.topAnchor="289.0">
+      <ImageView fitHeight="180.0" fitWidth="450.0" layoutX="25.0" layoutY="220.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="25.0" AnchorPane.topAnchor="220.0">
          <image>
             <Image url="@Transparent%20Logo.png" />
          </image>

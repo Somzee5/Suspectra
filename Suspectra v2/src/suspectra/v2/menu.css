@@ -3,6 +3,7 @@
  */
 
 .mainFxmlClass {
-    -fx-background-image: url('menu.jpg');
+    -fx-background-image: url('login.jpg');
+    
     -fx-background-size: cover;
 }
