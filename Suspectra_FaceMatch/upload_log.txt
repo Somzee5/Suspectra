@@ -1,0 +1,17 @@
+[INFO] Scanning for projects...
+[INFO] 
+[INFO] -----------------< com.mycompany:Suspectra_FaceMatch >------------------
+[INFO] Building Suspectra_FaceMatch 1.0-SNAPSHOT
+[INFO]   from pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- exec:3.1.0:java (default-cli) @ Suspectra_FaceMatch ---
+========================================
+  BATCH FACE ADDITION TO AWS REKOGNITION
+========================================
+
+? AWS credentials found
+Folder: D:\Suspectra\Suspectra_FaceMatch\--add-opens
+? ERROR: Folder does not exist: D:\Suspectra\Suspectra_FaceMatch\--add-opens
+   Current working directory: D:\Suspectra\Suspectra_FaceMatch
+   Please check the folder path and try again.

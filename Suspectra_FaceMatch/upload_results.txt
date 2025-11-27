@@ -1,0 +1,1858 @@
+[INFO] Scanning for projects...
+[INFO] 
+[INFO] -----------------< com.mycompany:Suspectra_FaceMatch >------------------
+[INFO] Building Suspectra_FaceMatch 1.0-SNAPSHOT
+[INFO]   from pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- exec:3.1.0:java (default-cli) @ Suspectra_FaceMatch ---
+========================================
+  BATCH FACE ADDITION TO AWS REKOGNITION
+========================================
+
+? AWS credentials found
+Folder: D:\Suspectra\Suspectra_FaceMatch\src\main\java\com\mycompany\suspectra_facematch\colorimages
+Found 255 image file(s) to process
+
+Starting batch processing...
+========================================
+
+[1/255] Processing: .1.jpeg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/.1.jpeg
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+    Error Code: ValidationException
+    Status Code: 400
+  ? Uploaded but failed to index face (no face detected or error)
+
+[2/255] Processing: .2.jpeg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/.2.jpeg
+  ? Uploaded but failed to index face (no face detected or error)
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+    Error Code: ValidationException
+
+    Status Code: 400
+[3/255] Processing: .3.jpeg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/.3.jpeg
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+    Error Code: ValidationException
+    Status Code: 400
+  ? Uploaded but failed to index face (no face detected or error)
+
+[4/255] Processing: .4.jpeg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/.4.jpeg
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+    Error Code: ValidationException
+    Status Code: 400
+  ? Uploaded but failed to index face (no face detected or error)
+
+[5/255] Processing: 001.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/001.jpg
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+    Error Code: ValidationException
+    Status Code: 400
+  ? Uploaded but failed to index face (no face detected or error)
+
+[6/255] Processing: 002.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/002.jpg
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+    Error Code: ValidationException
+    Status Code: 400
+  ? Uploaded but failed to index face (no face detected or error)
+
+[7/255] Processing: 003.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/003.jpg
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+    Error Code: ValidationException
+    Status Code: 400
+  ? Uploaded but failed to index face (no face detected or error)
+
+[8/255] Processing: 004.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/004.jpg
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+    Error Code: ValidationException
+    Status Code: 400
+  ? Uploaded but failed to index face (no face detected or error)
+
+[9/255] Processing: 005.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/005.jpg
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+    Error Code: ValidationException
+    Status Code: 400
+  ? Uploaded but failed to index face (no face detected or error)
+
+[10/255] Processing: 006.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/006.jpg
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+    Error Code: ValidationException
+    Status Code: 400
+  ? Uploaded but failed to index face (no face detected or error)
+
+[11/255] Processing: 007.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/007.jpg
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+    Error Code: ValidationException
+    Status Code: 400
+  ? Uploaded but failed to index face (no face detected or error)
+
+[12/255] Processing: 008.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/008.jpg
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+    Error Code: ValidationException
+    Status Code: 400
+  ? Uploaded but failed to index face (no face detected or error)
+
+[13/255] Processing: 009.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/009.jpg
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+    Error Code: ValidationException
+    Status Code: 400
+  ? Uploaded but failed to index face (no face detected or error)
+
+[14/255] Processing: 010.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/010.jpg
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+    Error Code: ValidationException
+    Status Code: 400
+  ? Uploaded but failed to index face (no face detected or error)
+
+[15/255] Processing: 011.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/011.jpg
+  ? Uploaded but failed to index face (no face detected or error)
+
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+    Error Code: ValidationException
+    Status Code: 400
+[16/255] Processing: 012.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/012.jpg
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+    Error Code: ValidationException
+    Status Code: 400
+  ? Uploaded but failed to index face (no face detected or error)
+
+[17/255] Processing: 013.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/013.jpg
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+    Error Code: ValidationException
+    Status Code: 400
+  ? Uploaded but failed to index face (no face detected or error)
+
+[18/255] Processing: 014.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/014.jpg
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+    Error Code: ValidationException
+    Status Code: 400
+  ? Uploaded but failed to index face (no face detected or error)
+
+[19/255] Processing: 015.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/015.jpg
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+    Error Code: ValidationException
+    Status Code: 400
+  ? Uploaded but failed to index face (no face detected or error)
+
+[20/255] Processing: 016.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/016.jpg
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+    Error Code: ValidationException
+    Status Code: 400
+  ? Uploaded but failed to index face (no face detected or error)
+
+[21/255] Processing: 017.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/017.jpg
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+    Error Code: ValidationException
+    Status Code: 400
+  ? Uploaded but failed to index face (no face detected or error)
+
+[22/255] Processing: 018.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/018.jpg
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+    Error Code: ValidationException
+    Status Code: 400
+  ? Uploaded but failed to index face (no face detected or error)
+
+[23/255] Processing: 019.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/019.jpg
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+    Error Code: ValidationException
+    Status Code: 400
+  ? Uploaded but failed to index face (no face detected or error)
+
+[24/255] Processing: 020.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/020.jpg
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+    Error Code: ValidationException
+    Status Code: 400
+  ? Uploaded but failed to index face (no face detected or error)
+
+[25/255] Processing: 021.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/021.jpg
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+    Error Code: ValidationException
+    Status Code: 400
+  ? Uploaded but failed to index face (no face detected or error)
+
+[26/255] Processing: 022.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/022.jpg
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+    Error Code: ValidationException
+    Status Code: 400
+  ? Uploaded but failed to index face (no face detected or error)
+
+[27/255] Processing: 023.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/023.jpg
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+    Error Code: ValidationException
+    Status Code: 400
+  ? Uploaded but failed to index face (no face detected or error)
+
+[28/255] Processing: 024.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/024.jpg
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+    Error Code: ValidationException
+    Status Code: 400
+  ? Uploaded but failed to index face (no face detected or error)
+
+[29/255] Processing: 025.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/025.jpg
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+    Error Code: ValidationException
+    Status Code: 400
+  ? Uploaded but failed to index face (no face detected or error)
+
+[30/255] Processing: 026.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/026.jpg
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+    Error Code: ValidationException
+    Status Code: 400
+  ? Uploaded but failed to index face (no face detected or error)
+
+[31/255] Processing: 027.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/027.jpg
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+  ? Uploaded but failed to index face (no face detected or error)
+    Error Code: ValidationException
+
+    Status Code: 400
+[32/255] Processing: 028.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/028.jpg
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+    Error Code: ValidationException
+    Status Code: 400
+  ? Uploaded but failed to index face (no face detected or error)
+
+[33/255] Processing: 029.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/029.jpg
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+    Error Code: ValidationException
+    Status Code: 400
+  ? Uploaded but failed to index face (no face detected or error)
+
+[34/255] Processing: 030.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/030.jpg
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+    Error Code: ValidationException
+    Status Code: 400
+  ? Uploaded but failed to index face (no face detected or error)
+
+[35/255] Processing: 031.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/031.jpg
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+    Error Code: ValidationException
+  ? Uploaded but failed to index face (no face detected or error)
+
+    Status Code: 400
+[36/255] Processing: 032.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/032.jpg
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+    Error Code: ValidationException
+    Status Code: 400
+  ? Uploaded but failed to index face (no face detected or error)
+
+[37/255] Processing: 033.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/033.jpg
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+    Error Code: ValidationException
+    Status Code: 400
+  ? Uploaded but failed to index face (no face detected or error)
+
+[38/255] Processing: 034.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/034.jpg
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+    Error Code: ValidationException
+    Status Code: 400
+  ? Uploaded but failed to index face (no face detected or error)
+
+[39/255] Processing: 035.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/035.jpg
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+    Error Code: ValidationException
+    Status Code: 400
+  ? Uploaded but failed to index face (no face detected or error)
+
+[40/255] Processing: 036.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/036.jpg
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+    Error Code: ValidationException
+    Status Code: 400
+  ? Uploaded but failed to index face (no face detected or error)
+
+[41/255] Processing: 037.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/037.jpg
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+    Error Code: ValidationException
+    Status Code: 400
+  ? Uploaded but failed to index face (no face detected or error)
+
+[42/255] Processing: 038.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/038.jpg
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+    Error Code: ValidationException
+    Status Code: 400
+  ? Uploaded but failed to index face (no face detected or error)
+
+[43/255] Processing: 039.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/039.jpg
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+    Error Code: ValidationException
+    Status Code: 400
+  ? Uploaded but failed to index face (no face detected or error)
+
+[44/255] Processing: 040.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/040.jpg
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+    Error Code: ValidationException
+    Status Code: 400
+  ? Uploaded but failed to index face (no face detected or error)
+
+[45/255] Processing: 041.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/041.jpg
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+    Error Code: ValidationException
+    Status Code: 400
+  ? Uploaded but failed to index face (no face detected or error)
+
+[46/255] Processing: 042.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/042.jpg
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+    Error Code: ValidationException
+  ? Uploaded but failed to index face (no face detected or error)
+
+    Status Code: 400
+[47/255] Processing: 043.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/043.jpg
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+    Error Code: ValidationException
+    Status Code: 400
+  ? Uploaded but failed to index face (no face detected or error)
+
+[48/255] Processing: 044.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/044.jpg
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+    Error Code: ValidationException
+    Status Code: 400
+  ? Uploaded but failed to index face (no face detected or error)
+
+[49/255] Processing: 045.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/045.jpg
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+    Error Code: ValidationException
+    Status Code: 400
+  ? Uploaded but failed to index face (no face detected or error)
+
+[50/255] Processing: 046.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/046.jpg
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+    Error Code: ValidationException
+    Status Code: 400
+  ? Uploaded but failed to index face (no face detected or error)
+
+[51/255] Processing: 047.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/047.jpg
+  ? Uploaded but failed to index face (no face detected or error)
+
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+    Error Code: ValidationException
+    Status Code: 400
+[52/255] Processing: 048.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/048.jpg
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+    Error Code: ValidationException
+    Status Code: 400
+  ? Uploaded but failed to index face (no face detected or error)
+
+[53/255] Processing: 049.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/049.jpg
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+    Error Code: ValidationException
+    Status Code: 400
+  ? Uploaded but failed to index face (no face detected or error)
+
+[54/255] Processing: 050.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/050.jpg
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+    Error Code: ValidationException
+    Status Code: 400
+  ? Uploaded but failed to index face (no face detected or error)
+
+[55/255] Processing: 051.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/051.jpg
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+  ? Uploaded but failed to index face (no face detected or error)
+    Error Code: ValidationException
+    Status Code: 400
+
+[56/255] Processing: 052.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/052.jpg
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+    Error Code: ValidationException
+    Status Code: 400
+  ? Uploaded but failed to index face (no face detected or error)
+
+[57/255] Processing: 053.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/053.jpg
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+  ? Uploaded but failed to index face (no face detected or error)
+
+    Error Code: ValidationException
+    Status Code: 400
+[58/255] Processing: 054.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/054.jpg
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+    Error Code: ValidationException
+    Status Code: 400
+  ? Uploaded but failed to index face (no face detected or error)
+
+[59/255] Processing: 055.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/055.jpg
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+    Error Code: ValidationException
+    Status Code: 400
+  ? Uploaded but failed to index face (no face detected or error)
+
+[60/255] Processing: 056.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/056.jpg
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+    Error Code: ValidationException
+    Status Code: 400
+  ? Uploaded but failed to index face (no face detected or error)
+
+[61/255] Processing: 057.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/057.jpg
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+    Error Code: ValidationException
+    Status Code: 400
+  ? Uploaded but failed to index face (no face detected or error)
+
+[62/255] Processing: 058.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/058.jpg
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+    Error Code: ValidationException
+    Status Code: 400
+  ? Uploaded but failed to index face (no face detected or error)
+
+[63/255] Processing: 059.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/059.jpg
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+    Error Code: ValidationException
+    Status Code: 400
+  ? Uploaded but failed to index face (no face detected or error)
+
+[64/255] Processing: 060.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/060.jpg
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+    Error Code: ValidationException
+    Status Code: 400
+  ? Uploaded but failed to index face (no face detected or error)
+
+[65/255] Processing: 061.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/061.jpg
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+    Error Code: ValidationException
+    Status Code: 400
+  ? Uploaded but failed to index face (no face detected or error)
+
+[66/255] Processing: 062.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/062.jpg
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+    Error Code: ValidationException
+    Status Code: 400
+  ? Uploaded but failed to index face (no face detected or error)
+
+[67/255] Processing: 063.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/063.jpg
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+    Error Code: ValidationException
+    Status Code: 400
+  ? Uploaded but failed to index face (no face detected or error)
+
+[68/255] Processing: 064.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/064.jpg
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+    Error Code: ValidationException
+    Status Code: 400
+  ? Uploaded but failed to index face (no face detected or error)
+
+[69/255] Processing: 065.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/065.jpg
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+    Error Code: ValidationException
+    Status Code: 400
+  ? Uploaded but failed to index face (no face detected or error)
+
+[70/255] Processing: 066.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/066.jpg
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+    Error Code: ValidationException
+    Status Code: 400
+  ? Uploaded but failed to index face (no face detected or error)
+
+[71/255] Processing: 067.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/067.jpg
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+    Error Code: ValidationException
+    Status Code: 400
+  ? Uploaded but failed to index face (no face detected or error)
+
+[72/255] Processing: 068.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/068.jpg
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+    Error Code: ValidationException
+    Status Code: 400
+  ? Uploaded but failed to index face (no face detected or error)
+
+[73/255] Processing: 069.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/069.jpg
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+    Error Code: ValidationException
+    Status Code: 400
+  ? Uploaded but failed to index face (no face detected or error)
+
+[74/255] Processing: 070.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/070.jpg
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+    Error Code: ValidationException
+    Status Code: 400
+  ? Uploaded but failed to index face (no face detected or error)
+
+[75/255] Processing: 071.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/071.jpg
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+    Error Code: ValidationException
+    Status Code: 400
+  ? Uploaded but failed to index face (no face detected or error)
+
+[76/255] Processing: 072.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/072.jpg
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+    Error Code: ValidationException
+    Status Code: 400
+  ? Uploaded but failed to index face (no face detected or error)
+
+[77/255] Processing: 073.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/073.jpg
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+    Error Code: ValidationException
+    Status Code: 400
+  ? Uploaded but failed to index face (no face detected or error)
+
+[78/255] Processing: 074.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/074.jpg
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+    Error Code: ValidationException
+    Status Code: 400
+  ? Uploaded but failed to index face (no face detected or error)
+
+[79/255] Processing: 075.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/075.jpg
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+    Error Code: ValidationException
+    Status Code: 400
+  ? Uploaded but failed to index face (no face detected or error)
+
+[80/255] Processing: 076.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/076.jpg
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+    Error Code: ValidationException
+    Status Code: 400
+  ? Uploaded but failed to index face (no face detected or error)
+
+[81/255] Processing: 077.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/077.jpg
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+    Error Code: ValidationException
+    Status Code: 400
+  ? Uploaded but failed to index face (no face detected or error)
+
+[82/255] Processing: 078.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/078.jpg
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+    Error Code: ValidationException
+    Status Code: 400
+  ? Uploaded but failed to index face (no face detected or error)
+
+[83/255] Processing: 079.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/079.jpg
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+    Error Code: ValidationException
+    Status Code: 400
+  ? Uploaded but failed to index face (no face detected or error)
+
+[84/255] Processing: 080.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/080.jpg
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+    Error Code: ValidationException
+    Status Code: 400
+  ? Uploaded but failed to index face (no face detected or error)
+
+[85/255] Processing: 081.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/081.jpg
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+    Error Code: ValidationException
+    Status Code: 400
+  ? Uploaded but failed to index face (no face detected or error)
+
+[86/255] Processing: 082.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/082.jpg
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+    Error Code: ValidationException
+    Status Code: 400
+  ? Uploaded but failed to index face (no face detected or error)
+
+[87/255] Processing: 083.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/083.jpg
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+    Error Code: ValidationException
+    Status Code: 400
+  ? Uploaded but failed to index face (no face detected or error)
+
+[88/255] Processing: 084.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/084.jpg
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+  ? Uploaded but failed to index face (no face detected or error)
+    Error Code: ValidationException
+    Status Code: 400
+
+[89/255] Processing: 085.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/085.jpg
+  ? Uploaded but failed to index face (no face detected or error)
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+
+    Error Code: ValidationException
+    Status Code: 400
+[90/255] Processing: 086.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/086.jpg
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+    Error Code: ValidationException
+    Status Code: 400
+  ? Uploaded but failed to index face (no face detected or error)
+
+[91/255] Processing: 087.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/087.jpg
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+  ? Uploaded but failed to index face (no face detected or error)
+    Error Code: ValidationException
+
+    Status Code: 400
+[92/255] Processing: 088.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/088.jpg
+  ? Uploaded but failed to index face (no face detected or error)
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+
+    Error Code: ValidationException
+    Status Code: 400
+[93/255] Processing: 089.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/089.jpg
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+    Error Code: ValidationException
+    Status Code: 400
+  ? Uploaded but failed to index face (no face detected or error)
+
+[94/255] Processing: 090.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/090.jpg
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+    Error Code: ValidationException
+    Status Code: 400
+  ? Uploaded but failed to index face (no face detected or error)
+
+[95/255] Processing: 091.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/091.jpg
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+    Error Code: ValidationException
+    Status Code: 400
+  ? Uploaded but failed to index face (no face detected or error)
+
+[96/255] Processing: 092.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/092.jpg
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+    Error Code: ValidationException
+    Status Code: 400
+  ? Uploaded but failed to index face (no face detected or error)
+
+[97/255] Processing: 093.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/093.jpg
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+    Error Code: ValidationException
+    Status Code: 400
+  ? Uploaded but failed to index face (no face detected or error)
+
+[98/255] Processing: 094.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/094.jpg
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+    Error Code: ValidationException
+    Status Code: 400
+  ? Uploaded but failed to index face (no face detected or error)
+
+[99/255] Processing: 095.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/095.jpg
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+    Error Code: ValidationException
+  ? Uploaded but failed to index face (no face detected or error)
+
+    Status Code: 400
+[100/255] Processing: 096.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/096.jpg
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+    Error Code: ValidationException
+    Status Code: 400
+  ? Uploaded but failed to index face (no face detected or error)
+
+[101/255] Processing: 097.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/097.jpg
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+    Error Code: ValidationException
+    Status Code: 400
+  ? Uploaded but failed to index face (no face detected or error)
+
+[102/255] Processing: 098.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/098.jpg
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+    Error Code: ValidationException
+    Status Code: 400
+  ? Uploaded but failed to index face (no face detected or error)
+
+[103/255] Processing: 099.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/099.jpg
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+    Error Code: ValidationException
+    Status Code: 400
+  ? Uploaded but failed to index face (no face detected or error)
+
+[104/255] Processing: 100.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/100.jpg
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+    Error Code: ValidationException
+    Status Code: 400
+  ? Uploaded but failed to index face (no face detected or error)
+
+[105/255] Processing: 101.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/101.jpg
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+    Error Code: ValidationException
+    Status Code: 400
+  ? Uploaded but failed to index face (no face detected or error)
+
+[106/255] Processing: 102.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/102.jpg
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+    Error Code: ValidationException
+    Status Code: 400
+  ? Uploaded but failed to index face (no face detected or error)
+
+[107/255] Processing: 103.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/103.jpg
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+  ? Uploaded but failed to index face (no face detected or error)
+
+    Error Code: ValidationException
+    Status Code: 400
+[108/255] Processing: 104.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/104.jpg
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+    Error Code: ValidationException
+    Status Code: 400
+  ? Uploaded but failed to index face (no face detected or error)
+
+[109/255] Processing: 105.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/105.jpg
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+    Error Code: ValidationException
+    Status Code: 400
+  ? Uploaded but failed to index face (no face detected or error)
+
+[110/255] Processing: 106.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/106.jpg
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+    Error Code: ValidationException
+    Status Code: 400
+  ? Uploaded but failed to index face (no face detected or error)
+
+[111/255] Processing: 107.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/107.jpg
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+    Error Code: ValidationException
+    Status Code: 400
+  ? Uploaded but failed to index face (no face detected or error)
+
+[112/255] Processing: 108.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/108.jpg
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+    Error Code: ValidationException
+    Status Code: 400
+  ? Uploaded but failed to index face (no face detected or error)
+
+[113/255] Processing: 109.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/109.jpg
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+    Error Code: ValidationException
+    Status Code: 400
+  ? Uploaded but failed to index face (no face detected or error)
+
+[114/255] Processing: 110.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/110.jpg
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+    Error Code: ValidationException
+    Status Code: 400
+  ? Uploaded but failed to index face (no face detected or error)
+
+[115/255] Processing: 111.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/111.jpg
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+    Error Code: ValidationException
+    Status Code: 400
+  ? Uploaded but failed to index face (no face detected or error)
+
+[116/255] Processing: 112.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/112.jpg
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+    Error Code: ValidationException
+    Status Code: 400
+  ? Uploaded but failed to index face (no face detected or error)
+
+[117/255] Processing: 113.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/113.jpg
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+    Error Code: ValidationException
+    Status Code: 400
+  ? Uploaded but failed to index face (no face detected or error)
+
+[118/255] Processing: 114.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/114.jpg
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+    Error Code: ValidationException
+    Status Code: 400
+  ? Uploaded but failed to index face (no face detected or error)
+
+[119/255] Processing: 115.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/115.jpg
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+    Error Code: ValidationException
+    Status Code: 400
+  ? Uploaded but failed to index face (no face detected or error)
+
+[120/255] Processing: 116.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/116.jpg
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+    Error Code: ValidationException
+    Status Code: 400
+  ? Uploaded but failed to index face (no face detected or error)
+
+[121/255] Processing: 117.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/117.jpg
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+    Error Code: ValidationException
+    Status Code: 400
+  ? Uploaded but failed to index face (no face detected or error)
+
+[122/255] Processing: 118.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/118.jpg
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+    Error Code: ValidationException
+    Status Code: 400
+  ? Uploaded but failed to index face (no face detected or error)
+
+[123/255] Processing: 119.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/119.jpg
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+    Error Code: ValidationException
+    Status Code: 400
+  ? Uploaded but failed to index face (no face detected or error)
+
+[124/255] Processing: 120.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/120.jpg
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+    Error Code: ValidationException
+    Status Code: 400
+  ? Uploaded but failed to index face (no face detected or error)
+
+[125/255] Processing: 121.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/121.jpg
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+    Error Code: ValidationException
+    Status Code: 400
+  ? Uploaded but failed to index face (no face detected or error)
+
+[126/255] Processing: 122.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/122.jpg
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+    Error Code: ValidationException
+    Status Code: 400
+  ? Uploaded but failed to index face (no face detected or error)
+
+[127/255] Processing: 123.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/123.jpg
+  ? Uploaded but failed to index face (no face detected or error)
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+
+    Error Code: ValidationException
+    Status Code: 400
+[128/255] Processing: 124.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/124.jpg
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+    Error Code: ValidationException
+    Status Code: 400
+  ? Uploaded but failed to index face (no face detected or error)
+
+[129/255] Processing: 125.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/125.jpg
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+    Error Code: ValidationException
+    Status Code: 400
+  ? Uploaded but failed to index face (no face detected or error)
+
+[130/255] Processing: 126.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/126.jpg
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+    Error Code: ValidationException
+    Status Code: 400
+  ? Uploaded but failed to index face (no face detected or error)
+
+[131/255] Processing: 127.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/127.jpg
+  ? Uploaded but failed to index face (no face detected or error)
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+
+    Error Code: ValidationException
+    Status Code: 400
+[132/255] Processing: 128.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/128.jpg
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+    Error Code: ValidationException
+    Status Code: 400
+  ? Uploaded but failed to index face (no face detected or error)
+
+[133/255] Processing: 129.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/129.jpg
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+    Error Code: ValidationException
+    Status Code: 400
+  ? Uploaded but failed to index face (no face detected or error)
+
+[134/255] Processing: 130.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/130.jpg
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+    Error Code: ValidationException
+    Status Code: 400
+  ? Uploaded but failed to index face (no face detected or error)
+
+[135/255] Processing: 131.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/131.jpg
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+    Error Code: ValidationException
+    Status Code: 400
+  ? Uploaded but failed to index face (no face detected or error)
+
+[136/255] Processing: 132.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/132.jpg
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+    Error Code: ValidationException
+    Status Code: 400
+  ? Uploaded but failed to index face (no face detected or error)
+
+[137/255] Processing: 133.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/133.jpg
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+    Error Code: ValidationException
+    Status Code: 400
+  ? Uploaded but failed to index face (no face detected or error)
+
+[138/255] Processing: 134.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/134.jpg
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+    Error Code: ValidationException
+    Status Code: 400
+  ? Uploaded but failed to index face (no face detected or error)
+
+[139/255] Processing: 135.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/135.jpg
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+    Error Code: ValidationException
+    Status Code: 400
+  ? Uploaded but failed to index face (no face detected or error)
+
+[140/255] Processing: 136.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/136.jpg
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+    Error Code: ValidationException
+    Status Code: 400
+  ? Uploaded but failed to index face (no face detected or error)
+
+[141/255] Processing: 137.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/137.jpg
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+    Error Code: ValidationException
+    Status Code: 400
+  ? Uploaded but failed to index face (no face detected or error)
+
+[142/255] Processing: 138.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/138.jpg
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+    Error Code: ValidationException
+    Status Code: 400
+  ? Uploaded but failed to index face (no face detected or error)
+
+[143/255] Processing: 139.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/139.jpg
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+    Error Code: ValidationException
+    Status Code: 400
+  ? Uploaded but failed to index face (no face detected or error)
+
+[144/255] Processing: 140.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/140.jpg
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+    Error Code: ValidationException
+    Status Code: 400
+  ? Uploaded but failed to index face (no face detected or error)
+
+[145/255] Processing: 141.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/141.jpg
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+    Error Code: ValidationException
+    Status Code: 400
+  ? Uploaded but failed to index face (no face detected or error)
+
+[146/255] Processing: 142.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/142.jpg
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+    Error Code: ValidationException
+    Status Code: 400
+  ? Uploaded but failed to index face (no face detected or error)
+
+[147/255] Processing: 143.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/143.jpg
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+    Error Code: ValidationException
+    Status Code: 400
+  ? Uploaded but failed to index face (no face detected or error)
+
+[148/255] Processing: 144.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/144.jpg
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+    Error Code: ValidationException
+    Status Code: 400
+  ? Uploaded but failed to index face (no face detected or error)
+
+[149/255] Processing: 145.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/145.jpg
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+    Error Code: ValidationException
+    Status Code: 400
+  ? Uploaded but failed to index face (no face detected or error)
+
+[150/255] Processing: 146.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/146.jpg
+  ? Uploaded but failed to index face (no face detected or error)
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+
+    Error Code: ValidationException
+    Status Code: 400
+[151/255] Processing: 147.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/147.jpg
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+    Error Code: ValidationException
+    Status Code: 400
+  ? Uploaded but failed to index face (no face detected or error)
+
+[152/255] Processing: 148.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/148.jpg
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+    Error Code: ValidationException
+    Status Code: 400
+  ? Uploaded but failed to index face (no face detected or error)
+
+[153/255] Processing: 149.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/149.jpg
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+    Error Code: ValidationException
+    Status Code: 400
+  ? Uploaded but failed to index face (no face detected or error)
+
+[154/255] Processing: 150.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/150.jpg
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+    Error Code: ValidationException
+    Status Code: 400
+  ? Uploaded but failed to index face (no face detected or error)
+
+[155/255] Processing: 151.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/151.jpg
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+    Error Code: ValidationException
+    Status Code: 400
+  ? Uploaded but failed to index face (no face detected or error)
+
+[156/255] Processing: 152.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/152.jpg
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+    Error Code: ValidationException
+    Status Code: 400
+  ? Uploaded but failed to index face (no face detected or error)
+
+[157/255] Processing: 153.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/153.jpg
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+    Error Code: ValidationException
+    Status Code: 400
+  ? Uploaded but failed to index face (no face detected or error)
+
+[158/255] Processing: 154.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/154.jpg
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+    Error Code: ValidationException
+    Status Code: 400
+  ? Uploaded but failed to index face (no face detected or error)
+
+[159/255] Processing: 155.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/155.jpg
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+    Error Code: ValidationException
+    Status Code: 400
+  ? Uploaded but failed to index face (no face detected or error)
+
+[160/255] Processing: 156.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/156.jpg
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+    Error Code: ValidationException
+    Status Code: 400
+  ? Uploaded but failed to index face (no face detected or error)
+
+[161/255] Processing: 157.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/157.jpg
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+    Error Code: ValidationException
+    Status Code: 400
+  ? Uploaded but failed to index face (no face detected or error)
+
+[162/255] Processing: 158.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/158.jpg
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+    Error Code: ValidationException
+    Status Code: 400
+  ? Uploaded but failed to index face (no face detected or error)
+
+[163/255] Processing: 159.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/159.jpg
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+    Error Code: ValidationException
+    Status Code: 400
+  ? Uploaded but failed to index face (no face detected or error)
+
+[164/255] Processing: 160.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/160.jpg
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+    Error Code: ValidationException
+    Status Code: 400
+  ? Uploaded but failed to index face (no face detected or error)
+
+[165/255] Processing: 161.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/161.jpg
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+    Error Code: ValidationException
+    Status Code: 400
+  ? Uploaded but failed to index face (no face detected or error)
+
+[166/255] Processing: 162.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/162.jpg
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+    Error Code: ValidationException
+    Status Code: 400
+  ? Uploaded but failed to index face (no face detected or error)
+
+[167/255] Processing: 163.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/163.jpg
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+    Error Code: ValidationException
+    Status Code: 400
+  ? Uploaded but failed to index face (no face detected or error)
+
+[168/255] Processing: 164.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/164.jpg
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+    Error Code: ValidationException
+    Status Code: 400
+  ? Uploaded but failed to index face (no face detected or error)
+
+[169/255] Processing: 165.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/165.jpg
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+  ? Uploaded but failed to index face (no face detected or error)
+    Error Code: ValidationException
+
+    Status Code: 400
+[170/255] Processing: 166.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/166.jpg
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+    Error Code: ValidationException
+    Status Code: 400
+  ? Uploaded but failed to index face (no face detected or error)
+
+[171/255] Processing: 167.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/167.jpg
+  ? Uploaded but failed to index face (no face detected or error)
+
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+    Error Code: ValidationException
+    Status Code: 400
+[172/255] Processing: 168.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/168.jpg
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+    Error Code: ValidationException
+    Status Code: 400
+  ? Uploaded but failed to index face (no face detected or error)
+
+[173/255] Processing: 169.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/169.jpg
+  ? Uploaded but failed to index face (no face detected or error)
+
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+    Error Code: ValidationException
+    Status Code: 400
+[174/255] Processing: 170.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/170.jpg
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+    Error Code: ValidationException
+    Status Code: 400
+  ? Uploaded but failed to index face (no face detected or error)
+
+[175/255] Processing: 171.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/171.jpg
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+    Error Code: ValidationException
+    Status Code: 400
+  ? Uploaded but failed to index face (no face detected or error)
+
+[176/255] Processing: 172.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/172.jpg
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+    Error Code: ValidationException
+    Status Code: 400
+  ? Uploaded but failed to index face (no face detected or error)
+
+[177/255] Processing: 173.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/173.jpg
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+    Error Code: ValidationException
+    Status Code: 400
+  ? Uploaded but failed to index face (no face detected or error)
+
+[178/255] Processing: 174.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/174.jpg
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+    Error Code: ValidationException
+    Status Code: 400
+  ? Uploaded but failed to index face (no face detected or error)
+
+[179/255] Processing: 175.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/175.jpg
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+    Error Code: ValidationException
+    Status Code: 400
+  ? Uploaded but failed to index face (no face detected or error)
+
+[180/255] Processing: 176.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/176.jpg
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+    Error Code: ValidationException
+    Status Code: 400
+  ? Uploaded but failed to index face (no face detected or error)
+
+[181/255] Processing: 177.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/177.jpg
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+    Error Code: ValidationException
+    Status Code: 400
+  ? Uploaded but failed to index face (no face detected or error)
+
+[182/255] Processing: 178.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/178.jpg
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+  ? Uploaded but failed to index face (no face detected or error)
+    Error Code: ValidationException
+
+    Status Code: 400
+[183/255] Processing: 179.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/179.jpg
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+    Error Code: ValidationException
+    Status Code: 400
+  ? Uploaded but failed to index face (no face detected or error)
+
+[184/255] Processing: 180.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/180.jpg
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+    Error Code: ValidationException
+    Status Code: 400
+  ? Uploaded but failed to index face (no face detected or error)
+
+[185/255] Processing: 181.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/181.jpg
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+    Error Code: ValidationException
+    Status Code: 400
+  ? Uploaded but failed to index face (no face detected or error)
+
+[186/255] Processing: 182.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/182.jpg
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+    Error Code: ValidationException
+    Status Code: 400
+  ? Uploaded but failed to index face (no face detected or error)
+
+[187/255] Processing: 183.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/183.jpg
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+    Error Code: ValidationException
+    Status Code: 400
+  ? Uploaded but failed to index face (no face detected or error)
+
+[188/255] Processing: 184.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/184.jpg
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+    Error Code: ValidationException
+    Status Code: 400
+  ? Uploaded but failed to index face (no face detected or error)
+
+[189/255] Processing: 185.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/185.jpg
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+    Error Code: ValidationException
+    Status Code: 400
+  ? Uploaded but failed to index face (no face detected or error)
+
+[190/255] Processing: 186.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/186.jpg
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+    Error Code: ValidationException
+    Status Code: 400
+  ? Uploaded but failed to index face (no face detected or error)
+
+[191/255] Processing: 187.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/187.jpg
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+    Error Code: ValidationException
+    Status Code: 400
+  ? Uploaded but failed to index face (no face detected or error)
+
+[192/255] Processing: 188.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/188.jpg
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+    Error Code: ValidationException
+    Status Code: 400
+  ? Uploaded but failed to index face (no face detected or error)
+
+[193/255] Processing: 189.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/189.jpg
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+    Error Code: ValidationException
+    Status Code: 400
+  ? Uploaded but failed to index face (no face detected or error)
+
+[194/255] Processing: 190.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/190.jpg
+  ? Uploaded but failed to index face (no face detected or error)
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+
+    Error Code: ValidationException
+    Status Code: 400
+[195/255] Processing: 191.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/191.jpg
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+    Error Code: ValidationException
+    Status Code: 400
+  ? Uploaded but failed to index face (no face detected or error)
+
+[196/255] Processing: 192.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/192.jpg
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+    Error Code: ValidationException
+    Status Code: 400
+  ? Uploaded but failed to index face (no face detected or error)
+
+[197/255] Processing: 193.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/193.jpg
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+    Error Code: ValidationException
+    Status Code: 400
+  ? Uploaded but failed to index face (no face detected or error)
+
+[198/255] Processing: 194.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/194.jpg
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+    Error Code: ValidationException
+    Status Code: 400
+  ? Uploaded but failed to index face (no face detected or error)
+
+[199/255] Processing: 195.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/195.jpg
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+    Error Code: ValidationException
+    Status Code: 400
+  ? Uploaded but failed to index face (no face detected or error)
+
+[200/255] Processing: 196.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/196.jpg
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+    Error Code: ValidationException
+    Status Code: 400
+  ? Uploaded but failed to index face (no face detected or error)
+
+[201/255] Processing: 197.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/197.jpg
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+    Error Code: ValidationException
+    Status Code: 400
+  ? Uploaded but failed to index face (no face detected or error)
+
+[202/255] Processing: 198.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/198.jpg
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+    Error Code: ValidationException
+    Status Code: 400
+  ? Uploaded but failed to index face (no face detected or error)
+
+[203/255] Processing: 199.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/199.jpg
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+    Error Code: ValidationException
+    Status Code: 400
+  ? Uploaded but failed to index face (no face detected or error)
+
+[204/255] Processing: 200.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/200.jpg
+  ? Uploaded but failed to index face (no face detected or error)
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+
+    Error Code: ValidationException
+    Status Code: 400
+[205/255] Processing: 201.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/201.jpg
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+    Error Code: ValidationException
+    Status Code: 400
+  ? Uploaded but failed to index face (no face detected or error)
+
+[206/255] Processing: 202.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/202.jpg
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+    Error Code: ValidationException
+    Status Code: 400
+  ? Uploaded but failed to index face (no face detected or error)
+
+[207/255] Processing: 203.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/203.jpg
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+    Error Code: ValidationException
+    Status Code: 400
+  ? Uploaded but failed to index face (no face detected or error)
+
+[208/255] Processing: 204.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/204.jpg
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+    Error Code: ValidationException
+    Status Code: 400
+  ? Uploaded but failed to index face (no face detected or error)
+
+[209/255] Processing: 205.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/205.jpg
+  ? Uploaded but failed to index face (no face detected or error)
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+
+    Error Code: ValidationException
+    Status Code: 400
+[210/255] Processing: 206.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/206.jpg
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+    Error Code: ValidationException
+    Status Code: 400
+  ? Uploaded but failed to index face (no face detected or error)
+
+[211/255] Processing: 207.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/207.jpg
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+  ? Uploaded but failed to index face (no face detected or error)
+    Error Code: ValidationException
+
+    Status Code: 400
+[212/255] Processing: 208.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/208.jpg
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+    Error Code: ValidationException
+    Status Code: 400
+  ? Uploaded but failed to index face (no face detected or error)
+
+[213/255] Processing: 209.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/209.jpg
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+    Error Code: ValidationException
+    Status Code: 400
+  ? Uploaded but failed to index face (no face detected or error)
+
+[214/255] Processing: 210.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/210.jpg
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+    Error Code: ValidationException
+    Status Code: 400
+  ? Uploaded but failed to index face (no face detected or error)
+
+[215/255] Processing: 211.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/211.jpg
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+    Error Code: ValidationException
+    Status Code: 400
+  ? Uploaded but failed to index face (no face detected or error)
+
+[216/255] Processing: 212.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/212.jpg
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+    Error Code: ValidationException
+    Status Code: 400
+  ? Uploaded but failed to index face (no face detected or error)
+
+[217/255] Processing: 213.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/213.jpg
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+    Error Code: ValidationException
+    Status Code: 400
+  ? Uploaded but failed to index face (no face detected or error)
+
+[218/255] Processing: 214.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/214.jpg
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+    Error Code: ValidationException
+    Status Code: 400
+  ? Uploaded but failed to index face (no face detected or error)
+
+[219/255] Processing: 215.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/215.jpg
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+    Error Code: ValidationException
+    Status Code: 400
+  ? Uploaded but failed to index face (no face detected or error)
+
+[220/255] Processing: 216.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/216.jpg
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+    Error Code: ValidationException
+    Status Code: 400
+  ? Uploaded but failed to index face (no face detected or error)
+
+[221/255] Processing: 217.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/217.jpg
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+    Error Code: ValidationException
+    Status Code: 400
+  ? Uploaded but failed to index face (no face detected or error)
+
+[222/255] Processing: 218.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/218.jpg
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+    Error Code: ValidationException
+    Status Code: 400
+  ? Uploaded but failed to index face (no face detected or error)
+
+[223/255] Processing: 219.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/219.jpg
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+    Error Code: ValidationException
+    Status Code: 400
+  ? Uploaded but failed to index face (no face detected or error)
+
+[224/255] Processing: 220.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/220.jpg
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+    Error Code: ValidationException
+    Status Code: 400
+  ? Uploaded but failed to index face (no face detected or error)
+
+[225/255] Processing: 221.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/221.jpg
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+    Error Code: ValidationException
+    Status Code: 400
+  ? Uploaded but failed to index face (no face detected or error)
+
+[226/255] Processing: 222.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/222.jpg
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+    Error Code: ValidationException
+    Status Code: 400
+  ? Uploaded but failed to index face (no face detected or error)
+
+[227/255] Processing: 223.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/223.jpg
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+    Error Code: ValidationException
+    Status Code: 400
+  ? Uploaded but failed to index face (no face detected or error)
+
+[228/255] Processing: 224.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/224.jpg
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+    Error Code: ValidationException
+    Status Code: 400
+  ? Uploaded but failed to index face (no face detected or error)
+
+[229/255] Processing: 225.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/225.jpg
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+  ? Uploaded but failed to index face (no face detected or error)
+    Error Code: ValidationException
+
+    Status Code: 400
+[230/255] Processing: 226.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/226.jpg
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+    Error Code: ValidationException
+    Status Code: 400
+  ? Uploaded but failed to index face (no face detected or error)
+
+[231/255] Processing: 227.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/227.jpg
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+    Error Code: ValidationException
+    Status Code: 400
+  ? Uploaded but failed to index face (no face detected or error)
+
+[232/255] Processing: 228.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/228.jpg
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+    Error Code: ValidationException
+    Status Code: 400
+  ? Uploaded but failed to index face (no face detected or error)
+
+[233/255] Processing: 229.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/229.jpg
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+    Error Code: ValidationException
+    Status Code: 400
+  ? Uploaded but failed to index face (no face detected or error)
+
+[234/255] Processing: 230.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/230.jpg
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+    Error Code: ValidationException
+    Status Code: 400
+  ? Uploaded but failed to index face (no face detected or error)
+
+[235/255] Processing: 231.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/231.jpg
+  ? Uploaded but failed to index face (no face detected or error)
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+
+    Error Code: ValidationException
+    Status Code: 400
+[236/255] Processing: 232.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/232.jpg
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+    Error Code: ValidationException
+    Status Code: 400
+  ? Uploaded but failed to index face (no face detected or error)
+
+[237/255] Processing: 233.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/233.jpg
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+  ? Uploaded but failed to index face (no face detected or error)
+    Error Code: ValidationException
+
+    Status Code: 400
+[238/255] Processing: 234.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/234.jpg
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+    Error Code: ValidationException
+    Status Code: 400
+  ? Uploaded but failed to index face (no face detected or error)
+
+[239/255] Processing: 235.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/235.jpg
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+    Error Code: ValidationException
+    Status Code: 400
+  ? Uploaded but failed to index face (no face detected or error)
+
+[240/255] Processing: 236.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/236.jpg
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+    Error Code: ValidationException
+    Status Code: 400
+  ? Uploaded but failed to index face (no face detected or error)
+
+[241/255] Processing: 237.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/237.jpg
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+    Error Code: ValidationException
+    Status Code: 400
+  ? Uploaded but failed to index face (no face detected or error)
+
+[242/255] Processing: 238.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/238.jpg
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+  ? Uploaded but failed to index face (no face detected or error)
+
+    Error Code: ValidationException
+    Status Code: 400
+[243/255] Processing: 239.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/239.jpg
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+  ? Uploaded but failed to index face (no face detected or error)
+    Error Code: ValidationException
+
+    Status Code: 400
+[244/255] Processing: 240.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/240.jpg
+  ? Uploaded but failed to index face (no face detected or error)
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+
+    Error Code: ValidationException
+    Status Code: 400
+[245/255] Processing: 241.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/241.jpg
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+  ? Uploaded but failed to index face (no face detected or error)
+    Error Code: ValidationException
+
+    Status Code: 400
+[246/255] Processing: 242.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/242.jpg
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+    Error Code: ValidationException
+    Status Code: 400
+  ? Uploaded but failed to index face (no face detected or error)
+
+[247/255] Processing: 243.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/243.jpg
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+  ? Uploaded but failed to index face (no face detected or error)
+    Error Code: ValidationException
+    Status Code: 400
+
+[248/255] Processing: 244.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/244.jpg
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+    Error Code: ValidationException
+    Status Code: 400
+  ? Uploaded but failed to index face (no face detected or error)
+
+[249/255] Processing: 245.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/245.jpg
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+    Error Code: ValidationException
+    Status Code: 400
+  ? Uploaded but failed to index face (no face detected or error)
+
+[250/255] Processing: 246.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/246.jpg
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+    Error Code: ValidationException
+    Status Code: 400
+  ? Uploaded but failed to index face (no face detected or error)
+
+[251/255] Processing: 247.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/247.jpg
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+    Error Code: ValidationException
+    Status Code: 400
+  ? Uploaded but failed to index face (no face detected or error)
+
+[252/255] Processing: 248.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/248.jpg
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+    Error Code: ValidationException
+    Status Code: 400
+  ? Uploaded but failed to index face (no face detected or error)
+
+[253/255] Processing: 249.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/249.jpg
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+    Error Code: ValidationException
+    Status Code: 400
+  ? Uploaded but failed to index face (no face detected or error)
+
+[254/255] Processing: 250.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/250.jpg
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+  ? Uploaded but failed to index face (no face detected or error)
+    Error Code: ValidationException
+    Status Code: 400
+
+[255/255] Processing: 251.jpg
+  ? Uploaded to S3: s3://suspectra-facematch-somzee5/faces/251.jpg
+    AWS Service Error: Unable to unmarshall exception response with the unmarshallers provided
+    Error Code: ValidationException
+    Status Code: 400
+  ? Uploaded but failed to index face (no face detected or error)
+
+
+========================================
+  BATCH PROCESSING SUMMARY
+========================================
+Total images:        255
+Processed:           255
+Successful uploads:  255
+Faces indexed:       0
+Failed:              0
+Time taken:          420 seconds
+
+? No faces were successfully indexed.
+  Check error messages above for details.
+========================================
+[WARNING] thread Thread[java-sdk-http-connection-reaper,5,com.mycompany.suspectra_facematch.BatchAddFaces] was interrupted but is still alive after waiting at least 15000msecs
+[WARNING] thread Thread[java-sdk-http-connection-reaper,5,com.mycompany.suspectra_facematch.BatchAddFaces] will linger despite being asked to die via interruption
+[WARNING] NOTE: 1 thread(s) did not finish despite being asked to via interruption. This is not a problem with exec:java, it is a problem with the running code. Although not serious, it should be remedied.
+[WARNING] Couldn't destroy threadgroup org.codehaus.mojo.exec.ExecJavaMojo$IsolatedThreadGroup[name=com.mycompany.suspectra_facematch.BatchAddFaces,maxpri=10]
+java.lang.IllegalThreadStateException
+    at java.lang.ThreadGroup.destroy (ThreadGroup.java:803)
+    at org.codehaus.mojo.exec.ExecJavaMojo.execute (ExecJavaMojo.java:319)
+    at org.apache.maven.plugin.DefaultBuildPluginManager.executeMojo (DefaultBuildPluginManager.java:126)
+    at org.apache.maven.lifecycle.internal.MojoExecutor.doExecute2 (MojoExecutor.java:328)
+    at org.apache.maven.lifecycle.internal.MojoExecutor.doExecute (MojoExecutor.java:316)
+    at org.apache.maven.lifecycle.internal.MojoExecutor.execute (MojoExecutor.java:212)
+    at org.apache.maven.lifecycle.internal.MojoExecutor.execute (MojoExecutor.java:174)
+    at org.apache.maven.lifecycle.internal.MojoExecutor.access$000 (MojoExecutor.java:75)
+    at org.apache.maven.lifecycle.internal.MojoExecutor$1.run (MojoExecutor.java:162)
+    at org.apache.maven.plugin.DefaultMojosExecutionStrategy.execute (DefaultMojosExecutionStrategy.java:39)
+    at org.apache.maven.lifecycle.internal.MojoExecutor.execute (MojoExecutor.java:159)
+    at org.apache.maven.lifecycle.internal.LifecycleModuleBuilder.buildProject (LifecycleModuleBuilder.java:105)
+    at org.apache.maven.lifecycle.internal.LifecycleModuleBuilder.buildProject (LifecycleModuleBuilder.java:73)
+    at org.apache.maven.lifecycle.internal.builder.singlethreaded.SingleThreadedBuilder.build (SingleThreadedBuilder.java:53)
+    at org.apache.maven.lifecycle.internal.LifecycleStarter.execute (LifecycleStarter.java:118)
+    at org.apache.maven.DefaultMaven.doExecute (DefaultMaven.java:261)
+    at org.apache.maven.DefaultMaven.doExecute (DefaultMaven.java:173)
+    at org.apache.maven.DefaultMaven.execute (DefaultMaven.java:101)
+    at org.apache.maven.cli.MavenCli.execute (MavenCli.java:906)
+    at org.apache.maven.cli.MavenCli.doMain (MavenCli.java:283)
+    at org.apache.maven.cli.MavenCli.main (MavenCli.java:206)
+    at jdk.internal.reflect.NativeMethodAccessorImpl.invoke0 (Native Method)
+    at jdk.internal.reflect.NativeMethodAccessorImpl.invoke (NativeMethodAccessorImpl.java:77)
+    at jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke (DelegatingMethodAccessorImpl.java:43)
+    at java.lang.reflect.Method.invoke (Method.java:569)
+    at org.codehaus.plexus.classworlds.launcher.Launcher.launchEnhanced (Launcher.java:255)
+    at org.codehaus.plexus.classworlds.launcher.Launcher.launch (Launcher.java:201)
+    at org.codehaus.plexus.classworlds.launcher.Launcher.mainWithExitCode (Launcher.java:361)
+    at org.codehaus.plexus.classworlds.launcher.Launcher.main (Launcher.java:314)
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  07:20 min
+[INFO] Finished at: 2025-11-28T01:22:28+05:30
+[INFO] ------------------------------------------------------------------------

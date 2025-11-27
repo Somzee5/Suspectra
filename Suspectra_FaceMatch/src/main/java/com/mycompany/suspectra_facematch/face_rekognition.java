@@ -103,7 +103,7 @@ public class face_rekognition extends javax.swing.JFrame {
         titleLabel.setFont(new java.awt.Font("Segoe UI", 1, 32)); // NOI18N
         titleLabel.setForeground(new java.awt.Color(30, 58, 138));
         titleLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        titleLabel.setText("🔍 Suspectra Face Match");
+        titleLabel.setText("Suspectra Face Match");
 
         subtitleLabel.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         subtitleLabel.setForeground(new java.awt.Color(100, 116, 139));
@@ -116,7 +116,7 @@ public class face_rekognition extends javax.swing.JFrame {
         sketchLabel.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         sketchLabel.setForeground(new java.awt.Color(51, 65, 85));
         sketchLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        sketchLabel.setText("📷 Upload Sketch");
+        sketchLabel.setText("Upload Sketch");
 
         sketch.setBackground(new java.awt.Color(255, 255, 255));
         sketch.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
@@ -147,7 +147,7 @@ public class face_rekognition extends javax.swing.JFrame {
         matchLabel.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         matchLabel.setForeground(new java.awt.Color(51, 65, 85));
         matchLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        matchLabel.setText("✅ Matched Face");
+        matchLabel.setText("Matched Face");
 
         match.setBackground(new java.awt.Color(255, 255, 255));
         match.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
@@ -178,7 +178,7 @@ public class face_rekognition extends javax.swing.JFrame {
         open_sketch.setBackground(new java.awt.Color(59, 130, 246));
         open_sketch.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         open_sketch.setForeground(new java.awt.Color(255, 255, 255));
-        open_sketch.setText("📁 Open Sketch");
+        open_sketch.setText("Open Sketch");
         open_sketch.setBorder(javax.swing.BorderFactory.createEmptyBorder(12, 24, 12, 24));
         open_sketch.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         open_sketch.setFocusPainted(false);
@@ -199,7 +199,7 @@ public class face_rekognition extends javax.swing.JFrame {
         upload_sketch.setBackground(new java.awt.Color(16, 185, 129));
         upload_sketch.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         upload_sketch.setForeground(new java.awt.Color(255, 255, 255));
-        upload_sketch.setText("☁️ Upload to AWS");
+        upload_sketch.setText("Upload to AWS");
         upload_sketch.setBorder(javax.swing.BorderFactory.createEmptyBorder(12, 24, 12, 24));
         upload_sketch.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         upload_sketch.setFocusPainted(false);
@@ -220,7 +220,7 @@ public class face_rekognition extends javax.swing.JFrame {
         find_match.setBackground(new java.awt.Color(139, 92, 246));
         find_match.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         find_match.setForeground(new java.awt.Color(255, 255, 255));
-        find_match.setText("🔎 Find Match");
+        find_match.setText("Find Match");
         find_match.setBorder(javax.swing.BorderFactory.createEmptyBorder(12, 24, 12, 24));
         find_match.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         find_match.setFocusPainted(false);
@@ -268,7 +268,7 @@ public class face_rekognition extends javax.swing.JFrame {
         resultsLabel.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         resultsLabel.setForeground(new java.awt.Color(51, 65, 85));
         resultsLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        resultsLabel.setText("📊 Match Details");
+        resultsLabel.setText("Match Details");
 
         jScrollPane1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(226, 232, 240), 2));
 
@@ -308,7 +308,7 @@ public class face_rekognition extends javax.swing.JFrame {
 
         statusLabel.setFont(new java.awt.Font("Segoe UI", 0, 11)); // NOI18N
         statusLabel.setForeground(new java.awt.Color(100, 116, 139));
-        statusLabel.setText("💡 Status: Ready | Click 'Open Sketch' to begin");
+        statusLabel.setText("Status: Ready | Click 'Open Sketch' to begin");
 
         sketch_path.setEditable(false);
         sketch_path.setBackground(new java.awt.Color(248, 250, 252));
@@ -436,7 +436,7 @@ public class face_rekognition extends javax.swing.JFrame {
             String getselectedImage = file.getAbsolutePath(); 
             
             sketch_path.setText(getselectedImage);
-            statusLabel.setText("💡 Status: Sketch loaded | Click 'Upload to AWS' to continue");
+                    statusLabel.setText("Status: Sketch loaded | Click 'Upload to AWS' to continue");
             
             // Clear match display when new sketch is loaded
             match.setText("No match found yet");
@@ -467,7 +467,7 @@ public class face_rekognition extends javax.swing.JFrame {
         // Validate that a sketch has been opened/selected first
         if (fileName == null || fileName.isBlank()) {
             JOptionPane.showMessageDialog(this, "Please open a sketch first (click 'Open Sketch').", "No Sketch Selected", JOptionPane.WARNING_MESSAGE);
-            statusLabel.setText("⚠️ Status: No sketch selected | Click 'Open Sketch' first");
+                    statusLabel.setText("Status: No sketch selected | Click 'Open Sketch' first");
             return;
         }
 
@@ -475,12 +475,12 @@ public class face_rekognition extends javax.swing.JFrame {
         if (!hasAwsCredentials()) {
             if (!promptForAwsCredentials()) {
                 JOptionPane.showMessageDialog(this, "AWS credentials required. Cannot upload to S3.", "AWS Credentials Required", JOptionPane.ERROR_MESSAGE);
-                statusLabel.setText("❌ Status: Upload failed | AWS credentials required");
+                    statusLabel.setText("Status: Upload failed | AWS credentials required");
                 return;
             }
         }
 
-        statusLabel.setText("⏳ Status: Uploading sketch to AWS S3...");
+                    statusLabel.setText("Status: Uploading sketch to AWS S3...");
         
         // Clear previous match UI
         match_path.setText("");
@@ -519,7 +519,7 @@ public class face_rekognition extends javax.swing.JFrame {
             // Also save local copy for fallback
             fallbackLocalSave(fileName);
             
-            statusLabel.setText("✅ Status: Upload successful | Click 'Find Match' to search");
+                    statusLabel.setText("Status: Upload successful | Click 'Find Match' to search");
             JOptionPane.showMessageDialog(this, "Sketch uploaded successfully to AWS S3!\n\nS3 Key: " + s3Key + "\n\nNow click 'Find Match' to search the collection.", "Upload Successful", JOptionPane.INFORMATION_MESSAGE);
             
         } catch (AmazonServiceException e) {
@@ -528,7 +528,7 @@ public class face_rekognition extends javax.swing.JFrame {
             
             // Provide helpful message for Access Denied
             if (e.getErrorCode().equals("AccessDenied")) {
-                errorMsg += "\n\n⚠️ PERMISSION ISSUE:\n";
+                    errorMsg += "\n\nPERMISSION ISSUE:\n";
                 errorMsg += "Your IAM user doesn't have permission to write to S3.\n\n";
                 errorMsg += "To fix:\n";
                 errorMsg += "1. Go to AWS IAM Console\n";
@@ -538,11 +538,11 @@ public class face_rekognition extends javax.swing.JFrame {
                 errorMsg += "See FIX_ACCESS_DENIED.md for details.";
             }
             
-            statusLabel.setText("❌ Status: Upload failed | Check AWS permissions");
+                    statusLabel.setText("Status: Upload failed | Check AWS permissions");
             JOptionPane.showMessageDialog(this, errorMsg, "AWS Service Error", JOptionPane.ERROR_MESSAGE);
         } catch (SdkClientException e) {
             System.err.println("AWS Client Error: " + e.getMessage());
-            statusLabel.setText("⚠️ Status: AWS error | Falling back to local matching");
+                    statusLabel.setText("Status: AWS error | Falling back to local matching");
             JOptionPane.showMessageDialog(this, "AWS Client Error: " + e.getMessage() + "\n\nFalling back to local matching...", "AWS Error", JOptionPane.WARNING_MESSAGE);
             // Fallback to local matching
             String localPath = sketch_path.getText();
@@ -552,7 +552,7 @@ public class face_rekognition extends javax.swing.JFrame {
         } catch (Exception e) {
             System.err.println("Unexpected error: " + e.getMessage());
             e.printStackTrace();
-            statusLabel.setText("❌ Status: Upload failed | Error occurred");
+                    statusLabel.setText("Status: Upload failed | Error occurred");
             JOptionPane.showMessageDialog(this, "Error uploading sketch: " + e.getMessage(), "Upload Error", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_upload_sketchActionPerformed
@@ -645,12 +645,12 @@ public class face_rekognition extends javax.swing.JFrame {
                 s3Key = "sketches/test.jpg";
             } else {
                 JOptionPane.showMessageDialog(this, "Please upload the sketch to S3 first (click 'Upload to AWS').", "No Upload Found", JOptionPane.WARNING_MESSAGE);
-                statusLabel.setText("⚠️ Status: No uploaded sketch | Click 'Upload to AWS' first");
+                    statusLabel.setText("Status: No uploaded sketch | Click 'Upload to AWS' first");
                 return;
             }
         }
         
-        statusLabel.setText("🔍 Status: Searching AWS Rekognition collection...");
+                    statusLabel.setText("Status: Searching AWS Rekognition collection...");
         
         System.out.println("[FaceMatch] Searching AWS Rekognition collection: " + collectionId);
         System.out.println("[FaceMatch] Using S3 image: s3://" + bucket + "/" + s3Key);
@@ -809,27 +809,55 @@ public class face_rekognition extends javax.swing.JFrame {
             match_properties.setText(props.toString());
             
             // Update status
-            statusLabel.setText("✅ Status: Match found - " + displayName + " (" + String.format("%.2f%%", similarity) + ")");
+            statusLabel.setText(" Status: Match found - " + displayName + " (" + String.format("%.2f%%", similarity) + ")");
             
             // Display Matched Image from S3 using S3 client
-            String matchedImageKey = bestMatch.getFace().getExternalImageId();
-            System.out.println("Fetching matched image from S3: s3://" + bucket + "/" + matchedImageKey);
-            
-            try {
-                // Use S3 client to download the image
-                AmazonS3 s3Client = AmazonS3ClientBuilder.standard()
-                        .withRegion(Regions.US_EAST_1) // Match the region used for Rekognition
+            String matchedExternalId = bestMatch.getFace().getExternalImageId();
+            System.out.println("Matched ExternalImageId: " + matchedExternalId);
+
+            // Prepare candidate S3 keys to try (some runs store files under 'faces/' prefix)
+            String[] candidates = new String[] {
+                "faces/" + matchedExternalId,
+                matchedExternalId,
+                // try removing a leading underscore if present (sanitization variants)
+                "faces/" + (matchedExternalId.startsWith("_") ? matchedExternalId.substring(1) : matchedExternalId),
+                (matchedExternalId.startsWith("_") ? matchedExternalId.substring(1) : matchedExternalId)
+            };
+
+            boolean loaded = false;
+            BufferedImage bufferedImage = null;
+            String matchedImageKey = null;
+            AmazonS3 s3Client = AmazonS3ClientBuilder.standard()
+                        .withRegion(Regions.US_EAST_1)
                         .build();
-                
-                GetObjectRequest getObjectRequest = new GetObjectRequest(bucket, matchedImageKey);
-                com.amazonaws.services.s3.model.S3Object s3Object = s3Client.getObject(getObjectRequest);
-                S3ObjectInputStream objectInputStream = s3Object.getObjectContent();
-                
-                // Read the image from S3
-                BufferedImage bufferedImage = ImageIO.read(objectInputStream);
-                objectInputStream.close();
-                
-                if (bufferedImage != null) {
+
+            for (String candidateKey : candidates) {
+                if (candidateKey == null || candidateKey.isEmpty()) continue;
+                System.out.println("Trying S3 key: s3://" + bucket + "/" + candidateKey);
+                try {
+                    GetObjectRequest getObjectRequest = new GetObjectRequest(bucket, candidateKey);
+                    com.amazonaws.services.s3.model.S3Object s3Object = s3Client.getObject(getObjectRequest);
+                    S3ObjectInputStream objectInputStream = s3Object.getObjectContent();
+                    bufferedImage = ImageIO.read(objectInputStream);
+                    objectInputStream.close();
+                    if (bufferedImage != null) {
+                        System.out.println("Successfully loaded matched image: " + candidateKey);
+                        loaded = true;
+                        matchedImageKey = candidateKey;
+                        break;
+                    }
+                } catch (AmazonServiceException ase) {
+                    // If key not found (404), try next candidate; otherwise log and try next
+                    System.err.println("AWS Service Error when trying key '" + candidateKey + "': " + ase.getMessage());
+                    // continue trying other candidates
+                } catch (SdkClientException sce) {
+                    System.err.println("AWS Client Error when trying key '" + candidateKey + "': " + sce.getMessage());
+                } catch (IOException ioe) {
+                    System.err.println("IO Error reading S3 object '" + candidateKey + "': " + ioe.getMessage());
+                }
+            }
+
+            if (bufferedImage != null) {
                     // Get the label dimensions (use preferred size if width/height are 0)
                     int labelWidth = match.getWidth() > 0 ? match.getWidth() : match.getPreferredSize().width;
                     int labelHeight = match.getHeight() > 0 ? match.getHeight() : match.getPreferredSize().height;
@@ -864,20 +892,7 @@ public class face_rekognition extends javax.swing.JFrame {
                     match.setText("Failed to load image");
                     JOptionPane.showMessageDialog(null, "Could not read matched image from S3: " + matchedImageKey);
                 }
-            } catch (AmazonServiceException e) {
-                System.err.println("AWS Service Error loading image: " + e.getMessage());
-                match.setText("Error loading image from AWS");
-                JOptionPane.showMessageDialog(null, "Error loading matched image from S3: " + e.getErrorMessage());
-            } catch (SdkClientException e) {
-                System.err.println("AWS Client Error loading image: " + e.getMessage());
-                match.setText("Error loading image from AWS");
-                JOptionPane.showMessageDialog(null, "Error loading matched image from S3: " + e.getMessage());
-            } catch (IOException e) {
-                System.err.println("Error reading image from S3: " + e.getMessage());
-                match.setText("Failed to read image from AWS");
-                JOptionPane.showMessageDialog(null, "Could not read matched image from S3: " + matchedImageKey);
-            }
-            
+
         } catch (AmazonRekognitionException e) {
             System.err.println("AWS Rekognition Error: " + e.getMessage());
             JOptionPane.showMessageDialog(null, "AWS Rekognition Error: " + e.getMessage() + "\n\nFalling back to local search...");
@@ -903,14 +918,14 @@ public class face_rekognition extends javax.swing.JFrame {
         StringBuilder bar = new StringBuilder();
         bar.append("[");
         
-        // Color-coded filled portion
+        // Filled portion (ASCII fallback)
         for (int i = 0; i < filled; i++) {
-            bar.append("█");
+            bar.append("#");
         }
-        
+
         // Empty portion
         for (int i = 0; i < empty; i++) {
-            bar.append("░");
+            bar.append("-");
         }
         
         bar.append("]");
@@ -1050,10 +1065,10 @@ public class face_rekognition extends javax.swing.JFrame {
                 ImageIcon ico = new ImageIcon(bestImg.getScaledInstance(match.getWidth(), match.getHeight(), Image.SCALE_SMOOTH));
                 match.setIcon(ico);
                 match.setText(""); // Clear the "No match found yet" text
-                statusLabel.setText("✅ Status: Local match found - " + bestFile.getName());
+                statusLabel.setText(" Status: Local match found - " + bestFile.getName());
                 JOptionPane.showMessageDialog(this, "Local match found: " + bestFile.getName() + " (" + String.format("%.1f", bestScore) + "%)", "Match Found", JOptionPane.INFORMATION_MESSAGE);
             } else {
-                statusLabel.setText("❌ Status: No local match found above threshold");
+                statusLabel.setText(" Status: No local match found above threshold");
                 JOptionPane.showMessageDialog(this, "No local match found above 30% threshold.\n\nBest score: " + (bestScore < 0 ? "n/a" : String.format("%.1f%%", bestScore)), "No Match", JOptionPane.WARNING_MESSAGE);
                 match.setIcon(null);
                 match.setText("No match found");
@@ -1064,8 +1079,8 @@ public class face_rekognition extends javax.swing.JFrame {
         }
     }
 
-    
-    
+
+    /**
     /**
      * @param args the command line arguments
      */
