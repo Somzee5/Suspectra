@@ -14,6 +14,10 @@ import java.sql.SQLException;
 import java.util.Properties;
 
 import java.util.ResourceBundle;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.event.ActionEvent;
@@ -120,6 +124,12 @@ public class Login_screenController implements Initializable {
         if(e_mail.isEmpty() || pass.isEmpty()) {
             error.setText("Empty credentials");
             status = "Error";
+            // write audit log for failed attempt due to empty credentials
+            try {
+                appendAuditLog(e_mail, ip_add.getText(), mac_add.getText(), status);
+            } catch (Exception ex) {
+                System.err.println("Failed to write audit log: " + ex.getMessage());
+            }
         } else {
             //query 
             String sql = "SELECT * FROM login_data Where email = ? and password = ?";
@@ -131,21 +141,114 @@ public class Login_screenController implements Initializable {
                 if (!resultSet.next()) {
                     System.out.println("Enter Correct Email/Password");
                     status = "Error";
+                    // write audit log for invalid credentials
+                    try {
+                        appendAuditLog(e_mail, ip_add.getText(), mac_add.getText(), "InvalidCredentials");
+                    } catch (Exception ex) {
+                        System.err.println("Failed to write audit log: " + ex.getMessage());
+                    }
                 } else {
                     System.out.println("Login Successful");
                     loginerror.setText("successful");
+                    // write audit log for successful login
+                    try {
+                        appendAuditLog(e_mail, ip_add.getText(), mac_add.getText(), "Success");
+                    } catch (Exception ex) {
+                        System.err.println("Failed to write audit log: " + ex.getMessage());
+                    }
                 }
             } catch (SQLException ex) {
                 System.err.println(ex.getMessage());
                 status = "Exception";
+                // log exception in audit
+                try {
+                    appendAuditLog(e_mail, ip_add.getText(), mac_add.getText(), "Exception: " + ex.getMessage());
+                } catch (Exception logEx) {
+                    System.err.println("Failed to write audit log: " + logEx.getMessage());
+                }
             }
         }
         return status;
+    }
+
+    /**
+     * Append a simple audit line to `login_audit.log` in the working directory.
+     * Format: timestamp | email=... | ip=... | mac=... | status=...
+     */
+    private void appendAuditLog(String email, String ip, String mac, String status) throws IOException {
+        String timestamp = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new java.util.Date());
+        String entry = String.format("%s | email=%s | ip=%s | mac=%s | status=%s", timestamp,
+                (email == null || email.isEmpty()) ? "(empty)" : email,
+                (ip == null || ip.isEmpty()) ? "(unknown)" : ip,
+                (mac == null || mac.isEmpty()) ? "(unknown)" : mac,
+                status);
+
+        // Attempt to write to the working directory file
+        String workingLog = System.getProperty("user.dir") + System.getProperty("file.separator") + "login_audit.log";
+        boolean wroteAny = false;
+        try {
+            try (FileWriter fw = new FileWriter(workingLog, true);
+                 BufferedWriter bw = new BufferedWriter(fw);
+                 PrintWriter out = new PrintWriter(bw)) {
+                out.println(entry);
+            }
+            System.out.println("[Audit] Wrote entry to working-dir: " + workingLog);
+            wroteAny = true;
+        } catch (Exception e) {
+            System.err.println("[Audit] Failed to write to working-dir log: " + e.getMessage());
+        }
+
+        // Also attempt to write to the repository's Suspectra v2 folder (fallback/visible location)
+        String repoLog = "D:" + System.getProperty("file.separator") + "Suspectra" + System.getProperty("file.separator") + "Suspectra v2" + System.getProperty("file.separator") + "login_audit.log";
+        try {
+            try (FileWriter fw = new FileWriter(repoLog, true);
+                 BufferedWriter bw = new BufferedWriter(fw);
+                 PrintWriter out = new PrintWriter(bw)) {
+                out.println(entry);
+            }
+            System.out.println("[Audit] Wrote entry to repo-log: " + repoLog);
+            wroteAny = true;
+        } catch (Exception e) {
+            System.err.println("[Audit] Failed to write to repo log: " + e.getMessage());
+        }
+
+        if (!wroteAny) {
+            throw new IOException("Failed to write audit log to any known location");
+        }
     }
     
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         new ip_mac().start(); //RUN FOR MAC AND IP SHOWING
+        // Ensure audit log exists and write startup header
+        try {
+            ensureAuditLogExists();
+            // Print working directory to console for visibility
+            System.out.println("Working directory: " + System.getProperty("user.dir"));
+        } catch (IOException ex) {
+            System.err.println("Failed to ensure audit log: " + ex.getMessage());
+        }
+    }
+
+    /**
+     * Ensure the audit log file exists and write a startup header line that includes the
+     * absolute path used by the application. This helps locating the file during demos.
+     */
+    private void ensureAuditLogExists() throws IOException {
+        String logFile = "login_audit.log";
+        java.io.File f = new java.io.File(logFile);
+        String abs = f.getAbsolutePath();
+        if (!f.exists()) {
+            // create file and write a header
+            try (FileWriter fw = new FileWriter(f, true);
+                 BufferedWriter bw = new BufferedWriter(fw);
+                 PrintWriter out = new PrintWriter(bw)) {
+                String timestamp = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new java.util.Date());
+                out.println("# Audit log created: " + timestamp);
+                out.println("# Log path: " + abs);
+                out.println("# Format: yyyy-MM-dd HH:mm:ss | email=... | ip=... | mac=... | status=...");
+            }
+        }
     }
     
     @FXML
