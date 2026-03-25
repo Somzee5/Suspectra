@@ -1,0 +1,60 @@
+========================================
+  SUSPECTRA ACCURACY ANALYSIS REPORT
+========================================
+
+Generated: 2025-11-28 10:17:32
+
+AWS Rekognition Collection: suspectra_collection
+Region: us-east-1
+
+========================================
+  PERFORMANCE SUMMARY
+========================================
+
+RECOMMENDED THRESHOLD: 50%
+  This threshold provides the best balance between precision and recall.
+
+  Performance at recommended threshold:
+    Accuracy:  0.00%
+    Precision: 0.00%
+    Recall:    0.00%
+    F1 Score:  0.00%
+
+========================================
+  DETAILED RESULTS
+========================================
+
+Threshold    Accuracy     Precision    Recall       F1 Score     Tested      
+------------------------------------------------------------------------
+50%          0.00%        0.00%        0.00%        0.00%        50          
+60%          0.00%        0.00%        0.00%        0.00%        50          
+70%          0.00%        0.00%        0.00%        0.00%        50          
+75%          0.00%        0.00%        0.00%        0.00%        50          
+80%          0.00%        0.00%        0.00%        0.00%        50          
+85%          0.00%        0.00%        0.00%        0.00%        50          
+90%          0.00%        0.00%        0.00%        0.00%        50          
+95%          0.00%        0.00%        0.00%        0.00%        50          
+
+========================================
+  METRIC DEFINITIONS
+========================================
+
+ACCURACY: Overall correctness of predictions
+  Formula: (TP + TN) / (TP + TN + FP + FN)
+
+PRECISION: When model predicts a match, how often is it correct?
+  Formula: TP / (TP + FP)
+  High precision = fewer false alarms
+
+RECALL (Sensitivity): Of all actual matches, how many did we find?
+  Formula: TP / (TP + FN)
+  High recall = fewer missed matches
+
+F1 SCORE: Harmonic mean of precision and recall
+  Formula: 2 * (Precision * Recall) / (Precision + Recall)
+  Balances precision and recall
+
+TP = True Positives (correct match)
+FP = False Positives (incorrect match)
+FN = False Negatives (missed match)
+TN = True Negatives (correct rejection)

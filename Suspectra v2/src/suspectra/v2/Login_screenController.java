@@ -71,37 +71,73 @@ public class Login_screenController implements Initializable {
         conn = connectdb.ConnectDB();
     }
 
+    // store resolved device info to avoid race conditions
+    private volatile String resolvedIp = "(unknown)";
+    private volatile String resolvedMac = "(unknown)";
+
     
     // CODE FOR MAC AND IP
     class ip_mac extends Thread{
-        @Override 
-        public void run(){
-            String ipmac;
-            InetAddress ip;
+        @Override
+        public void run() {
             try {
-                //IP Address Code
-                ip = InetAddress.getLocalHost();
-                ip_add.setText(ip.getHostAddress());
-                
-                //MAC Address Code
-                    //get port name
-                    NetworkInterface network = NetworkInterface.getByInetAddress(ip);
-                    System.out.println(network);
-                    net_add.setText("[ " +network.toString()+ " ]");
-                                        
-                    //get mac address
-                    byte[] mac = network.getHardwareAddress();
-                    //display mac adress
-                    StringBuilder sb = new StringBuilder();
-                    for (int i = 0; i < mac.length; i++) {
-			sb.append(String.format("%02X%s", mac[i], (i < mac.length - 1) ? "-" : ""));		
-                    }             
-                    ipmac=sb.toString();
-                    System.out.println(ipmac);
-                    mac_add.setText(ipmac); // Display Mac Add
-                    
-            }    catch (UnknownHostException | SocketException e) {
-		Logger.getLogger(Login_screenController.class.getName()).log(Level.SEVERE, null, e);
+                // Prefer the first non-loopback, up, site-local interface
+                java.util.Enumeration<java.net.NetworkInterface> nets = java.net.NetworkInterface.getNetworkInterfaces();
+                InetAddress chosenAddr = null;
+                java.net.NetworkInterface chosenNet = null;
+                while (nets.hasMoreElements()) {
+                    java.net.NetworkInterface net = nets.nextElement();
+                    try {
+                        if (!net.isUp() || net.isLoopback() || net.isVirtual()) continue;
+                    } catch (SocketException se) {
+                        continue;
+                    }
+                    java.util.Enumeration<InetAddress> addrs = net.getInetAddresses();
+                    while (addrs.hasMoreElements()) {
+                        InetAddress a = addrs.nextElement();
+                        if (a.isLoopbackAddress()) continue;
+                        if (a instanceof java.net.Inet4Address) {
+                            chosenAddr = a;
+                            chosenNet = net;
+                            break;
+                        } else if (chosenAddr == null) {
+                            chosenAddr = a;
+                            chosenNet = net;
+                        }
+                    }
+                    if (chosenAddr != null) break;
+                }
+
+                if (chosenAddr != null) {
+                    resolvedIp = chosenAddr.getHostAddress();
+                    javafx.application.Platform.runLater(() -> ip_add.setText(resolvedIp));
+
+                    if (chosenNet != null) {
+                        final String disp = "[ " + chosenNet.getDisplayName() + " ]";
+                        javafx.application.Platform.runLater(() -> net_add.setText(disp));
+                        byte[] mac = chosenNet.getHardwareAddress();
+                        if (mac != null) {
+                            StringBuilder sb = new StringBuilder();
+                            for (int i = 0; i < mac.length; i++) {
+                                sb.append(String.format("%02X%s", mac[i], (i < mac.length - 1) ? "-" : ""));
+                            }
+                            resolvedMac = sb.toString();
+                            javafx.application.Platform.runLater(() -> mac_add.setText(resolvedMac));
+                        }
+                    }
+                } else {
+                    InetAddress ip = InetAddress.getLocalHost();
+                    resolvedIp = ip.getHostAddress();
+                    javafx.application.Platform.runLater(() -> ip_add.setText(resolvedIp));
+                }
+
+                // enable login button now that device info is populated
+                if (send != null) {
+                    javafx.application.Platform.runLater(() -> send.setDisable(false));
+                }
+
+            } catch (Exception e) {
+                Logger.getLogger(Login_screenController.class.getName()).log(Level.WARNING, "Failed to resolve IP/MAC", e);
             }
         }
     }
@@ -177,11 +213,14 @@ public class Login_screenController implements Initializable {
      */
     private void appendAuditLog(String email, String ip, String mac, String status) throws IOException {
         String timestamp = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new java.util.Date());
+        // use provided values if present, otherwise fall back to resolved device info
+        String useIp = (ip != null && !ip.isEmpty() && !ip.equals("(unknown)")) ? ip : resolvedIp;
+        String useMac = (mac != null && !mac.isEmpty() && !mac.equals("(unknown)")) ? mac : resolvedMac;
         String entry = String.format("%s | email=%s | ip=%s | mac=%s | status=%s", timestamp,
-                (email == null || email.isEmpty()) ? "(empty)" : email,
-                (ip == null || ip.isEmpty()) ? "(unknown)" : ip,
-                (mac == null || mac.isEmpty()) ? "(unknown)" : mac,
-                status);
+            (email == null || email.isEmpty()) ? "(empty)" : email,
+            (useIp == null || useIp.isEmpty()) ? "(unknown)" : useIp,
+            (useMac == null || useMac.isEmpty()) ? "(unknown)" : useMac,
+            status);
 
         // Attempt to write to the working directory file
         String workingLog = System.getProperty("user.dir") + System.getProperty("file.separator") + "login_audit.log";
@@ -219,6 +258,8 @@ public class Login_screenController implements Initializable {
     
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        // disable login button until device info is resolved to avoid logging empty values
+        if (send != null) send.setDisable(true);
         new ip_mac().start(); //RUN FOR MAC AND IP SHOWING
         // Ensure audit log exists and write startup header
         try {

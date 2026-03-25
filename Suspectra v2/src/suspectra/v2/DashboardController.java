@@ -511,51 +511,7 @@ public class DashboardController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // Initialize slider
-        if (sizeSlider != null) {
-            sizeSlider.setVisible(true);
-            sizeSlider.setDisable(false);
-            if (sizeLabel != null) {
-                sizeLabel.setText("100%");
-            }
-            System.out.println("Size slider initialized and visible");
-        } else {
-            System.err.println("ERROR: sizeSlider is null in initialize!");
-        }
-        
-        // Initialize size buttons (menu bar)
-        if (size_increase_btn != null) {
-            size_increase_btn.setVisible(true);
-            size_increase_btn.setDisable(false);
-            System.out.println("Size increase button (menu) initialized and visible");
-        } else {
-            System.err.println("ERROR: size_increase_btn is null in initialize!");
-        }
-        
-        if (size_decrease_btn != null) {
-            size_decrease_btn.setVisible(true);
-            size_decrease_btn.setDisable(false);
-            System.out.println("Size decrease button (menu) initialized and visible");
-        } else {
-            System.err.println("ERROR: size_decrease_btn is null in initialize!");
-        }
-        
-        // Initialize size buttons (sketch area)
-        if (sketch_size_increase_btn != null) {
-            sketch_size_increase_btn.setVisible(true);
-            sketch_size_increase_btn.setDisable(false);
-            System.out.println("Size increase button (sketch) initialized and visible");
-        } else {
-            System.err.println("ERROR: sketch_size_increase_btn is null in initialize!");
-        }
-        
-        if (sketch_size_decrease_btn != null) {
-            sketch_size_decrease_btn.setVisible(true);
-            sketch_size_decrease_btn.setDisable(false);
-            System.out.println("Size decrease button (sketch) initialized and visible");
-        } else {
-            System.err.println("ERROR: sketch_size_decrease_btn is null in initialize!");
-        }
+        // Size controls (slider and blue buttons) disabled - not used in this version
 
         // Clip the sketch area so oversized/skewed images cannot draw outside the canvas
         if (sketch != null) {
@@ -582,125 +538,9 @@ public class DashboardController implements Initializable {
         
         // Keep existing drag setup for any hardcoded elements
         dragSketch();
-        
-        // Bring size buttons to front so they're always visible
-        if (sketch_size_increase_btn != null) {
-            sketch_size_increase_btn.toFront();
-        }
-        if (sketch_size_decrease_btn != null) {
-            sketch_size_decrease_btn.toFront();
-        }
-        // Labels will be brought to front automatically when their parent buttons are toFront()
 
-        // Ensure resize controls are visible, interactive and always on top
-        Rectangle[] resizeControls = new Rectangle[]{size_increase_btn, size_decrease_btn, sketch_size_increase_btn, sketch_size_decrease_btn};
-        for (Rectangle rc : resizeControls) {
-            if (rc != null) {
-                rc.setVisible(true);
-                rc.setDisable(false);
-                rc.setManaged(true);
-                rc.setMouseTransparent(false);
-                rc.setOpacity(1.0);
-                rc.toFront();
-                rc.setPickOnBounds(true);
-
-                // Attach a debug click handler so clicks are logged even if FXML handler isn't firing
-                rc.setOnMousePressed(evt -> {
-                    System.out.println("DEBUG: Resize control clicked -> id=" + rc.getId() + " source=" + evt.getSource());
-                });
-
-                // Print debug state
-                try {
-                    String parentId = (rc.getParent() != null && rc.getParent().getId() != null) ? rc.getParent().getId() : String.valueOf(rc.getParent());
-                    System.out.println(String.format("DEBUG: Control '%s' visible=%b managed=%b mouseTransparent=%b opacity=%.2f layout=(%.1f,%.1f) translate=(%.1f,%.1f) parent=%s bounds=%s",
-                            rc.getId(), rc.isVisible(), rc.isManaged(), rc.isMouseTransparent(), rc.getOpacity(), rc.getLayoutX(), rc.getLayoutY(), rc.getTranslateX(), rc.getTranslateY(), parentId, rc.getBoundsInParent().toString()));
-                } catch (Exception e) {
-                    System.out.println("DEBUG: Could not print control bounds for " + rc.getId() + ": " + e.getMessage());
-                }
-            }
-        }
-        // Also ensure menu_tab is on top for visibility
-        if (menu_tab != null) {
-            menu_tab.toFront();
-            System.out.println("DEBUG: menu_tab layoutY=" + menu_tab.getLayoutY() + " visible=" + menu_tab.isVisible());
-        }
-
-        // Fallback: if FXML didn't inject controls, create them programmatically
-        try {
-            if (size_increase_btn == null && menu_tab != null) {
-                Rectangle r = new Rectangle(45, 45, Color.web("#1F93FF"));
-                r.setArcWidth(5);
-                r.setArcHeight(5);
-                r.setLayoutX(720);
-                r.setLayoutY(21);
-                r.setId("size_increase_btn");
-                r.setOnMousePressed(evt -> onSizeIncrease(null));
-                menu_tab.getChildren().add(r);
-                size_increase_btn = r;
-                System.out.println("DEBUG: created fallback size_increase_btn");
-            }
-
-            if (size_decrease_btn == null && menu_tab != null) {
-                Rectangle r = new Rectangle(45, 45, Color.web("#1F93FF"));
-                r.setArcWidth(5);
-                r.setArcHeight(5);
-                r.setLayoutX(775);
-                r.setLayoutY(21);
-                r.setId("size_decrease_btn");
-                r.setOnMousePressed(evt -> onSizeDecrease(null));
-                menu_tab.getChildren().add(r);
-                size_decrease_btn = r;
-                System.out.println("DEBUG: created fallback size_decrease_btn");
-            }
-
-            if (sizeSlider == null && menu_tab != null) {
-                Slider s = new Slider(20, 300, 100);
-                s.setLayoutX(830);
-                s.setLayoutY(30);
-                s.setPrefWidth(180);
-                s.valueProperty().addListener((obs, oldV, newV) -> onSizeSliderChanged());
-                menu_tab.getChildren().add(s);
-                sizeSlider = s;
-                System.out.println("DEBUG: created fallback sizeSlider");
-            }
-
-            if (sizeLabel == null && menu_tab != null) {
-                Label lbl = new Label("100%");
-                lbl.setLayoutX(1030);
-                lbl.setLayoutY(33);
-                menu_tab.getChildren().add(lbl);
-                sizeLabel = lbl;
-                System.out.println("DEBUG: created fallback sizeLabel");
-            }
-
-            if (sketch_size_increase_btn == null && sketch != null) {
-                Rectangle r2 = new Rectangle(50,50, Color.web("#1F93FF"));
-                r2.setArcWidth(8);
-                r2.setArcHeight(8);
-                r2.setLayoutX(70);
-                r2.setLayoutY(5);
-                r2.setId("sketch_size_increase_btn");
-                r2.setOnMousePressed(evt -> onSizeIncrease(null));
-                sketch.getChildren().add(r2);
-                sketch_size_increase_btn = r2;
-                System.out.println("DEBUG: created fallback sketch_size_increase_btn");
-            }
-
-            if (sketch_size_decrease_btn == null && sketch != null) {
-                Rectangle r2 = new Rectangle(50,50, Color.web("#1F93FF"));
-                r2.setArcWidth(8);
-                r2.setArcHeight(8);
-                r2.setLayoutX(130);
-                r2.setLayoutY(5);
-                r2.setId("sketch_size_decrease_btn");
-                r2.setOnMousePressed(evt -> onSizeDecrease(null));
-                sketch.getChildren().add(r2);
-                sketch_size_decrease_btn = r2;
-                System.out.println("DEBUG: created fallback sketch_size_decrease_btn");
-            }
-        } catch (Exception ex) {
-            System.out.println("DEBUG: error creating fallback controls: " + ex.getMessage());
-        }
+        // Fallback controls disabled - only using FXML-defined buttons (SAVE, RESET, ZOOM+, ZOOM-)
+        // Blue buttons and slider removed as per user request
     }
     /**
      * Dynamically load all sketch elements from folders
@@ -732,16 +572,6 @@ public class DashboardController implements Initializable {
         
         // Ensure all head elements are at the back
         ensureHeadAtBack();
-        
-        // Bring size buttons to front after all elements are loaded
-        if (sketch_size_increase_btn != null) {
-            sketch_size_increase_btn.toFront();
-            System.out.println("Brought size increase button to front after loading");
-        }
-        if (sketch_size_decrease_btn != null) {
-            sketch_size_decrease_btn.toFront();
-            System.out.println("Brought size decrease button to front after loading");
-        }
         
         System.out.println("\n=== Dynamic element loading complete ===");
     }

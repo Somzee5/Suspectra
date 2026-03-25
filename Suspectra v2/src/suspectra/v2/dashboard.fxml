@@ -1480,26 +1480,26 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </Rectangle>
-            <Label layoutX="470.0" layoutY="33.0" text="ZOOM +" textFill="WHITE">
-               <font>
-                  <Font name="Futura Md BT Bold" size="14.0" />
-               </font>
-            </Label>
-            <Rectangle fx:id="zoom_in_btn" arcHeight="5.0" arcWidth="5.0" fill="#1f93ff00" height="54.0" layoutX="470.0" layoutY="16.0" onMousePressed="#onZoomIn" stroke="WHITE" strokeType="INSIDE" strokeWidth="3.0" width="80.0">
+            <Rectangle fx:id="zoom_in_btn" arcHeight="5.0" arcWidth="5.0" fill="#1f93ff00" height="54.0" layoutX="320.0" layoutY="16.0" onMousePressed="#onZoomIn" stroke="WHITE" strokeType="INSIDE" strokeWidth="3.0" width="100.0">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>
             </Rectangle>
-            <Label layoutX="560.0" layoutY="33.0" text="ZOOM -" textFill="WHITE">
+            <Label layoutX="342.0" layoutY="33.0" text="ZOOM +" textFill="WHITE">
                <font>
                   <Font name="Futura Md BT Bold" size="14.0" />
                </font>
             </Label>
-            <Rectangle fx:id="zoom_out_btn" arcHeight="5.0" arcWidth="5.0" fill="#1f93ff00" height="54.0" layoutX="560.0" layoutY="16.0" onMousePressed="#onZoomOut" stroke="WHITE" strokeType="INSIDE" strokeWidth="3.0" width="80.0">
+            <Rectangle fx:id="zoom_out_btn" arcHeight="5.0" arcWidth="5.0" fill="#1f93ff00" height="54.0" layoutX="435.0" layoutY="16.0" onMousePressed="#onZoomOut" stroke="WHITE" strokeType="INSIDE" strokeWidth="3.0" width="100.0">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>
             </Rectangle>
+            <Label layoutX="460.0" layoutY="33.0" text="ZOOM -" textFill="WHITE">
+               <font>
+                  <Font name="Futura Md BT Bold" size="14.0" />
+               </font>
+            </Label>
          </children>
       </AnchorPane>
    </children>
